@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#101016"/>
+      <stop offset="100%" stop-color="#050507"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="28%" r="62%">
+      <stop offset="0%" stop-color="#d8b45c" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#d8b45c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect width="1200" height="900" fill="url(#glow)"/>
+  <circle cx="250" cy="200" r="180" fill="#cf9ca5" fill-opacity="0.14"/>
+  <circle cx="980" cy="620" r="240" fill="#7e2336" fill-opacity="0.16"/>
+  <text x="86" y="160" fill="#f4f0e8" font-size="66" font-family="Georgia, serif" font-weight="700">Un mes de nosotros</text>
+  <text x="86" y="238" fill="#d8b45c" font-size="30" letter-spacing="4" font-family="Segoe UI, Arial, sans-serif">Capítulo visual · Timeline 04</text>
+</svg>

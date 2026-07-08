@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07070a" />
+    <title>Feliz primer mes ❤️</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="scene-bg" aria-hidden="true">
+      <canvas id="skyCanvas"></canvas>
+      <div class="ambient ambient-1"></div>
+      <div class="ambient ambient-2"></div>
+      <div class="ambient ambient-3"></div>
+    </div>
+
+    <div id="fxLayer" class="fx-layer" aria-hidden="true"></div>
+
+    <div id="startCurtain" class="start-curtain">
+      <div class="hero-card glass-panel hero-card--start">
+        <span class="eyebrow">Edgar Sebastian Perez Diaz & Karen Julieth Verdugo Rodriguez</span>
+        <h1>Nuestra historia de amor ❤️</h1>
+        <p>
+          Un mini libro de recuerdos reales, promesas y momentos sagrados que nos trajeron
+          hasta este presente tan bonito.
+        </p>
+        <button id="startButton" class="primary-button primary-button--hero">
+          Comenzar nuestra historia
+        </button>
+        <small class="hero-note">Hecho para verse perfecto en celular y computador.</small>
+      </div>
+    </div>
+
+    <header class="topbar">
+      <button id="musicButton" class="music-button glass-panel" type="button" aria-pressed="false">
+        <span class="music-button__icon" aria-hidden="true">
+          <span class="music-wave music-wave--one"></span>
+          <span class="music-wave music-wave--two"></span>
+          <span class="music-wave music-wave--three"></span>
+        </span>
+        <span class="music-button__copy">
+          <strong>Música</strong>
+          <span id="musicStatus">Lista para sonar</span>
+        </span>
+      </button>
+
+      <div class="topbar-counter glass-panel">
+        <span class="topbar-counter__label">Tiempo juntos</span>
+        <strong id="topbarCounterValue">00m 00d 00h 00m 00s</strong>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="section intro-section reveal-group" id="introSection" data-reveal>
+        <div class="section-copy">
+          <span class="section-kicker">Nuestro comienzo</span>
+          <h2>Edgar Sebastian y Karen Julieth</h2>
+          <p>
+            Esta pagina guarda lo que somos: nuestras risas, nuestros viajes, nuestras oraciones,
+            y el instante exacto en que dijimos si a este amor.
+          </p>
+        </div>
+        <div class="intro-mood glass-panel">
+          <p class="intro-mood__title">Promesa de amor</p>
+          <ul>
+            <li>Recuerdos escritos desde la memoria</li>
+            <li>Fotos que cuentan nuestra verdad</li>
+            <li>Canciones que nos abrazan por dentro</li>
+            <li>Un estilo romantico y delicado</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section counter-section" id="counterSection" data-reveal>
+        <div class="section-copy section-copy--center">
+          <span class="section-kicker">Desde nuestro si</span>
+          <h2>Desde el 07 de junio de 2026, 7:00 p.m.</h2>
+          <p>El reloj late con nosotros desde la noche en que empezamos oficialmente esta historia.</p>
+        </div>
+
+        <div class="counter-grid">
+          <article class="counter-card glass-panel">
+            <span>Meses</span>
+            <strong id="counterMonths">00</strong>
+          </article>
+          <article class="counter-card glass-panel">
+            <span>Días</span>
+            <strong id="counterDays">00</strong>
+          </article>
+          <article class="counter-card glass-panel">
+            <span>Horas</span>
+            <strong id="counterHours">00</strong>
+          </article>
+          <article class="counter-card glass-panel">
+            <span>Minutos</span>
+            <strong id="counterMinutes">00</strong>
+          </article>
+          <article class="counter-card glass-panel counter-card--wide">
+            <span>Segundos</span>
+            <strong id="counterSeconds">00</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="section timeline-section" id="timelineSection" data-reveal>
+        <div class="section-copy section-copy--center">
+          <span class="section-kicker">Línea de tiempo</span>
+          <h2>Momentos importantes de nosotros</h2>
+          <p>Fragmentos romanticos inspirados en la sensibilidad de Morat, unidos a nuestros recuerdos reales.</p>
+        </div>
+        <div id="timelineGrid" class="timeline-grid"></div>
+      </section>
+
+      <section class="section gallery-section" id="gallerySection" data-reveal>
+        <div class="section-copy section-copy--center">
+          <span class="section-kicker">Secuencia</span>
+          <h2>Un album de amor que respira con musica</h2>
+          <p>Cada bloque une fotos y canciones para revivir cada latido de nuestra historia, con textos completos en cada imagen.</p>
+        </div>
+        <div id="galleryGrid" class="gallery-grid"></div>
+      </section>
+
+      <section class="section letter-section" id="letterSection" data-reveal>
+        <div class="section-copy section-copy--center">
+          <span class="section-kicker">Mini Libro</span>
+          <h2>Cartas de un Amor con Realismo Magico</h2>
+          <p>La carta I es la introduccion. Desde la carta II, cada una corresponde a una foto, para que la memoria y las imagenes caminen juntas.</p>
+        </div>
+        <article class="letter-paper glass-panel">
+          <div class="letter-book__meta">
+            <span id="letterBookProgress" class="card-meta">Carta 1 de 21</span>
+            <span id="letterBookSong" class="letter-book__song">Cancion asociada: Intro</span>
+          </div>
+
+          <div class="letter-book__controls">
+            <button id="letterPrev" class="ghost-button" type="button">Carta anterior</button>
+            <button id="letterNext" class="ghost-button" type="button">Carta siguiente</button>
+            <button id="letterPlaySong" class="ghost-button" type="button">Reproducir cancion</button>
+            <button id="letterOpenPhoto" class="ghost-button" type="button">Ver foto relacionada</button>
+            <button id="letterPetals" class="ghost-button" type="button">Lluvia de amor</button>
+          </div>
+
+          <div id="letterText" class="letter-text letter-text--book" aria-live="polite"></div>
+          <div id="letterRail" class="letter-rail"></div>
+        </article>
+      </section>
+
+      <section class="section final-section" id="finalSection" data-reveal>
+        <div class="final-visual" aria-hidden="true"></div>
+        <div class="section-copy section-copy--center final-copy">
+          <span class="section-kicker">Final</span>
+          <h2>Gracias por elegirme, Karen Julieth.</h2>
+          <p>Att: Edgar Sebastian. Que nuestro amor siga escribiendo capitulos eternos.</p>
+          <button id="loveButton" class="primary-button primary-button--final" type="button">Te amo ❤️</button>
+        </div>
+      </section>
+    </main>
+
+    <section id="galleryModal" class="gallery-modal" aria-hidden="true">
+      <div class="gallery-modal__backdrop" data-modal-close></div>
+      <article class="gallery-modal__panel glass-panel">
+        <button class="modal-close" type="button" data-modal-close aria-label="Cerrar galería">×</button>
+        <button id="modalPrev" class="modal-nav modal-nav--prev" type="button" aria-label="Imagen anterior">Anterior</button>
+        <button id="modalNext" class="modal-nav modal-nav--next" type="button" aria-label="Imagen siguiente">Siguiente</button>
+
+        <div class="gallery-modal__media">
+          <img id="modalImage" alt="" />
+        </div>
+        <div class="gallery-modal__copy">
+          <span id="modalDate" class="gallery-modal__date"></span>
+          <span id="modalSong" class="gallery-modal__song"></span>
+          <h3 id="modalTitle"></h3>
+          <p id="modalCaption"></p>
+        </div>
+      </article>
+    </section>
+
+    <noscript>
+      Esta experiencia necesita JavaScript para animaciones, contador, galería y carta interactiva.
+    </noscript>
+
+    <script src="script.js"></script>
+  </body>
+</html>
