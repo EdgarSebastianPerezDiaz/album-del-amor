@@ -60,16 +60,6 @@
         <div class="section-copy">
           <span class="section-kicker">Nuestro comienzo</span>
           <h2>Edgar Sebastian y Karen Julieth</h2>
-          <p>Esta página guarda lo que somos: nuestras risas, nuestros viajes, nuestras oraciones, y el instante exacto en que dijimos sí a este amor.</p>
-        </div>
-        <div class="intro-mood glass-panel">
-          <p class="intro-mood__title">Promesa de amor</p>
-          <ul>
-            <li>Recuerdos escritos desde la memoria</li>
-            <li>Fotos que cuentan nuestra verdad</li>
-            <li>Canciones que nos abrazan por dentro</li>
-            <li>Un estilo romántico y delicado</li>
-          </ul>
         </div>
       </section>
 
@@ -78,7 +68,6 @@
         <div class="section-copy section-copy--center">
           <span class="section-kicker">Desde nuestro sí</span>
           <h2>Desde el 07 de junio de 2026, 7:00 p.m.</h2>
-          <p>El reloj late con nosotros desde la noche en que empezamos oficialmente esta historia.</p>
         </div>
         <div class="counter-grid">
           <article class="counter-card glass-panel"><span>Meses</span><strong id="counterMonths">00</strong></article>
@@ -103,7 +92,6 @@
         <div class="section-copy section-copy--center">
           <span class="section-kicker">Álbum de Momentos</span>
           <h2>Nuestras Cartas de Recuerdos</h2>
-          <p>20 cartas únicas de nuestra historia. Selecciona una para abrir el recuerdo completo.</p>
         </div>
         <div class="rarity-legend">
           <span class="rarity-badge rarity-comun">Común ★</span>
@@ -132,96 +120,328 @@
         <div class="section-copy section-copy--center">
           <span class="section-kicker">Nuestros Sueños</span>
           <h2>Boulevard de Sueños</h2>
-          <p>Un tablero interactivo donde escribimos los sueños y planes que queremos cumplir juntos.</p>
         </div>
 
         <div class="boulevard-board" id="boulevardBoard">
 
-          <!-- Fondo cinematográfico (night boulevard SVG) -->
+          <!-- === FONDO JARDÍN ROMÁNTICO === -->
           <div class="boulevard-bg" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 580" preserveAspectRatio="xMidYMid slice">
               <defs>
-                <linearGradient id="bSky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#020108"/><stop offset="55%" stop-color="#06040f"/><stop offset="100%" stop-color="#0c0910"/>
-                </linearGradient>
-                <linearGradient id="bRoad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#0a0806"/><stop offset="100%" stop-color="#1c1610"/>
-                </linearGradient>
-                <radialGradient id="bLamp" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#ffe060" stop-opacity="1"/><stop offset="35%" stop-color="#ffa020" stop-opacity="0.55"/><stop offset="100%" stop-color="#ff8000" stop-opacity="0"/>
-                </radialGradient>
-                <radialGradient id="bLampB" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#ffe060" stop-opacity="1"/><stop offset="40%" stop-color="#ffa020" stop-opacity="0.45"/><stop offset="100%" stop-color="#ff8000" stop-opacity="0"/>
-                </radialGradient>
-                <radialGradient id="bVan" cx="50%" cy="100%" r="50%">
-                  <stop offset="0%" stop-color="#c8903c" stop-opacity="0.22"/><stop offset="100%" stop-color="#c8903c" stop-opacity="0"/>
-                </radialGradient>
+                <linearGradient id="gBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#07090f"/><stop offset="60%" stop-color="#090d08"/><stop offset="100%" stop-color="#12100a"/></linearGradient>
+                <radialGradient id="ghGlow" cx="50%" cy="58%" r="32%"><stop offset="0%" stop-color="#e8a530" stop-opacity="0.48"/><stop offset="50%" stop-color="#c87c1a" stop-opacity="0.18"/><stop offset="100%" stop-color="#c87c1a" stop-opacity="0"/></radialGradient>
+                <radialGradient id="winG" cx="50%" cy="55%" r="50%"><stop offset="0%" stop-color="#f5b840" stop-opacity="0.95"/><stop offset="40%" stop-color="#d09225" stop-opacity="0.55"/><stop offset="100%" stop-color="#c07810" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkPurp" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#9060cc" stop-opacity="0.9"/><stop offset="45%" stop-color="#6838a8" stop-opacity="0.38"/><stop offset="100%" stop-color="#6838a8" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkLav" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c8a8ec" stop-opacity="0.78"/><stop offset="50%" stop-color="#a080d0" stop-opacity="0.28"/><stop offset="100%" stop-color="#a080d0" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkPink" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8709a" stop-opacity="0.92"/><stop offset="45%" stop-color="#c84878" stop-opacity="0.38"/><stop offset="100%" stop-color="#c84878" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkPinkL" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f8a8c4" stop-opacity="0.82"/><stop offset="50%" stop-color="#e080a8" stop-opacity="0.28"/><stop offset="100%" stop-color="#e080a8" stop-opacity="0"/></radialGradient>
+                <radialGradient id="sl" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff8e0" stop-opacity="1"/><stop offset="30%" stop-color="#ffe080" stop-opacity="0.55"/><stop offset="70%" stop-color="#ffc040" stop-opacity="0.18"/><stop offset="100%" stop-color="#ffc040" stop-opacity="0"/></radialGradient>
+                <radialGradient id="slSm" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff8e0" stop-opacity="1"/><stop offset="40%" stop-color="#ffe080" stop-opacity="0.38"/><stop offset="100%" stop-color="#ffc040" stop-opacity="0"/></radialGradient>
+                <radialGradient id="lanG" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#f5a820" stop-opacity="0.95"/><stop offset="45%" stop-color="#e08010" stop-opacity="0.45"/><stop offset="100%" stop-color="#e08010" stop-opacity="0"/></radialGradient>
+                <radialGradient id="vig" cx="50%" cy="50%" r="70%"><stop offset="30%" stop-color="transparent"/><stop offset="100%" stop-color="#000000" stop-opacity="0.62"/></radialGradient>
               </defs>
-              <rect width="1200" height="520" fill="url(#bSky)"/>
-              <!-- Stars -->
-              <circle cx="42" cy="18" r="1.1" fill="#fff8e0" opacity="0.75"/><circle cx="105" cy="32" r="0.7" fill="#fff8e0" opacity="0.5"/><circle cx="198" cy="12" r="1.4" fill="#fff8e0" opacity="0.65"/><circle cx="278" cy="42" r="0.8" fill="#fff8e0" opacity="0.4"/><circle cx="385" cy="22" r="1.0" fill="#fff8e0" opacity="0.6"/><circle cx="455" cy="8" r="0.6" fill="#fff8e0" opacity="0.5"/><circle cx="528" cy="38" r="1.2" fill="#fff8e0" opacity="0.55"/><circle cx="610" cy="14" r="0.9" fill="#fff8e0" opacity="0.7"/><circle cx="695" cy="28" r="1.3" fill="#fff8e0" opacity="0.45"/><circle cx="778" cy="16" r="0.7" fill="#fff8e0" opacity="0.6"/><circle cx="862" cy="36" r="1.1" fill="#fff8e0" opacity="0.5"/><circle cx="940" cy="20" r="0.8" fill="#fff8e0" opacity="0.65"/><circle cx="1025" cy="45" r="1.0" fill="#fff8e0" opacity="0.4"/><circle cx="1118" cy="10" r="1.4" fill="#fff8e0" opacity="0.7"/><circle cx="1175" cy="30" r="0.8" fill="#fff8e0" opacity="0.5"/><circle cx="160" cy="55" r="0.6" fill="#fff8e0" opacity="0.35"/><circle cx="730" cy="52" r="0.9" fill="#fff8e0" opacity="0.4"/>
-              <!-- Buildings LEFT -->
-              <rect x="0" y="80" width="128" height="240" fill="#030206"/><rect x="0" y="55" width="72" height="265" fill="#020105"/><rect x="118" y="105" width="85" height="215" fill="#040307"/><rect x="195" y="128" width="62" height="192" fill="#030206"/><rect x="250" y="148" width="45" height="172" fill="#040307"/>
-              <!-- Windows LEFT -->
-              <rect x="12" y="95" width="11" height="9" fill="#ffd040" opacity="0.13" rx="1"/><rect x="32" y="95" width="11" height="9" fill="#ffd040" opacity="0.09" rx="1"/><rect x="52" y="95" width="11" height="9" fill="#ffd040" opacity="0.15" rx="1"/><rect x="12" y="122" width="11" height="9" fill="#ffd040" opacity="0.1" rx="1"/><rect x="52" y="122" width="11" height="9" fill="#ffd040" opacity="0.08" rx="1"/><rect x="12" y="149" width="11" height="9" fill="#ffd040" opacity="0.12" rx="1"/><rect x="130" y="125" width="11" height="9" fill="#ffd040" opacity="0.1" rx="1"/><rect x="152" y="125" width="11" height="9" fill="#ffd040" opacity="0.09" rx="1"/><rect x="205" y="148" width="10" height="9" fill="#ffd040" opacity="0.09" rx="1"/>
-              <!-- Buildings RIGHT -->
-              <rect x="1000" y="80" width="200" height="240" fill="#030206"/><rect x="1110" y="55" width="90" height="265" fill="#020105"/><rect x="1010" y="110" width="72" height="210" fill="#040307"/><rect x="958" y="132" width="55" height="188" fill="#030206"/><rect x="912" y="150" width="52" height="170" fill="#040307"/>
-              <!-- Windows RIGHT -->
-              <rect x="1012" y="100" width="11" height="9" fill="#ffd040" opacity="0.12" rx="1"/><rect x="1032" y="100" width="11" height="9" fill="#ffd040" opacity="0.08" rx="1"/><rect x="1052" y="100" width="11" height="9" fill="#ffd040" opacity="0.1" rx="1"/><rect x="1012" y="128" width="11" height="9" fill="#ffd040" opacity="0.09" rx="1"/><rect x="1052" y="128" width="11" height="9" fill="#ffd040" opacity="0.12" rx="1"/><rect x="1120" y="88" width="11" height="9" fill="#ffd040" opacity="0.11" rx="1"/><rect x="1142" y="88" width="11" height="9" fill="#ffd040" opacity="0.09" rx="1"/><rect x="1162" y="88" width="11" height="9" fill="#ffd040" opacity="0.13" rx="1"/><rect x="968" y="152" width="10" height="9" fill="#ffd040" opacity="0.09" rx="1"/>
-              <!-- Road -->
-              <polygon points="0,520 1200,520 758,268 442,268" fill="url(#bRoad)"/>
-              <line x1="442" y1="268" x2="0" y2="520" stroke="#2a2216" stroke-width="2" opacity="0.7"/>
-              <line x1="758" y1="268" x2="1200" y2="520" stroke="#2a2216" stroke-width="2" opacity="0.7"/>
-              <line x1="600" y1="268" x2="570" y2="520" stroke="#2e2618" stroke-width="2.5" stroke-dasharray="22,18" opacity="0.5"/>
-              <!-- Lamps LEFT -->
-              <line x1="492" y1="272" x2="358" y2="342" stroke="#201c14" stroke-width="2.5"/>
-              <ellipse cx="358" cy="332" rx="52" ry="52" fill="url(#bLamp)" opacity="0.75"/>
-              <circle cx="358" cy="330" r="5" fill="#fff0a0"/><circle cx="358" cy="330" r="2" fill="#fff"/>
-              <ellipse cx="358" cy="415" rx="72" ry="22" fill="#ffa020" opacity="0.06"/>
-              <line x1="458" y1="292" x2="242" y2="402" stroke="#201c14" stroke-width="3.5"/>
-              <ellipse cx="242" cy="390" rx="78" ry="78" fill="url(#bLampB)" opacity="0.68"/>
-              <circle cx="242" cy="388" r="7" fill="#fff0a0"/><circle cx="242" cy="388" r="3" fill="#fff"/>
-              <ellipse cx="242" cy="465" rx="105" ry="30" fill="#ffa020" opacity="0.07"/>
-              <line x1="418" y1="320" x2="60" y2="495" stroke="#201c14" stroke-width="4.5"/>
-              <ellipse cx="60" cy="480" rx="120" ry="110" fill="url(#bLampB)" opacity="0.45"/>
-              <ellipse cx="60" cy="515" rx="150" ry="35" fill="#ffa020" opacity="0.07"/>
-              <!-- Lamps RIGHT -->
-              <line x1="708" y1="272" x2="842" y2="342" stroke="#201c14" stroke-width="2.5"/>
-              <ellipse cx="842" cy="332" rx="52" ry="52" fill="url(#bLamp)" opacity="0.75"/>
-              <circle cx="842" cy="330" r="5" fill="#fff0a0"/><circle cx="842" cy="330" r="2" fill="#fff"/>
-              <ellipse cx="842" cy="415" rx="72" ry="22" fill="#ffa020" opacity="0.06"/>
-              <line x1="742" y1="292" x2="958" y2="402" stroke="#201c14" stroke-width="3.5"/>
-              <ellipse cx="958" cy="390" rx="78" ry="78" fill="url(#bLampB)" opacity="0.68"/>
-              <circle cx="958" cy="388" r="7" fill="#fff0a0"/><circle cx="958" cy="388" r="3" fill="#fff"/>
-              <ellipse cx="958" cy="465" rx="105" ry="30" fill="#ffa020" opacity="0.07"/>
-              <line x1="782" y1="320" x2="1140" y2="495" stroke="#201c14" stroke-width="4.5"/>
-              <ellipse cx="1140" cy="480" rx="120" ry="110" fill="url(#bLampB)" opacity="0.45"/>
-              <ellipse cx="1140" cy="515" rx="150" ry="35" fill="#ffa020" opacity="0.07"/>
-              <!-- Vanishing point glow + fog + overlay -->
-              <ellipse cx="600" cy="268" rx="190" ry="75" fill="url(#bVan)" opacity="0.9"/>
-              <ellipse cx="600" cy="510" rx="700" ry="120" fill="#c8903c" opacity="0.04"/>
-              <rect width="1200" height="520" fill="rgba(0,0,0,0.50)"/>
+
+              <!-- BASE -->
+              <rect width="1200" height="580" fill="url(#gBase)"/>
+
+              <!-- GROUND – autumn leaf-covered soil -->
+              <rect x="0" y="400" width="1200" height="180" fill="#100c07"/>
+              <ellipse cx="95" cy="438" rx="30" ry="9" fill="#a04818" opacity="0.34" transform="rotate(-14,95,438)"/>
+              <ellipse cx="205" cy="455" rx="24" ry="7" fill="#c06020" opacity="0.29" transform="rotate(11,205,455)"/>
+              <ellipse cx="355" cy="440" rx="20" ry="6" fill="#b05018" opacity="0.27" transform="rotate(-19,355,440)"/>
+              <ellipse cx="480" cy="465" rx="26" ry="8" fill="#984015" opacity="0.26" transform="rotate(7,480,465)"/>
+              <ellipse cx="620" cy="448" rx="22" ry="7" fill="#b05820" opacity="0.29" transform="rotate(-11,620,448)"/>
+              <ellipse cx="750" cy="460" rx="24" ry="7" fill="#a84818" opacity="0.31" transform="rotate(16,750,460)"/>
+              <ellipse cx="900" cy="444" rx="28" ry="8" fill="#c06822" opacity="0.27" transform="rotate(-9,900,444)"/>
+              <ellipse cx="1040" cy="458" rx="21" ry="6" fill="#a04510" opacity="0.3" transform="rotate(17,1040,458)"/>
+              <ellipse cx="1150" cy="442" rx="26" ry="8" fill="#b85520" opacity="0.27" transform="rotate(-21,1150,442)"/>
+              <ellipse cx="165" cy="478" rx="17" ry="5" fill="#984015" opacity="0.21" transform="rotate(24,165,478)"/>
+              <ellipse cx="525" cy="482" rx="15" ry="4" fill="#b05020" opacity="0.2" transform="rotate(13,525,482)"/>
+              <ellipse cx="695" cy="485" rx="21" ry="5" fill="#984015" opacity="0.19" transform="rotate(-17,695,485)"/>
+              <ellipse cx="840" cy="476" rx="17" ry="5" fill="#a04818" opacity="0.21" transform="rotate(22,840,476)"/>
+
+              <!-- FOLIAGE LEFT -->
+              <ellipse cx="-35" cy="250" rx="160" ry="68" fill="#0a1808" transform="rotate(-20,-35,250)"/>
+              <ellipse cx="25" cy="335" rx="138" ry="58" fill="#0c1e09" transform="rotate(-13,25,335)"/>
+              <ellipse cx="75" cy="430" rx="155" ry="62" fill="#091508" transform="rotate(-7,75,430)"/>
+              <ellipse cx="-20" cy="410" rx="145" ry="58" fill="#0b1a09" transform="rotate(16,-20,410)"/>
+              <ellipse cx="145" cy="390" rx="128" ry="52" fill="#0a1708" transform="rotate(-11,145,390)"/>
+              <ellipse cx="58" cy="175" rx="118" ry="52" fill="#0d2210" transform="rotate(-30,58,175)"/>
+              <ellipse cx="12" cy="110" rx="108" ry="46" fill="#0b1e09" transform="rotate(-36,12,110)"/>
+              <ellipse cx="185" cy="235" rx="112" ry="48" fill="#0c2009" transform="rotate(-17,185,235)"/>
+              <ellipse cx="225" cy="295" rx="102" ry="44" fill="#0a1808" transform="rotate(-13,225,295)"/>
+
+              <!-- FOLIAGE RIGHT -->
+              <ellipse cx="1235" cy="250" rx="160" ry="68" fill="#0a1808" transform="rotate(20,1235,250)"/>
+              <ellipse cx="1175" cy="335" rx="138" ry="58" fill="#0c1e09" transform="rotate(13,1175,335)"/>
+              <ellipse cx="1125" cy="430" rx="155" ry="62" fill="#091508" transform="rotate(7,1125,430)"/>
+              <ellipse cx="1220" cy="410" rx="145" ry="58" fill="#0b1a09" transform="rotate(-16,1220,410)"/>
+              <ellipse cx="1055" cy="390" rx="128" ry="52" fill="#0a1708" transform="rotate(11,1055,390)"/>
+              <ellipse cx="1142" cy="175" rx="118" ry="52" fill="#0d2210" transform="rotate(30,1142,175)"/>
+              <ellipse cx="1188" cy="110" rx="108" ry="46" fill="#0b1e09" transform="rotate(36,1188,110)"/>
+              <ellipse cx="1015" cy="235" rx="112" ry="48" fill="#0c2009" transform="rotate(17,1015,235)"/>
+              <ellipse cx="975" cy="295" rx="102" ry="44" fill="#0a1808" transform="rotate(13,975,295)"/>
+
+              <!-- TOP FOLIAGE -->
+              <ellipse cx="105" cy="-5" rx="142" ry="60" fill="#0c1e09"/>
+              <ellipse cx="295" cy="-8" rx="128" ry="54" fill="#0d2009"/>
+              <ellipse cx="905" cy="-8" rx="128" ry="54" fill="#0d2009"/>
+              <ellipse cx="1095" cy="-5" rx="142" ry="60" fill="#0c1e09"/>
+
+              <!-- PURPLE / LAVENDER FLOWERS – LEFT (dominant) -->
+              <circle cx="88" cy="195" r="98" fill="url(#bkPurp)" opacity="0.92"/>
+              <circle cx="168" cy="148" r="78" fill="url(#bkPurp)" opacity="0.87"/>
+              <circle cx="52" cy="140" r="66" fill="url(#bkLav)" opacity="0.82"/>
+              <circle cx="222" cy="190" r="64" fill="url(#bkPurp)" opacity="0.77"/>
+              <circle cx="135" cy="98" r="57" fill="url(#bkLav)" opacity="0.74"/>
+              <circle cx="248" cy="135" r="52" fill="url(#bkPurp)" opacity="0.7"/>
+              <circle cx="68" cy="258" r="56" fill="url(#bkLav)" opacity="0.62"/>
+              <circle cx="295" cy="160" r="46" fill="url(#bkLav)" opacity="0.64"/>
+              <circle cx="15" cy="185" r="52" fill="url(#bkPurp)" opacity="0.57"/>
+              <circle cx="335" cy="120" r="44" fill="url(#bkPurp)" opacity="0.57"/>
+              <circle cx="375" cy="152" r="38" fill="url(#bkLav)" opacity="0.52"/>
+              <circle cx="315" cy="208" r="42" fill="url(#bkPurp)" opacity="0.5"/>
+
+              <!-- PINK / ROSE FLOWERS – RIGHT (dominant) -->
+              <circle cx="1112" cy="195" r="98" fill="url(#bkPink)" opacity="0.92"/>
+              <circle cx="1032" cy="148" r="78" fill="url(#bkPink)" opacity="0.87"/>
+              <circle cx="1148" cy="140" r="66" fill="url(#bkPinkL)" opacity="0.82"/>
+              <circle cx="978" cy="190" r="64" fill="url(#bkPink)" opacity="0.77"/>
+              <circle cx="1065" cy="98" r="57" fill="url(#bkPinkL)" opacity="0.74"/>
+              <circle cx="952" cy="135" r="52" fill="url(#bkPink)" opacity="0.7"/>
+              <circle cx="1132" cy="258" r="56" fill="url(#bkPinkL)" opacity="0.62"/>
+              <circle cx="905" cy="160" r="46" fill="url(#bkPinkL)" opacity="0.64"/>
+              <circle cx="1185" cy="185" r="52" fill="url(#bkPink)" opacity="0.57"/>
+              <circle cx="865" cy="120" r="44" fill="url(#bkPink)" opacity="0.57"/>
+              <circle cx="825" cy="152" r="38" fill="url(#bkPinkL)" opacity="0.52"/>
+              <circle cx="885" cy="208" r="42" fill="url(#bkPink)" opacity="0.5"/>
+
+              <!-- GREENHOUSE / CONSERVATORY – background trees -->
+              <ellipse cx="600" cy="118" rx="195" ry="88" fill="#0e1c0a"/>
+              <ellipse cx="490" cy="148" rx="118" ry="58" fill="#0c1908"/>
+              <ellipse cx="710" cy="148" rx="118" ry="58" fill="#0c1908"/>
+
+              <!-- Greenhouse wall fill -->
+              <path d="M398,358 L398,192 L600,122 L802,192 L802,358 Z" fill="#0f0d09"/>
+
+              <!-- Greenhouse windows (arched, warm glow) -->
+              <rect x="412" y="195" width="68" height="160" fill="#c88018" opacity="0.27" rx="34 34 2 2"/>
+              <rect x="491" y="195" width="68" height="160" fill="#d09520" opacity="0.32" rx="34 34 2 2"/>
+              <rect x="569" y="195" width="62" height="163" fill="#e09a22" opacity="0.38" rx="31 31 2 2"/>
+              <rect x="642" y="195" width="68" height="160" fill="#d09520" opacity="0.32" rx="34 34 2 2"/>
+              <rect x="720" y="195" width="68" height="160" fill="#c08015" opacity="0.26" rx="34 34 2 2"/>
+
+              <!-- Window glows -->
+              <ellipse cx="446" cy="250" rx="42" ry="58" fill="url(#winG)" opacity="0.42"/>
+              <ellipse cx="525" cy="250" rx="44" ry="60" fill="url(#winG)" opacity="0.48"/>
+              <ellipse cx="600" cy="252" rx="46" ry="64" fill="url(#winG)" opacity="0.58"/>
+              <ellipse cx="676" cy="250" rx="44" ry="60" fill="url(#winG)" opacity="0.46"/>
+              <ellipse cx="754" cy="250" rx="40" ry="56" fill="url(#winG)" opacity="0.36"/>
+
+              <!-- Door (center window) -->
+              <rect x="572" y="295" width="56" height="63" fill="#d09820" opacity="0.38" rx="2"/>
+
+              <!-- Greenhouse frame lines -->
+              <line x1="398" y1="192" x2="600" y2="122" stroke="#26220e" stroke-width="2.5"/>
+              <line x1="802" y1="192" x2="600" y2="122" stroke="#26220e" stroke-width="2.5"/>
+              <line x1="398" y1="192" x2="802" y2="192" stroke="#26220e" stroke-width="2"/>
+              <line x1="480" y1="192" x2="480" y2="358" stroke="#26220e" stroke-width="1.8"/>
+              <line x1="558" y1="192" x2="558" y2="358" stroke="#26220e" stroke-width="1.8"/>
+              <line x1="640" y1="192" x2="640" y2="358" stroke="#26220e" stroke-width="1.8"/>
+              <line x1="720" y1="192" x2="720" y2="358" stroke="#26220e" stroke-width="1.8"/>
+              <line x1="398" y1="358" x2="802" y2="358" stroke="#26220e" stroke-width="2.5"/>
+              <line x1="398" y1="278" x2="802" y2="278" stroke="#1e1a0c" stroke-width="1.2" opacity="0.6"/>
+
+              <!-- Roof glass tint -->
+              <polygon points="398,192 600,122 600,192" fill="#d4a030" opacity="0.055"/>
+              <polygon points="600,122 802,192 600,192" fill="#d4a030" opacity="0.045"/>
+
+              <!-- Roof purlins -->
+              <line x1="428" y1="178" x2="558" y2="143" stroke="#26220e" stroke-width="1.2" opacity="0.65"/>
+              <line x1="455" y1="166" x2="528" y2="145" stroke="#26220e" stroke-width="1" opacity="0.55"/>
+              <line x1="642" y1="143" x2="772" y2="178" stroke="#26220e" stroke-width="1.2" opacity="0.65"/>
+              <line x1="672" y1="145" x2="745" y2="166" stroke="#26220e" stroke-width="1" opacity="0.55"/>
+
+              <!-- Greenhouse warm aura -->
+              <ellipse cx="600" cy="270" rx="285" ry="185" fill="url(#ghGlow)"/>
+              <ellipse cx="600" cy="270" rx="180" ry="120" fill="#c87820" opacity="0.06"/>
+
+              <!-- STRING LIGHTS – arc 1 (main) -->
+              <path d="M0,90 C130,65 300,75 460,68 C520,64 560,61 600,57 C640,61 680,64 740,68 C900,75 1070,65 1200,90" stroke="rgba(155,125,48,0.48)" stroke-width="1.6" fill="none"/>
+              <!-- Arc 2 -->
+              <path d="M0,125 C160,108 380,118 570,112 C600,110 630,112 820,118 C1040,126 1100,115 1200,125" stroke="rgba(155,125,48,0.28)" stroke-width="1.1" fill="none"/>
+
+              <!-- String 1 light glows -->
+              <circle cx="48"   cy="87"  r="32" fill="url(#sl)" opacity="0.8"/><circle cx="148"  cy="73"  r="25" fill="url(#sl)" opacity="0.7"/><circle cx="252"  cy="77"  r="29" fill="url(#sl)" opacity="0.76"/><circle cx="355"  cy="72"  r="23" fill="url(#sl)" opacity="0.66"/><circle cx="448"  cy="68"  r="31" fill="url(#sl)" opacity="0.8"/><circle cx="525"  cy="64"  r="27" fill="url(#sl)" opacity="0.73"/><circle cx="600"  cy="58"  r="34" fill="url(#sl)" opacity="0.85"/><circle cx="675"  cy="64"  r="27" fill="url(#sl)" opacity="0.73"/><circle cx="752"  cy="68"  r="31" fill="url(#sl)" opacity="0.8"/><circle cx="848"  cy="72"  r="25" fill="url(#sl)" opacity="0.7"/><circle cx="950"  cy="77"  r="29" fill="url(#sl)" opacity="0.76"/><circle cx="1052" cy="73"  r="23" fill="url(#sl)" opacity="0.66"/><circle cx="1155" cy="89"  r="30" fill="url(#sl)" opacity="0.76"/>
+              <!-- String 1 bulb dots -->
+              <circle cx="48"   cy="87"  r="3.8" fill="#fffce8"/><circle cx="148"  cy="73"  r="3.2" fill="#fffce8"/><circle cx="252"  cy="77"  r="3.6" fill="#fffce8"/><circle cx="355"  cy="72"  r="2.8" fill="#fffce8"/><circle cx="448"  cy="68"  r="3.8" fill="#fffce8"/><circle cx="525"  cy="64"  r="3.2" fill="#fffce8"/><circle cx="600"  cy="58"  r="4.2" fill="#fffce8"/><circle cx="675"  cy="64"  r="3.2" fill="#fffce8"/><circle cx="752"  cy="68"  r="3.8" fill="#fffce8"/><circle cx="848"  cy="72"  r="3.2" fill="#fffce8"/><circle cx="950"  cy="77"  r="3.6" fill="#fffce8"/><circle cx="1052" cy="73"  r="2.8" fill="#fffce8"/><circle cx="1155" cy="89"  r="3.5" fill="#fffce8"/>
+
+              <!-- String 2 lights -->
+              <circle cx="92"   cy="120" r="20" fill="url(#slSm)" opacity="0.54"/><circle cx="245"  cy="114" r="18" fill="url(#slSm)" opacity="0.5"/><circle cx="408"  cy="117" r="21" fill="url(#slSm)" opacity="0.54"/><circle cx="565"  cy="113" r="18" fill="url(#slSm)" opacity="0.5"/><circle cx="722"  cy="113" r="21" fill="url(#slSm)" opacity="0.54"/><circle cx="882"  cy="116" r="18" fill="url(#slSm)" opacity="0.5"/><circle cx="1042" cy="119" r="21" fill="url(#slSm)" opacity="0.54"/><circle cx="1162" cy="123" r="17" fill="url(#slSm)" opacity="0.46"/>
+              <circle cx="92"   cy="120" r="2.6" fill="#fffce8"/><circle cx="245"  cy="114" r="2.2" fill="#fffce8"/><circle cx="408"  cy="117" r="2.6" fill="#fffce8"/><circle cx="565"  cy="113" r="2.2" fill="#fffce8"/><circle cx="722"  cy="113" r="2.6" fill="#fffce8"/><circle cx="882"  cy="116" r="2.2" fill="#fffce8"/><circle cx="1042" cy="119" r="2.6" fill="#fffce8"/><circle cx="1162" cy="123" r="2.2" fill="#fffce8"/>
+
+              <!-- LANTERN – lower right -->
+              <ellipse cx="985" cy="375" rx="46" ry="48" fill="url(#lanG)" opacity="0.72"/>
+              <rect x="974" y="358" width="24" height="34" fill="#1e1808" rx="2"/>
+              <rect x="977" y="361" width="18" height="25" fill="#f0a020" opacity="0.52" rx="1"/>
+              <polygon points="970,358 1002,358 996,348 976,348" fill="#201c0a"/>
+              <rect x="979" y="390" width="14" height="5" fill="#1e1808" rx="1"/>
+
+              <!-- DAISIES & ROSES near ground (more, denser) -->
+              <!-- Daisies -->
+              <g transform="translate(355,408)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.76"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.76"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.76"/><circle cx="6.4" cy="6.4" r="4.5" fill="white" opacity="0.76"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.76"/><circle cx="-6.4" cy="6.4" r="4.5" fill="white" opacity="0.76"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.76"/><circle cx="-6.4" cy="-6.4" r="4.5" fill="white" opacity="0.76"/><circle cx="0" cy="0" r="5.2" fill="#f5c030"/></g>
+              <g transform="translate(855,402) scale(0.86)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.73"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.73"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.73"/><circle cx="6.4" cy="6.4" r="4.5" fill="white" opacity="0.73"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.73"/><circle cx="-6.4" cy="6.4" r="4.5" fill="white" opacity="0.73"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.73"/><circle cx="-6.4" cy="-6.4" r="4.5" fill="white" opacity="0.73"/><circle cx="0" cy="0" r="5.2" fill="#f5c030"/></g>
+              <g transform="translate(158,422) scale(0.76)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.65"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.65"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.65"/><circle cx="6.4" cy="6.4" r="4.5" fill="white" opacity="0.65"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.65"/><circle cx="-6.4" cy="6.4" r="4.5" fill="white" opacity="0.65"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.65"/><circle cx="-6.4" cy="-6.4" r="4.5" fill="white" opacity="0.65"/><circle cx="0" cy="0" r="5" fill="#f5c030"/></g>
+              <g transform="translate(1058,416) scale(0.72)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.64"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.64"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.64"/><circle cx="6.4" cy="6.4" r="4.5" fill="white" opacity="0.64"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.64"/><circle cx="-6.4" cy="6.4" r="4.5" fill="white" opacity="0.64"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.64"/><circle cx="-6.4" cy="-6.4" r="4.5" fill="white" opacity="0.64"/><circle cx="0" cy="0" r="5" fill="#f5c030"/></g>
+              <!-- Extra daisies scattered -->
+              <g transform="translate(510,430) scale(0.7)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.6"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.6"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.6"/><circle cx="6.4" cy="6.4" r="4.5" fill="white" opacity="0.6"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.6"/><circle cx="-6.4" cy="6.4" r="4.5" fill="white" opacity="0.6"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.6"/><circle cx="-6.4" cy="-6.4" r="4.5" fill="white" opacity="0.6"/><circle cx="0" cy="0" r="4.8" fill="#f5c030"/></g>
+              <g transform="translate(680,418) scale(0.78)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.68"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.68"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.68"/><circle cx="6.4" cy="6.4" r="4.5" fill="white" opacity="0.68"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.68"/><circle cx="-6.4" cy="6.4" r="4.5" fill="white" opacity="0.68"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.68"/><circle cx="-6.4" cy="-6.4" r="4.5" fill="white" opacity="0.68"/><circle cx="0" cy="0" r="5" fill="#f5c030"/></g>
+              <g transform="translate(240,445) scale(0.65)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.55"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.55"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.55"/><circle cx="6.4" cy="6.4" r="4.5" fill="white" opacity="0.55"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.55"/><circle cx="-6.4" cy="6.4" r="4.5" fill="white" opacity="0.55"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.55"/><circle cx="-6.4" cy="-6.4" r="4.5" fill="white" opacity="0.55"/><circle cx="0" cy="0" r="4.6" fill="#f5c030"/></g>
+              <g transform="translate(958,432) scale(0.68)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.6"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.6"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.6"/><circle cx="6.4" cy="6.4" r="4.5" fill="white" opacity="0.6"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.6"/><circle cx="-6.4" cy="6.4" r="4.5" fill="white" opacity="0.6"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.6"/><circle cx="-6.4" cy="-6.4" r="4.5" fill="white" opacity="0.6"/><circle cx="0" cy="0" r="4.8" fill="#f5c030"/></g>
+              <!-- Roses (5-petal pattern, red/pink) -->
+              <g transform="translate(440,395)">
+                <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#d4204a" opacity="0.82"/>
+                <ellipse cx="6.7" cy="-2.2" rx="5" ry="7" fill="#d4204a" opacity="0.82" transform="rotate(72,0,0)"/>
+                <ellipse cx="4.1" cy="5.7" rx="5" ry="7" fill="#c81840" opacity="0.78" transform="rotate(144,0,0)"/>
+                <ellipse cx="-4.1" cy="5.7" rx="5" ry="7" fill="#d4204a" opacity="0.8" transform="rotate(216,0,0)"/>
+                <ellipse cx="-6.7" cy="-2.2" rx="5" ry="7" fill="#c81840" opacity="0.78" transform="rotate(288,0,0)"/>
+                <circle cx="0" cy="0" r="4" fill="#8a0a28"/>
+              </g>
+              <g transform="translate(770,388) scale(0.88)">
+                <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#e84070" opacity="0.8"/>
+                <ellipse cx="6.7" cy="-2.2" rx="5" ry="7" fill="#e84070" opacity="0.8" transform="rotate(72,0,0)"/>
+                <ellipse cx="4.1" cy="5.7" rx="5" ry="7" fill="#d83060" opacity="0.76" transform="rotate(144,0,0)"/>
+                <ellipse cx="-4.1" cy="5.7" rx="5" ry="7" fill="#e84070" opacity="0.78" transform="rotate(216,0,0)"/>
+                <ellipse cx="-6.7" cy="-2.2" rx="5" ry="7" fill="#d83060" opacity="0.76" transform="rotate(288,0,0)"/>
+                <circle cx="0" cy="0" r="4" fill="#901840"/>
+              </g>
+              <g transform="translate(270,400) scale(0.72)">
+                <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#e84070" opacity="0.7"/>
+                <ellipse cx="6.7" cy="-2.2" rx="5" ry="7" fill="#e84070" opacity="0.7" transform="rotate(72,0,0)"/>
+                <ellipse cx="4.1" cy="5.7" rx="5" ry="7" fill="#d83060" opacity="0.66" transform="rotate(144,0,0)"/>
+                <ellipse cx="-4.1" cy="5.7" rx="5" ry="7" fill="#e84070" opacity="0.68" transform="rotate(216,0,0)"/>
+                <ellipse cx="-6.7" cy="-2.2" rx="5" ry="7" fill="#d83060" opacity="0.66" transform="rotate(288,0,0)"/>
+                <circle cx="0" cy="0" r="3.5" fill="#901840"/>
+              </g>
+              <g transform="translate(940,395) scale(0.8)">
+                <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#d4204a" opacity="0.75"/>
+                <ellipse cx="6.7" cy="-2.2" rx="5" ry="7" fill="#d4204a" opacity="0.75" transform="rotate(72,0,0)"/>
+                <ellipse cx="4.1" cy="5.7" rx="5" ry="7" fill="#c81840" opacity="0.72" transform="rotate(144,0,0)"/>
+                <ellipse cx="-4.1" cy="5.7" rx="5" ry="7" fill="#d4204a" opacity="0.73" transform="rotate(216,0,0)"/>
+                <ellipse cx="-6.7" cy="-2.2" rx="5" ry="7" fill="#c81840" opacity="0.72" transform="rotate(288,0,0)"/>
+                <circle cx="0" cy="0" r="4" fill="#8a0a28"/>
+              </g>
+              <g transform="translate(600,392) scale(0.76)">
+                <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#ff6090" opacity="0.72"/>
+                <ellipse cx="6.7" cy="-2.2" rx="5" ry="7" fill="#ff6090" opacity="0.72" transform="rotate(72,0,0)"/>
+                <ellipse cx="4.1" cy="5.7" rx="5" ry="7" fill="#ee4880" opacity="0.68" transform="rotate(144,0,0)"/>
+                <ellipse cx="-4.1" cy="5.7" rx="5" ry="7" fill="#ff6090" opacity="0.7" transform="rotate(216,0,0)"/>
+                <ellipse cx="-6.7" cy="-2.2" rx="5" ry="7" fill="#ee4880" opacity="0.68" transform="rotate(288,0,0)"/>
+                <circle cx="0" cy="0" r="3.5" fill="#a02050"/>
+              </g>
+
+              <!-- EXTRA ROSE CLUSTERS around the frame (for richness) -->
+              <!-- Rose clusters top-left -->
+              <circle cx="110" cy="55"  r="70" fill="url(#bkPink)"  opacity="0.72"/>
+              <circle cx="60"  cy="90"  r="55" fill="url(#bkPinkL)" opacity="0.65"/>
+              <!-- Rose clusters top-right -->
+              <circle cx="1090" cy="55"  r="70" fill="url(#bkPink)"  opacity="0.72"/>
+              <circle cx="1140" cy="90"  r="55" fill="url(#bkPinkL)" opacity="0.65"/>
+              <!-- More purple/rose mix mid sides -->
+              <circle cx="38"  cy="310" r="62" fill="url(#bkPurp)" opacity="0.58"/>
+              <circle cx="1162" cy="310" r="62" fill="url(#bkPurp)" opacity="0.58"/>
+              <circle cx="55"  cy="360" r="48" fill="url(#bkPink)"  opacity="0.52"/>
+              <circle cx="1145" cy="360" r="48" fill="url(#bkPink)"  opacity="0.52"/>
+              <!-- Rose clusters near ground sides -->
+              <circle cx="145" cy="370" r="52" fill="url(#bkPink)"  opacity="0.6"/>
+              <circle cx="1055" cy="370" r="52" fill="url(#bkPink)"  opacity="0.6"/>
+              <circle cx="220" cy="355" r="40" fill="url(#bkPinkL)" opacity="0.55"/>
+              <circle cx="980" cy="355" r="40" fill="url(#bkPinkL)" opacity="0.55"/>
+
+              <!-- ATMOSPHERE + VIGNETTE (lighter for visibility) -->
+              <ellipse cx="600" cy="295" rx="440" ry="275" fill="#c87820" opacity="0.06"/>
+              <rect width="1200" height="580" fill="url(#vig)"/>
+              <rect width="1200" height="580" fill="rgba(0,0,0,0.08)"/>
             </svg>
           </div>
 
-          <!-- Frases cinematográficas -->
-          <div class="boulevard-quotes">
-            <div class="boulevard-quote-film-strip"></div>
-            <div class="boulevard-quote-body">
-              <span class="boulevard-quote-icon">"</span>
-              <p class="boulevard-quote-text" id="boulevardQuoteText">Cargando...</p>
-              <span class="boulevard-quote-attr" id="boulevardQuoteAttr"></span>
-            </div>
+          <!-- === FLORES INTERACTIVAS === -->
+          <div class="boulevard-flowers" id="boulevardFlowers" aria-label="Flores del jardín">
+            <button class="flower-pin" data-flower="rosa"       style="left:7%;top:58%"  aria-label="Rosa">🌹</button>
+            <button class="flower-pin" data-flower="margarita"  style="left:22%;top:42%" aria-label="Margarita">🌼</button>
+            <button class="flower-pin" data-flower="girasol"    style="left:38%;top:68%" aria-label="Girasol">🌻</button>
+            <button class="flower-pin" data-flower="tulipan"    style="left:12%;top:28%" aria-label="Tulipán">🌷</button>
+            <button class="flower-pin" data-flower="orquidea"   style="left:55%;top:72%" aria-label="Orquídea">🪷</button>
+            <button class="flower-pin" data-flower="lirio"      style="left:68%;top:50%" aria-label="Lirio">💐</button>
+            <button class="flower-pin" data-flower="jazmin"     style="left:80%;top:36%" aria-label="Jazmín">🌸</button>
+            <button class="flower-pin" data-flower="hortensia"  style="left:90%;top:58%" aria-label="Hortensia">💜</button>
+            <button class="flower-pin" data-flower="peonia"     style="left:48%;top:28%" aria-label="Peonía">🌺</button>
+            <button class="flower-pin" data-flower="lavanda"    style="left:32%;top:18%" aria-label="Lavanda">🫐</button>
+          </div>
+          <!-- Popup de flor -->
+          <div class="flower-popup" id="flowerPopup" aria-hidden="true">
+            <button class="flower-popup__close" id="flowerPopupClose" aria-label="Cerrar">×</button>
+            <div class="flower-popup__emoji" id="flowerEmoji"></div>
+            <h4 class="flower-popup__name" id="flowerName"></h4>
+            <p class="flower-popup__sci" id="flowerSci"></p>
+            <p class="flower-popup__origin" id="flowerOrigin"></p>
+            <ul class="flower-popup__facts" id="flowerFacts"></ul>
           </div>
 
-          <div class="boulevard-toolbar">
-            <span class="boulevard-title-tag">📌 Tablero de Karen &amp; Sebastian</span>
-            <button class="boulevard-add-btn" id="boulevardAddBtn">+ Nuevo Sueño</button>
-          </div>
-          <div class="boulevard-canvas" id="boulevardCanvas">
-            <svg class="boulevard-strings" id="boulevardStrings" aria-hidden="true"></svg>
-            <div class="boulevard-notes" id="boulevardNotes"></div>
-          </div>
+          <!-- === PIZARRÓN CENTRAL === -->
+          <div class="boulevard-chalkboard">
+
+            <!-- Guirnalda superior con margaritas -->
+            <div class="chalkboard-garland" aria-hidden="true">
+              <svg viewBox="0 0 800 38" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                <path d="M0,22 Q100,10 200,22 Q300,34 400,22 Q500,10 600,22 Q700,34 800,22" stroke="#4a8a40" stroke-width="2" fill="none" opacity="0.7"/>
+                <g transform="translate(60,18) scale(0.82)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.88"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.88"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.88"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.88"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.88"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.88"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.88"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.88"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <g transform="translate(200,28) scale(0.72)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.85"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.85"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.85"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.85"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.85"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.85"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.85"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.85"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <g transform="translate(400,18) scale(0.82)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.88"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.88"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.88"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.88"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.88"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.88"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.88"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.88"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <g transform="translate(600,28) scale(0.72)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.85"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.85"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.85"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.85"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.85"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.85"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.85"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.85"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <g transform="translate(750,20) scale(0.76)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.88"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.88"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.88"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.88"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.88"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.88"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.88"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.88"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <ellipse cx="130" cy="18" rx="8" ry="3.5" fill="#4a8040" opacity="0.7" transform="rotate(-25,130,18)"/>
+                <ellipse cx="320" cy="28" rx="7" ry="3" fill="#4a8040" opacity="0.65" transform="rotate(20,320,28)"/>
+                <ellipse cx="500" cy="18" rx="8" ry="3.5" fill="#4a8040" opacity="0.7" transform="rotate(-20,500,18)"/>
+                <ellipse cx="680" cy="28" rx="7" ry="3" fill="#4a8040" opacity="0.65" transform="rotate(15,680,28)"/>
+              </svg>
+            </div>
+
+            <!-- Frases -->
+            <div class="boulevard-quotes">
+              <div class="boulevard-quote-film-strip"></div>
+              <div class="boulevard-quote-body">
+                <span class="boulevard-quote-icon">"</span>
+                <p class="boulevard-quote-text" id="boulevardQuoteText">Cargando...</p>
+                <span class="boulevard-quote-attr" id="boulevardQuoteAttr"></span>
+              </div>
+            </div>
+
+            <div class="boulevard-toolbar">
+              <span class="boulevard-title-tag">🌿 Tablero de Karen &amp; Sebastian 🌿</span>
+              <button class="boulevard-add-btn" id="boulevardAddBtn">+ Nuevo Sueño</button>
+            </div>
+
+            <div class="boulevard-canvas" id="boulevardCanvas">
+              <svg class="boulevard-strings" id="boulevardStrings" aria-hidden="true"></svg>
+              <div class="boulevard-notes" id="boulevardNotes"></div>
+            </div>
+
+            <!-- Guirnalda inferior con margaritas -->
+            <div class="chalkboard-garland chalkboard-garland--bottom" aria-hidden="true">
+              <svg viewBox="0 0 800 38" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                <path d="M0,16 Q100,28 200,16 Q300,4 400,16 Q500,28 600,16 Q700,4 800,16" stroke="#4a8a40" stroke-width="2" fill="none" opacity="0.7"/>
+                <g transform="translate(130,14) scale(0.76)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.85"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.85"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.85"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.85"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.85"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.85"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.85"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.85"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <g transform="translate(330,24) scale(0.7)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.82"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.82"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.82"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.82"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.82"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.82"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.82"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.82"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <g transform="translate(535,14) scale(0.76)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.85"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.85"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.85"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.85"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.85"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.85"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.85"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.85"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <g transform="translate(710,22) scale(0.68)"><circle cx="0" cy="-8" r="4" fill="white" opacity="0.82"/><circle cx="5.7" cy="-5.7" r="4" fill="white" opacity="0.82"/><circle cx="8" cy="0" r="4" fill="white" opacity="0.82"/><circle cx="5.7" cy="5.7" r="4" fill="white" opacity="0.82"/><circle cx="0" cy="8" r="4" fill="white" opacity="0.82"/><circle cx="-5.7" cy="5.7" r="4" fill="white" opacity="0.82"/><circle cx="-8" cy="0" r="4" fill="white" opacity="0.82"/><circle cx="-5.7" cy="-5.7" r="4" fill="white" opacity="0.82"/><circle cx="0" cy="0" r="4.5" fill="#f5c030"/></g>
+                <ellipse cx="240" cy="18" rx="7" ry="3" fill="#4a8040" opacity="0.65" transform="rotate(20,240,18)"/>
+                <ellipse cx="440" cy="10" rx="7" ry="3" fill="#4a8040" opacity="0.65" transform="rotate(-18,440,10)"/>
+                <ellipse cx="625" cy="18" rx="7" ry="3" fill="#4a8040" opacity="0.65" transform="rotate(15,625,18)"/>
+              </svg>
+            </div>
+
+          </div><!-- /boulevard-chalkboard -->
         </div>
       </section>
 
@@ -346,6 +566,17 @@
     </div>
 
     <noscript>Esta experiencia necesita JavaScript.</noscript>
+    <!-- ===== MODAL UNIVERSO ===== -->
+    <div id="universeModal" class="universe-modal" aria-hidden="true" role="dialog" aria-label="Universo de amor">
+      <canvas id="universeCanvas" class="universe-canvas"></canvas>
+      <div class="universe-overlay-text">
+        <div class="universe-hearts">❤️</div>
+        <h2 class="universe-title">Karen & Sebastian</h2>
+        <p class="universe-sub">Nuestro universo personal</p>
+      </div>
+      <button class="universe-close" id="universeClose" aria-label="Cerrar universo">×</button>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

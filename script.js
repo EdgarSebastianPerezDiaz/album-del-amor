@@ -7,92 +7,94 @@
 const APP_DATA = {
   startDate: new Date('2026-06-07T19:00:00'),
 
-  /* Canciones — agrega más MP3 en assets/music/ y añádelas aquí */
   songs: [
-    { title: 'Solo Para Ti',          artist: 'Camila',                        src: 'assets/music/Camila - Solo Para Ti (Alt. Version).mp3' },
-    { title: 'Prometo',               artist: 'Fonseca',                       src: 'assets/music/Fonseca - Prometo (LyricLetra).mp3' },
-    { title: 'Para Tu Amor',          artist: 'Juanes',                        src: 'assets/music/Juanes - Para Tu Amor (Official Music Video).mp3' },
-    { title: 'Estar Contigo',         artist: 'Alex Ubago ft. La Oreja de Van Gogh', src: 'assets/music/Alex Ubago - Estar contigo ft. La oreja de Van Gogh (Videoclip Oficial).mp3' },
-    { title: 'Lo Poco Que Yo Quiero', artist: 'Morat & Silvestre Dangond',     src: 'assets/music/Morat, Silvestre Dangond - Lo poco que yo quiero (Video Oficial).mp3' },
-    { title: 'Me Cambiaste la Vida',  artist: 'Río Roma',                      src: 'assets/music/Río Roma - Me Cambiaste la Vida (Videoclip).mp3' },
-    { title: 'Amor del Bueno',        artist: 'Reyli Barba',                   src: 'assets/music/Reyli Barba - Amor del Bueno (Video).mp3' },
-    { title: 'Sabrás',                artist: 'Herencia de Timbiquí',          src: 'assets/music/Sabrás, Herencia de Timbiquí - Video Oficial.mp3' },
-    { title: 'Mi Suerte',             artist: '',                              src: 'assets/music/Mi Suerte.mp3' },
-    { title: 'The Reason',            artist: 'Hoobastank',                    src: 'assets/music/Hoobastank - The Reason (Official Music Video).mp3' },
-    /* Andrés Cepeda — pon el MP3 en assets/music/ con este nombre exacto */
-    { title: 'Tan Solo Un Momento',   artist: 'Andrés Cepeda',                 src: 'assets/music/Andres Cepeda - Tan Solo Un Momento.mp3' },
-    { title: 'El Camino',             artist: 'Andrés Cepeda',                 src: 'assets/music/Andres Cepeda - El Camino.mp3' },
-    { title: 'Mañana',                artist: 'Andrés Cepeda',                 src: 'assets/music/Andres Cepeda - Manana.mp3' },
-    /* Santiago Cruz */
-    { title: 'Eres',                  artist: 'Santiago Cruz',                 src: 'assets/music/Santiago Cruz - Eres.mp3' },
-    { title: 'La Respuesta',          artist: 'Santiago Cruz',                 src: 'assets/music/Santiago Cruz - La Respuesta.mp3' },
-    { title: 'Un Millón de Recuerdos',artist: 'Santiago Cruz',                 src: 'assets/music/Santiago Cruz - Un Millon de Recuerdos.mp3' },
-    /* Manuel Medrano */
-    { title: 'Sueños',                artist: 'Manuel Medrano',                src: 'assets/music/Manuel Medrano - Suenos.mp3' },
-    { title: 'Tu Nombre',             artist: 'Manuel Medrano',                src: 'assets/music/Manuel Medrano - Tu Nombre.mp3' },
-    { title: 'No Te Vayas',           artist: 'Manuel Medrano',                src: 'assets/music/Manuel Medrano - No Te Vayas.mp3' },
+    /* 0 */ { title: 'Solo Para Ti',              artist: 'Camila',                           src: 'assets/music/Camila - Solo Para Ti (Alt. Version).mp3' },
+    /* 1 */ { title: 'Prometo',                   artist: 'Fonseca',                          src: 'assets/music/Fonseca - Prometo (LyricLetra).mp3' },
+    /* 2 */ { title: 'Para Tu Amor',              artist: 'Juanes',                           src: 'assets/music/Juanes - Para Tu Amor (Official Music Video).mp3' },
+    /* 3 */ { title: 'Estar Contigo',             artist: 'Alex Ubago ft. La Oreja de Van Gogh', src: 'assets/music/Alex Ubago - Estar contigo ft. La oreja de Van Gogh (Videoclip Oficial).mp3' },
+    /* 4 */ { title: 'Lo Poco Que Yo Quiero',     artist: 'Morat & Silvestre Dangond',        src: 'assets/music/Morat, Silvestre Dangond - Lo poco que yo quiero (Video Oficial).mp3' },
+    /* 5 */ { title: 'Me Cambiaste la Vida',      artist: 'Río Roma',                         src: 'assets/music/Río Roma - Me Cambiaste la Vida (Videoclip).mp3' },
+    /* 6 */ { title: 'Amor del Bueno',            artist: 'Reyli Barba',                      src: 'assets/music/Reyli Barba - Amor del Bueno (Video).mp3' },
+    /* 7 */ { title: 'Sabrás',                    artist: 'Herencia de Timbiquí',             src: 'assets/music/Sabrás, Herencia de Timbiquí - Video Oficial.mp3' },
+    /* 8 */ { title: 'Mi Suerte',                 artist: '',                                 src: 'assets/music/Mi Suerte.mp3' },
+    /* 9 */ { title: 'The Reason',                artist: 'Hoobastank',                       src: 'assets/music/Hoobastank - The Reason (Official Music Video).mp3' },
+    /*10 */ { title: 'Tengo Ganas',               artist: 'Andrés Cepeda',                    src: 'assets/music/Tengo Ganas - Andrés Cepeda (Cover Audio)(mp3j.cc).mp3' },
+    /*11 */ { title: 'Afuera del Planeta',        artist: 'Manuel Medrano',                   src: 'assets/music/Manuel Medrano - Afuera del Planeta (Lyric Video)(mp3j.cc).mp3' },
+    /*12 */ { title: 'El Amor Más Grande del Planeta', artist: 'Felipe Peláez ft. Zabaleta',  src: 'assets/music/Felipe Peláez, Zabaleta - El Amor Más Grande del Planeta (Cover Audio)(mp3j.cc).mp3' },
+    /*13 */ { title: 'Te Amo y Te Amo',           artist: 'Felipe Peláez ft. Zabaleta',       src: 'assets/music/Felipe Pelaez, Zabaleta - Te Amo y te amo (Video Oficial)(mp3j.cc).mp3' },
+    /*14 */ { title: 'Ella Es Mi Todo',           artist: 'Kaleth Morales',                   src: 'assets/music/Kaleth Morales - Ella Es Mi Todo (Letra).mp3' },
+    /*15 */ { title: 'La Mujer Perfecta',         artist: 'Kurt',                             src: 'assets/music/Kurt - La Mujer Perfecta (Lyric Video)(mp3j.cc).mp3' },
+    /*16 */ { title: 'Sonreír',                   artist: 'Kurt',                             src: 'assets/music/Kurt - Sonreír (Versión Acústica)(mp3j.cc).mp3' },
+    /*17 */ { title: 'Coincidir',                 artist: 'Macaco',                           src: 'assets/music/Macaco - Coincidir (Official Music Video)(mp3j.cc).mp3' },
+    /*18 */ { title: 'Lo Quiero Todo',            artist: 'Macaco',                           src: 'assets/music/Macaco - Lo Quiero Todo(mp3j.cc).mp3' },
+    /*19 */ { title: 'Tan Fácil',                 artist: 'CNCO',                             src: 'assets/music/CNCO - Tan Fácil (Official Video)(mp3j.cc).mp3' },
+    /*20 */ { title: 'Eres',                      artist: 'Café Tacvba',                      src: 'assets/music/Café Tacvba - Eres (Video Oficial)(mp3j.cc).mp3' },
+    /*21 */ { title: 'Día Tras Día',              artist: '',                                 src: 'assets/music/Día Tras Día(mp3j.cc).mp3' },
+    /*22 */ { title: 'Bonita',                    artist: '',                                 src: 'assets/music/Bonita(mp3j.cc).mp3' },
+    /*23 */ { title: 'Ven',                       artist: '',                                 src: 'assets/music/Ven.mp3' },
+    /*24 */ { title: 'Y Si Te Quedas, ¿Qué?',    artist: '',                                 src: 'assets/music/Y Si Te Quedas, ¿Qué(mp3j.cc).mp3' },
   ],
 
   gallery: [
-    { date:'El primer beso', title:'El Primer Beso', image:'assets/img/3.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:0,
-      text:'Karen,\n\nHay besos que son sólo besos. Y luego está ese, el nuestro, que fue una declaración entera. Un poema sin palabras. Una respuesta a todas las preguntas que no sabía que me estaba haciendo.\n\nCuando cerraste los ojos, cerré el capítulo de la soledad para siempre.\n\nTuyo,\nEdgar ♥' },
+    { date:'El primer beso', title:'El primer beso', image:'assets/img/3.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:0,
+      text:'Hubo una noche que anhelé tanto que cuando por fin llegó, casi no supe cómo sostenerla entre los brazos, quizás porque los deseos cumplidos siempre asustan un poco antes de volverse alegría. Ese beso que tanto imaginé se sintió como si el aire mismo se hubiera puesto de acuerdo para quedarse quieto un segundo, solo para nosotros.' },
 
-    { date:'Las madrugadas de Instagram', title:'Madrugadas de Instagram', image:'assets/img/1.jpeg', rarity:'raro', type:'Memoria', hp:70, songIndex:1,
-      text:'Para Karen,\n\nLas 2am contigo son diferentes. El mundo duerme pero nosotros inventábamos universos en letras y emojis. Cada notificación era un regalo anticipado.\n\nEn esas madrugadas aprendí que el tiempo contigo no se pierde: se invierte en algo que vale la eternidad.\n\nSiempre,\nEdgar ♥' },
+    { date:'Las madrugadas de Instagram', title:'Las madrugadas de Instagram', image:'assets/img/1.jpeg', rarity:'raro', type:'Memoria', hp:70, songIndex:1,
+      text:'Hubo un tiempo en que las dos y las tres de la mañana dejaron de ser horas de insomnio para convertirse en horas nuestras, ya que el sueño no lograba competir con las ganas de seguir hablando. Cada notificación se volvió una pequeña fiesta, cada audio tuyo una melodía que yo guardaba como quien guarda algo valioso en un cofre invisible. Quizás nunca entendí bien cómo el cansancio se transformaba en felicidad apenas veía tu nombre en la pantalla, pero así fue, así ocurrió sin que yo lo planeara: esperar tus mensajes se convirtió en mi manera favorita de esperar la vida.' },
 
-    { date:'La primera foto juntos', title:'Primera Foto Juntos', image:'assets/img/2.jpeg', rarity:'ultra', type:'Historia', hp:85, songIndex:2,
-      text:'Mi Karen,\n\nLa primera foto juntos guarda más que imagen: guarda el instante preciso en que dejamos de ser dos historias separadas para convertirnos en un capítulo conjunto.\n\nMira esa foto y verás en mis ojos que ya sabía que eras todo.\n\nCon amor,\nEdgar ♥' },
+    { date:'La primera foto juntos', title:'La primera cita', image:'assets/img/2.jpeg', rarity:'ultra', type:'Historia', hp:85, songIndex:2,
+      text:'El tiempo, esa cosa que normalmente pesa tanto, decidió volverse líquido esa tarde, y se nos escapó entre las manos sin que lo notáramos, ya que hablar contigo nunca se sintió como hablar sino como reconocer algo que ya conocía de otra vida. Ese día te tomé de la mano, y desde entonces decidí, casi sin decirlo, que no pensaba soltarla. Tal vez fue ahí, en ese gesto tan simple, donde empezó de verdad todo lo demás.' },
 
-    { date:'Nuestro primer plan', title:'El Primer Plan', image:'assets/img/4.jpeg', rarity:'raro', type:'Aventura', hp:75, songIndex:3,
-      text:'Karen Julieth,\n\nEse día tomamos la decisión más sencilla del mundo: estar juntos en algún lugar del mapa. No importaba el destino. Tú eras el destino.\n\nAprendí que el mejor viaje es cualquiera que hagas a mi lado.\n\nPara siempre tuyo,\nEdgar ♥' },
+    { date:'Nuestro primer plan', title:'La primera misa juntos', image:'assets/img/4.jpeg', rarity:'raro', type:'Aventura', hp:75, songIndex:3,
+      text:'Hay lugares que cargan un peso distinto, y la iglesia siempre ha sido, para mí, uno de esos sitios donde todo se vuelve más real, más importante. Ir a misa contigo por primera vez fue como presentarte ante lo que más respeto, ya que estar ahí, cerca de ti, en silencio compartido, me hizo sentir que por fin tenía a la mujer indicada en el lugar indicado.' },
 
-    { date:'Cuando me dijiste que sí', title:'El Gran Sí', image:'assets/img/5.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:4,
-      text:'Mi amor,\n\nCuando dijiste sí, el tiempo se detuvo. El corazón aceleró. El mundo adquirió colores que no tenía antes.\n\nEse sí tuyo es la respuesta más hermosa que he recibido en toda mi vida. Y la más importante de todas.\n\nCompletamente tuyo,\nEdgar ♥' },
+    { date:'Cuando me dijiste que sí', title:'Tunja, tu salón, tu saco', image:'assets/img/5.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:4,
+      text:'Fui a Tunja con la excusa de un trabajo de la universidad que, al final, dejé sin terminar, ya que verte de lejos en tu salón de clase, tan juiciosa, tan hermosa sin proponérselo, me pareció mucho más importante que cualquier nota académica. Te regalé el saco que más me gustaba usar porque quería que tuvieras una parte de mí cerca cuando yo no pudiera estarlo.' },
 
-    { date:'La primera vez que cocinamos', title:'Cocinando Juntos', image:'assets/img/6.jpeg', rarity:'comun', type:'Hogar', hp:60, songIndex:5,
-      text:'Para Karen,\n\nLa harina en la ropa y las risas en la cocina me enseñaron que los momentos imperfectos contigo son perfectos. Que no necesito planearlo todo para que salga bien, si estás tú presente.\n\nCon cariño y harina,\nEdgar ♥' },
+    { date:'La primera vez que cocinamos', title:'El día que te pedí que fueras mi novia', image:'assets/img/6.jpeg', rarity:'comun', type:'Hogar', hp:60, songIndex:6,
+      text:'Lo anhelé tanto que lo planeé con la misma dedicación con la que se planea algo sagrado. Te escribí una carta acompañada de canciones de Morat, porque a veces las palabras propias necesitan ayuda de otras voces para decir lo que sienten. Tal vez nunca estuve tan nervioso en mi vida, pero tampoco nunca estuve tan seguro de algo.' },
 
-    { date:'Ese atardecer inolvidable', title:'El Atardecer', image:'assets/img/7.jpeg', rarity:'ultra', type:'Magia', hp:90, songIndex:6,
-      text:'Karen,\n\nEl cielo pintó naranja ese atardecer y yo sólo pude mirarte a ti. Porque ningún color del mundo compite con la luz que tienes cuando eres feliz.\n\nEse silencio que compartimos fue la conversación más profunda de mi vida.\n\nTuyo,\nEdgar ♥' },
+    { date:'Ese atardecer inolvidable', title:'El lugar, el llanto, el alma llena', image:'assets/img/7.jpeg', rarity:'ultra', type:'Magia', hp:90, songIndex:5,
+      text:'Cuéntame tú que recuerdas de ese día, porque yo lo llevo grabado como una fotografía que no se borra: verte llorar, no de tristeza sino de esas lágrimas que solo salen cuando el corazón está demasiado lleno para quedarse callado, fue quizás el instante más humano que he vivido contigo.' },
 
-    { date:'La noche de estrellas', title:'Noche de Estrellas', image:'assets/img/8.jpeg', rarity:'ultra', type:'Magia', hp:88, songIndex:7,
-      text:'Mi Karen,\n\nAcostados bajo el cielo contándote cosas que nunca le he dicho a nadie. Cada estrella testigo de que este amor es real, luminoso y completamente nuestro.\n\nEl universo entero conspira para que sigamos aquí, juntos.\n\nSiempre,\nEdgar ♥' },
+    { date:'La noche de estrellas', title:'El lugar favorito y la comida', image:'assets/img/8.jpeg', rarity:'ultra', type:'Magia', hp:88, songIndex:7,
+      text:'Ese mismo día, como si el universo quisiera regalarnos una jornada completa, terminamos en nuestro lugar favorito, compartiendo una comida que supo distinta, más especial, ya que todo lo que como contigo sabe distinto.' },
 
-    { date:'Nuestro primer viaje', title:'Primer Viaje', image:'assets/img/9.jpeg', rarity:'legendario', type:'Aventura', hp:95, songIndex:8,
-      text:'Para Karen Julieth,\n\nEl primer viaje juntos redefinió todo lo que sabía sobre la aventura. Resultó que el mejor destino no está en el mapa sino en la persona que lleva tu mano en el camino.\n\nContigo quiero perderme en todos los mapas del mundo.\n\nCon amor eterno,\nEdgar ♥' },
+    { date:'Nuestro primer viaje', title:'Risas de toda una semana', image:'assets/img/9.jpeg', rarity:'legendario', type:'Aventura', hp:95, songIndex:8,
+      text:'Anhelo verte todas las veces que la vida me lo permite, ya que cada encuentro contigo se ha convertido en de mis días más felices, incluso los que compartimos con tu mamá entre charlas y sobremesas. Conocer a tus perritos, jugar con ellos, verlos correr hacia ti como si supieran que eres su persona favorita del mundo, me enseñó que el amor también se mide en esas pequeñas alegrías compartidas.' },
 
-    { date:'La llamada de medianoche', title:'Llamada de Medianoche', image:'assets/img/10.jpeg', rarity:'raro', type:'Conexión', hp:72, songIndex:9,
-      text:'Karen,\n\nA las 2am cuando el mundo duerme, tu voz es el único sonido que necesito. Cada llamada un puente entre tu mundo y el mío, construido en segundos, sólido como el amor.\n\nTuyo a cualquier hora,\nEdgar ♥' },
+    { date:'La llamada de medianoche', title:'El primer helado', image:'assets/img/10.jpeg', rarity:'raro', type:'Conexión', hp:72, songIndex:9,
+      text:'Un domingo cualquiera se volvió memorable solo porque estuvimos juntos, compartiendo un helado que quizás no recuerdo de qué sabor era, pero sí recuerdo tu risa mientras lo comíamos. Tal vez el amor no necesita grandes escenarios: a veces basta un helado y una tarde de domingo.' },
 
-    { date:'Bailando bajo la lluvia', title:'Lluvia y Baile', image:'assets/img/11.jpeg', rarity:'ultra', type:'Alegría', hp:87, songIndex:10,
-      text:'Mi Karen,\n\nBailaste bajo la lluvia sin importarte nada y en ese momento te vi como eres: libre, luminosa, completamente viva. El agua no te mojó, te reveló.\n\nEnamorado de ti para siempre,\nEdgar ♥' },
+    { date:'Bailando bajo la lluvia', title:'Segundo viaje a Tunja', image:'assets/img/11.jpeg', rarity:'ultra', type:'Alegría', hp:87, songIndex:10,
+      text:'Volví a Tunja, esta vez para conocer tu universidad, tu biblioteca, los rincones donde te vuelves tú misma sin que nadie te mire. Escuché tus historias, conocí tus lugares favoritos, y entendí que cada espacio que me mostrabas era, en realidad, un pedazo de tu memoria que decidías compartir conmigo.' },
 
-    { date:'El día que lloramos juntos', title:'Lágrimas Compartidas', image:'assets/img/12.jpeg', rarity:'raro', type:'Verdad', hp:80, songIndex:11,
-      text:'Para Karen,\n\nEl día que lloramos juntos descubrí que el amor verdadero no es sólo risa sino también abrazo en la tormenta, mano tendida en la oscuridad, presencia cuando más duele.\n\nAquí estaré siempre,\nEdgar ♥' },
+    { date:'El día que lloramos juntos', title:'La biblioteca, tu belleza, tu cercanía', image:'assets/img/12.jpeg', rarity:'raro', type:'Verdad', hp:80, songIndex:11,
+      text:'Estar contigo en la biblioteca de tu universidad, admirando tu belleza sin necesidad de decir nada, sintiéndote cerca mientras el silencio del lugar nos envolvía, fue de esos momentos que se quedan grabados como una fotografía importante.' },
 
-    { date:'Nuestra canción favorita', title:'Nuestra Canción', image:'assets/img/13.jpeg', rarity:'comun', type:'Música', hp:65, songIndex:12,
-      text:'Karen Julieth,\n\nUna canción que se convirtió en nuestra cuando la escuchamos juntos. Ahora cada vez que suena el mundo se detiene y sólo existimos nosotros dos en ese segundo perfecto.\n\nCon música y amor,\nEdgar ♥' },
+    { date:'Nuestra canción favorita', title:'El atardecer que cerró el viaje', image:'assets/img/13.jpeg', rarity:'comun', type:'Música', hp:65, songIndex:12,
+      text:'Terminamos ese viaje con una vista de atardecer que parecía pintada solo para nosotros, entre iglesias hermosas donde oramos juntos, entre sushi y pizza compartidos como quien comparte más que comida, y con nuestros primeros collares comprados como símbolo de algo que ya no tenía vuelta atrás.' },
 
-    { date:'El cumpleaños especial', title:'Cumpleaños Especial', image:'assets/img/14.jpeg', rarity:'ultra', type:'Celebración', hp:92, songIndex:13,
-      text:'Mi Karen,\n\nUn año más de ti en el mundo y yo queriendo celebrar cada uno de esos años. No sólo tu cumpleaños sino el regalo que significa tu existencia entera para mí.\n\nFeliz de compartir el tiempo contigo,\nEdgar ♥' },
+    { date:'El cumpleaños especial', title:'La excusa de visitar a mi suegra', image:'assets/img/14.jpeg', rarity:'ultra', type:'Celebración', hp:92, songIndex:13,
+      text:'Siempre anhelo ir a visitar a tu mamá, ir a recogerla, y si soy honesto, sé que esa es apenas una excusa hermosa para estar más cerca de ti. Tal vez no hay estrategia más sincera que esa: inventar motivos pequeños para no dejar de verte.' },
 
-    { date:'La promesa del futuro', title:'Promesa del Futuro', image:'assets/img/15.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:14,
-      text:'Para Karen,\n\nEl día que prometimos el mañana juntos, el futuro dejó de ser incierto. Ahora lo que viene tiene dirección, tiene nombre, tiene tus ojos como brújula.\n\nPrometido para siempre,\nEdgar ♥' },
+    { date:'La promesa del futuro', title:'El camino tarde por hablar de más', image:'assets/img/15.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:14,
+      text:'También recuerdo esos caminos a recoger a tu mamá donde el tiempo se nos iba entre risas y conversaciones, y a veces llegábamos tarde solo por no querer dejar de hablar. Quizás la impuntualidad, cuando es por hablar contigo, deja de ser un defecto.' },
 
-    { date:'Nuestro lugar secreto', title:'Lugar Secreto', image:'assets/img/16.jpeg', rarity:'ultra', type:'Refugio', hp:88, songIndex:15,
-      text:'Karen mía,\n\nEse lugar que sólo nosotros conocemos, donde el tiempo corre diferente y somos exactamente quienes somos sin máscaras ni miedo. Ese rincón del mundo tiene tu perfume.\n\nTuyo en ese lugar y en todos,\nEdgar ♥' },
+    { date:'Nuestro lugar secreto', title:'Misa, pareja ideal, y unas medias', image:'assets/img/16.jpeg', rarity:'ultra', type:'Refugio', hp:88, songIndex:15,
+      text:'Fuimos a misa una vez más, y esa mañana nos vimos como la pareja ideal que aún hoy seguimos siendo. Después, entre risas, salimos a comprar unas medias porque tus botines nuevos te habían dejado heridas en los pies, y ese detalle tan pequeño, tan humano, también se volvió parte de nuestra historia.' },
 
-    { date:'La sorpresa perfecta', title:'La Gran Sorpresa', image:'assets/img/17.jpeg', rarity:'raro', type:'Magia', hp:78, songIndex:16,
-      text:'Mi amor,\n\nPlanifiqué la sorpresa durante semanas y cuando la viste, tu cara valió más que todo el esfuerzo combinado. Ese momento guardado para siempre en los archivos del corazón.\n\nSiempre queriendo sorprenderte,\nEdgar ♥' },
+    { date:'La sorpresa perfecta', title:'Poesía pura I', image:'assets/img/17.jpeg', rarity:'raro', type:'Magia', hp:78, songIndex:16,
+      text:'Tal vez el amor no se explica, solo se vive, y contigo he vivido instantes que se sienten como versos escritos por alguien que nos observa desde lejos. Tu risa tiene la costumbre de llegar sin avisar y quedarse instalada en mi pecho durante días.' },
 
-    { date:'Nuestro primer año', title:'Un Año Juntos', image:'assets/img/18.jpeg', rarity:'legendario', type:'Hito', hp:100, songIndex:17,
-      text:'Para Karen Julieth,\n\n365 días. 8760 horas. Un año entero aprendiendo a amarte mejor cada día. Un año entero eligiéndote y descubriendo que es la decisión más fácil y más importante de mi vida.\n\nCon un año de amor y toda la vida por delante,\nEdgar ♥' },
+    { date:'Nuestro primer año', title:'Poesía pura II', image:'assets/img/18.jpeg', rarity:'legendario', type:'Hito', hp:100, songIndex:17,
+      text:'Quizás nadie me explicó nunca que el amor también huele a mañanas compartidas, a mensajes de buenos días, a la certeza tranquila de que hay alguien pensando en uno incluso en el silencio. Contigo aprendí que la felicidad no siempre grita, a veces solo susurra, y ese susurro se parece mucho a tu nombre.' },
 
-    { date:'La selfie del corazón', title:'Selfie del Corazón', image:'assets/img/19.jpeg', rarity:'comun', type:'Cotidiano', hp:62, songIndex:18,
-      text:'Karen,\n\nUna foto cualquiera de un día cualquiera. Y sin embargo guarda algo extraordinario: el destello en tus ojos cuando estás feliz y sé que soy parte de ese brillo.\n\nEnamorado de tu cotidiano,\nEdgar ♥' },
+    { date:'La selfie del corazón', title:'Poesía pura III', image:'assets/img/19.jpeg', rarity:'comun', type:'Cotidiano', hp:62, songIndex:18,
+      text:'Ya que el tiempo insiste en pasar, prefiero que pase contigo, entre risas, entre misas, entre viajes a Tunja y helados de domingo. Tal vez lo mágico de esta historia no está en los grandes gestos sino en la suma silenciosa de todos los días pequeños que decidimos compartir sin darnos cuenta de que estábamos construyendo algo que ya no se puede deshacer.' },
 
-    { date:'Hoy y siempre', title:'Hoy y Siempre', image:'assets/img/20.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:0,
-      text:'Mi Karen Julieth,\n\nEste recuerdo aún se está escribiendo. Hoy, mañana, todos los días que vienen. El amor no tiene punto final, tiene puntos suspensivos que se convierten en nuevos capítulos.\n\nHoy y siempre,\nEdgar Sebastian Perez Diaz ♥' },
+    { date:'Hoy y siempre', title:'El futuro que espero contigo', image:'assets/img/20.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:0,
+      text:'Quizás todavía no sé cómo se ve el futuro con exactitud, pero sé que quiero que tenga tu risa dentro, tus perritos corriendo por algún patio, tu mamá cerca, tus historias de maestra contadas antes de dormir. Espero que seas mi futuro, ya que ya eres, sin proponértelo, mi presente favorito.' },
   ],
 
   timeline: [
@@ -167,22 +169,134 @@ const RARITY_GRADIENT = {
 function initSky() {
   const canvas = el.skyCanvas; if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let W, H;
-  const stars = Array.from({length:200}, () => ({
-    x: Math.random(), y: Math.random(),
-    r: Math.random() * 1.5 + 0.3,
-    a: Math.random(), da: (Math.random() - 0.5) * 0.005,
+  let W, H, t = 0;
+
+  // Stars
+  const stars = Array.from({length:280}, () => ({
+    x:Math.random(), y:Math.random(),
+    r:Math.random()*1.6+0.2,
+    a:Math.random(), da:(Math.random()-0.5)*0.004,
   }));
+
+  // Constellations (groups of connected stars)
+  const constellations = [
+    { pts:[{x:0.08,y:0.12},{x:0.14,y:0.09},{x:0.19,y:0.14},{x:0.17,y:0.20},{x:0.11,y:0.22}] },
+    { pts:[{x:0.72,y:0.07},{x:0.78,y:0.05},{x:0.82,y:0.10},{x:0.79,y:0.15},{x:0.73,y:0.13},{x:0.72,y:0.07}] },
+    { pts:[{x:0.42,y:0.05},{x:0.47,y:0.03},{x:0.52,y:0.06},{x:0.50,y:0.11},{x:0.45,y:0.12}] },
+    { pts:[{x:0.60,y:0.18},{x:0.65,y:0.15},{x:0.70,y:0.19},{x:0.68,y:0.25}] },
+    { pts:[{x:0.25,y:0.22},{x:0.30,y:0.18},{x:0.35,y:0.22},{x:0.32,y:0.28},{x:0.27,y:0.27}] },
+  ];
+
+  // Satellites (moving dots)
+  const satellites = Array.from({length:3}, (_, i) => ({
+    x: Math.random(), y: Math.random() * 0.5,
+    vx:(Math.random()*0.0006+0.0003) * (Math.random()<0.5?1:-1),
+    vy:(Math.random()*0.0002+0.0001) * (Math.random()<0.5?1:-1),
+    trail:[],
+  }));
+
+  // Astronaut
+  const astro = { x:0.15, y:0.35, vx:0.00025, vy:0.00012, angle:0 };
+
+  // Floating flowers/petals
+  const petals = Array.from({length:12}, () => ({
+    x:Math.random(), y:Math.random()*0.8+0.1,
+    vx:(Math.random()-0.5)*0.0004,
+    vy:-Math.random()*0.0003-0.0001,
+    a:Math.random()*Math.PI*2, va:(Math.random()-0.5)*0.015,
+    opacity:Math.random()*0.5+0.2,
+    symbol:['🌸','🌺','🌼','🌹','💐'][Math.floor(Math.random()*5)],
+  }));
+
   function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
   resize(); window.addEventListener('resize', resize);
+
+  function drawAstronaut(x, y, angle) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.font = '18px serif';
+    ctx.globalAlpha = 0.55;
+    ctx.fillText('👨‍🚀', -9, 9);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
   (function tick() {
+    t += 0.01;
     ctx.clearRect(0, 0, W, H);
-    stars.forEach(s => {
-      s.a = Math.max(0.08, Math.min(1, s.a + s.da));
-      if (s.a <= 0.08 || s.a >= 1) s.da *= -1;
-      ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,240,200,${s.a * 0.65})`; ctx.fill();
+
+    // Constellations
+    constellations.forEach(c => {
+      ctx.beginPath();
+      c.pts.forEach((p, i) => {
+        const cx = p.x * W, cy = p.y * H;
+        if (i === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
+      });
+      ctx.strokeStyle = `rgba(200,180,255,${0.12 + 0.04 * Math.sin(t*0.7)})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      c.pts.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x * W, p.y * H, 1.6, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(220,210,255,${0.7 + 0.2 * Math.sin(t)})`;
+        ctx.fill();
+      });
     });
+
+    // Stars
+    stars.forEach(s => {
+      s.a = Math.max(0.06, Math.min(1, s.a + s.da));
+      if (s.a <= 0.06 || s.a >= 1) s.da *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,240,200,${s.a * 0.6})`;
+      ctx.fill();
+    });
+
+    // Satellites
+    satellites.forEach(sat => {
+      sat.x += sat.vx; sat.y += sat.vy;
+      if (sat.x < 0) sat.x = 1; if (sat.x > 1) sat.x = 0;
+      if (sat.y < 0) sat.y = 0.5; if (sat.y > 0.5) sat.y = 0;
+      sat.trail.push({x:sat.x*W, y:sat.y*H});
+      if (sat.trail.length > 18) sat.trail.shift();
+      sat.trail.forEach((pt, i) => {
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 0.8, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(180,230,255,${(i/sat.trail.length)*0.5})`;
+        ctx.fill();
+      });
+      ctx.beginPath();
+      ctx.arc(sat.x*W, sat.y*H, 2, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(180,230,255,0.9)';
+      ctx.fill();
+    });
+
+    // Astronaut drift
+    astro.x += astro.vx; astro.y += astro.vy;
+    astro.angle = Math.sin(t * 0.3) * 0.3;
+    if (astro.x > 1.05) astro.x = -0.05;
+    if (astro.y < 0.05) { astro.vy *= -1; }
+    if (astro.y > 0.6) { astro.vy *= -1; }
+    drawAstronaut(astro.x * W, astro.y * H, astro.angle);
+
+    // Petals
+    petals.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.a += p.va;
+      if (p.x < -0.02) p.x = 1.02;
+      if (p.x > 1.02)  p.x = -0.02;
+      if (p.y < -0.05) p.y = 1.05;
+      if (p.y > 1.05)  p.y = -0.05;
+      ctx.save();
+      ctx.translate(p.x*W, p.y*H);
+      ctx.rotate(p.a);
+      ctx.globalAlpha = p.opacity;
+      ctx.font = `${14 + 4*Math.sin(t+p.x*6)}px serif`;
+      ctx.fillText(p.symbol, -8, 8);
+      ctx.restore();
+    });
+
     requestAnimationFrame(tick);
   })();
 }
@@ -876,8 +990,380 @@ function initStart() {
 function initLoveButton() {
   if (!el.loveButton) return;
   el.loveButton.addEventListener('click', () => {
-    spawnParticles('hearts'); spawnParticles('petals');
+    spawnParticles('hearts');
     document.body.classList.add('final-mode');
+    openUniverse();
+  });
+}
+
+/* ─────────────── UNIVERSO ─────────────── */
+function openUniverse() {
+  const modal = document.getElementById('universeModal');
+  const canvas = document.getElementById('universeCanvas');
+  const closeBtn = document.getElementById('universeClose');
+  if (!modal || !canvas) return;
+
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  const ctx = canvas.getContext('2d');
+  let W, H, raf, running = true, t2 = 0;
+
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+
+  // Galaxy particles
+  const gParticles = Array.from({length:600}, (_, i) => {
+    const arm = Math.floor(Math.random()*3);
+    const dist = Math.random() * Math.min(W, H) * 0.42;
+    const spread = dist * 0.18;
+    const baseAngle = (arm / 3) * Math.PI * 2 + dist * 0.008;
+    const angle = baseAngle + (Math.random() - 0.5) * 0.6;
+    return {
+      dist, angle,
+      da: 0.003 / (dist / 80 + 1),
+      x: 0, y: 0,
+      r: Math.random() * 1.8 + 0.3,
+      hue: arm === 0 ? 260 + Math.random()*40
+         : arm === 1 ? 320 + Math.random()*40
+         : 180 + Math.random()*40,
+      a: Math.random() * 0.7 + 0.3,
+    };
+  });
+
+  // Orbiting planets
+  const planets = [
+    { dist:110, angle:0,   da:0.0085, r:8,  color:'#e8a0c0', label:'♡' },
+    { dist:175, angle:2.1, da:0.0055, r:6,  color:'#90c0f8', label:'★' },
+    { dist:240, angle:4.5, da:0.0035, r:10, color:'#f8d080', label:'♥' },
+    { dist:310, angle:1.2, da:0.0022, r:5,  color:'#b8f0b0', label:'✦' },
+  ];
+
+  // Shooting stars
+  const shooters = Array.from({length:4}, () => ({
+    active:false, x:0, y:0, vx:0, vy:0, life:0, maxLife:0,
+    timer: Math.random() * 180,
+  }));
+
+  // Kiss lean: starts apart, closes over ~3s then stays kissing
+  let kissProgress = 0;
+
+  function drawCouple(cx, cy) {
+    ctx.save();
+    // kissProgress 0=apart, 1=kissing
+    kissProgress = Math.min(1, kissProgress + 0.004);
+    const lean = kissProgress * 18; // pixels closer
+    const tiltK = kissProgress * 0.28;  // Karen tilts right
+    const tiltE = -kissProgress * 0.28; // Edgar tilts left
+
+    // Soft glow underneath
+    const glow = ctx.createRadialGradient(cx, cy+20, 0, cx, cy+20, 80);
+    glow.addColorStop(0, 'rgba(255,180,220,0.22)');
+    glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(cx, cy+20, 80, 0, Math.PI*2); ctx.fill();
+
+    // ── Karen (left) ──────────────────────
+    ctx.save();
+    ctx.translate(cx - 32 + lean, cy);
+    ctx.rotate(tiltK);
+    // body / dress
+    ctx.fillStyle = 'rgba(255,160,210,0.88)';
+    ctx.beginPath();
+    ctx.moveTo(0, -2); ctx.bezierCurveTo(-12, 10, -14, 30, -8, 44);
+    ctx.lineTo(8, 44); ctx.bezierCurveTo(14, 30, 12, 10, 0, -2); ctx.fill();
+    // neck
+    ctx.fillStyle = 'rgba(255,200,220,0.8)';
+    ctx.fillRect(-4, -12, 8, 12);
+    // head
+    ctx.beginPath(); ctx.arc(0, -20, 12, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,200,220,0.9)'; ctx.fill();
+    // hair
+    ctx.fillStyle = 'rgba(180,80,140,0.7)';
+    ctx.beginPath();
+    ctx.ellipse(0, -26, 13, 9, 0, Math.PI, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(-10, -20, 5, 12, -0.3, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(10, -20, 5, 12, 0.3, 0, Math.PI*2); ctx.fill();
+    // arms wrapping
+    if (kissProgress > 0.5) {
+      ctx.strokeStyle = 'rgba(255,160,210,0.7)';
+      ctx.lineWidth = 5; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(10, 8); ctx.quadraticCurveTo(28+lean, 8, 28+lean*1.5, 14); ctx.stroke();
+    }
+    ctx.restore();
+
+    // ── Edgar (right) ─────────────────────
+    ctx.save();
+    ctx.translate(cx + 32 - lean, cy);
+    ctx.rotate(tiltE);
+    // body / shirt
+    ctx.fillStyle = 'rgba(140,180,255,0.88)';
+    ctx.beginPath();
+    ctx.moveTo(0, -2); ctx.bezierCurveTo(-12, 8, -13, 28, -8, 44);
+    ctx.lineTo(8, 44); ctx.bezierCurveTo(13, 28, 12, 8, 0, -2); ctx.fill();
+    // neck
+    ctx.fillStyle = 'rgba(200,220,255,0.8)';
+    ctx.fillRect(-4, -12, 8, 12);
+    // head
+    ctx.beginPath(); ctx.arc(0, -20, 12, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(200,220,255,0.9)'; ctx.fill();
+    // hair (short)
+    ctx.fillStyle = 'rgba(60,40,20,0.75)';
+    ctx.beginPath();
+    ctx.ellipse(0, -28, 11, 7, 0, Math.PI, Math.PI*2); ctx.fill();
+    // arms wrapping
+    if (kissProgress > 0.5) {
+      ctx.strokeStyle = 'rgba(140,180,255,0.7)';
+      ctx.lineWidth = 5; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(-10, 8); ctx.quadraticCurveTo(-28-lean, 8, -28-lean*1.5, 14); ctx.stroke();
+    }
+    ctx.restore();
+
+    // ── Kiss sparkles when close ───────────
+    if (kissProgress > 0.85) {
+      const ks = 1 + 0.3*Math.sin(t2*8);
+      ctx.font = `${14*ks}px serif`;
+      ctx.textAlign = 'center';
+      ctx.globalAlpha = (kissProgress - 0.85) / 0.15 * 0.9;
+      ctx.fillText('💋', cx, cy - 38);
+      ctx.globalAlpha = 0.5 * Math.abs(Math.sin(t2*3));
+      ctx.font = '11px serif';
+      ctx.fillText('✨', cx - 18, cy - 48 + Math.sin(t2*2)*5);
+      ctx.fillText('✨', cx + 18, cy - 48 + Math.cos(t2*2)*5);
+      ctx.globalAlpha = 1;
+      ctx.textAlign = 'left';
+    } else {
+      // Heart floating between them while approaching
+      const ht = 0.7 + 0.3*Math.sin(t2*3);
+      ctx.font = `${18*ht}px serif`;
+      ctx.textAlign = 'center';
+      ctx.globalAlpha = 0.85;
+      ctx.fillText('❤️', cx, cy - 36);
+      ctx.globalAlpha = 1; ctx.textAlign = 'left';
+    }
+
+    ctx.restore();
+  }
+
+  function tick2() {
+    if (!running) return;
+    t2 += 0.012;
+    ctx.clearRect(0, 0, W, H);
+
+    const cx = W/2, cy = H/2 + 30;
+
+    // Deep space background
+    const bg = ctx.createRadialGradient(cx, cy-30, 0, cx, cy-30, Math.max(W,H)*0.75);
+    bg.addColorStop(0,   'rgba(22,8,42,1)');
+    bg.addColorStop(0.35,'rgba(10,5,25,1)');
+    bg.addColorStop(1,   'rgba(2,2,8,1)');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Galaxy particles (spin around couple)
+    gParticles.forEach(p => {
+      p.angle += p.da;
+      p.x = cx + Math.cos(p.angle) * p.dist;
+      p.y = cy - 30 + Math.sin(p.angle) * p.dist * 0.42;
+      const ga = p.a * (0.55 + 0.45*Math.sin(t2*1.8 + p.angle));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = `hsla(${p.hue},80%,78%,${ga})`;
+      ctx.fill();
+    });
+
+    // Nebula glow
+    const ng = ctx.createRadialGradient(cx, cy-30, 0, cx, cy-30, 200);
+    ng.addColorStop(0,   'rgba(200,100,255,0.18)');
+    ng.addColorStop(0.5, 'rgba(100,60,200,0.08)');
+    ng.addColorStop(1,   'rgba(0,0,0,0)');
+    ctx.fillStyle = ng;
+    ctx.beginPath(); ctx.arc(cx, cy-30, 200, 0, Math.PI*2); ctx.fill();
+
+    // Orbiting planets
+    planets.forEach(pl => {
+      pl.angle += pl.da;
+      const px = cx + Math.cos(pl.angle) * pl.dist;
+      const py = cy - 30 + Math.sin(pl.angle) * pl.dist * 0.42;
+      const pg = ctx.createRadialGradient(px,py,0,px,py,pl.r*3.5);
+      pg.addColorStop(0, pl.color+'cc'); pg.addColorStop(1, 'transparent');
+      ctx.fillStyle = pg;
+      ctx.beginPath(); ctx.arc(px, py, pl.r*3.5, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, pl.r, 0, Math.PI*2);
+      ctx.fillStyle = pl.color; ctx.fill();
+    });
+
+    // Shooting stars
+    shooters.forEach(s => {
+      if (!s.active) {
+        s.timer--;
+        if (s.timer <= 0) {
+          s.active = true;
+          s.x = Math.random() * W;
+          s.y = Math.random() * H * 0.5;
+          const ang = Math.PI/4 + (Math.random()-0.5)*0.5;
+          const spd = 9 + Math.random()*7;
+          s.vx = Math.cos(ang)*spd; s.vy = Math.sin(ang)*spd;
+          s.maxLife = s.life = 28 + Math.random()*18;
+        }
+      } else {
+        ctx.save();
+        ctx.strokeStyle = `rgba(255,255,240,${s.life/s.maxLife*0.85})`;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.vx*5, s.y - s.vy*5);
+        ctx.stroke();
+        ctx.restore();
+        s.x += s.vx; s.y += s.vy; s.life--;
+        if (s.life <= 0) { s.active = false; s.timer = 80 + Math.random()*180; }
+      }
+    });
+
+    // Couple kissing
+    drawCouple(cx, cy - 30);
+
+    // Floating hearts around couple
+    for (let i = 0; i < 6; i++) {
+      const ha = t2 * 0.8 + i * Math.PI / 3;
+      const hd = 85 + 18 * Math.sin(t2 + i);
+      const hx = cx + Math.cos(ha) * hd;
+      const hy = cy - 30 + Math.sin(ha) * hd * 0.5;
+      ctx.globalAlpha = 0.35 + 0.25*Math.sin(t2*2+i);
+      ctx.font = `${12 + 4*Math.sin(t2+i)}px serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(['❤️','💕','✨','💫','🌟','💖'][i], hx, hy);
+    }
+    ctx.globalAlpha = 1;
+    ctx.textAlign = 'left';
+
+    raf = requestAnimationFrame(tick2);
+  }
+
+  tick2();
+
+  function closeUniverse() {
+    running = false;
+    cancelAnimationFrame(raf);
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.onclick = closeUniverse;
+  modal.addEventListener('click', e => { if (e.target === modal) closeUniverse(); });
+}
+
+/* ─────────────── FLORES BOULEVARD ─────────────── */
+const FLOWER_DATA = {
+  rosa: {
+    emoji:'🌹', name:'Rosa', sci:'Rosa damascena',
+    origin:'Originaria de Persia y Europa, florece en primavera y verano.',
+    facts:['Símbolo universal del amor romántico','Una rosa roja = amor profundo','Sus pétalos se usan en perfumes y aceites esenciales','Pueden vivir más de 35 años en la naturaleza'],
+  },
+  margarita: {
+    emoji:'🌼', name:'Margarita', sci:'Bellis perennis',
+    origin:'Europa y Asia Occidental. Florece en primavera y otoño.',
+    facts:['El juego "me quiere, no me quiere" nació con ella','Tiene propiedades medicinales antiinflamatorias','Su nombre viene del griego "margarites" (perla)','Puede florecer casi todo el año en climas templados'],
+  },
+  girasol: {
+    emoji:'🌻', name:'Girasol', sci:'Helianthus annuus',
+    origin:'América del Norte. Cultivado desde hace 3.000 años.',
+    facts:['Sigue al sol durante el día (heliotropismo)','Una cabeza puede contener hasta 2.000 semillas','Su aceite se usa en cocina y cosmética','Símbolo de lealtad y adoración'],
+  },
+  tulipan: {
+    emoji:'🌷', name:'Tulipán', sci:'Tulipa gesneriana',
+    origin:'Turquía y Persia, naturalizado en Holanda.',
+    facts:['En el siglo XVII causó la "Tulipomanía" en Holanda','Sus bulbos valían más que una casa en esa época','Existen más de 3.000 variedades registradas','Simboliza amor perfecto y declaración amorosa'],
+  },
+  orquidea: {
+    emoji:'🪷', name:'Orquídea', sci:'Orchidaceae',
+    origin:'Trópicos y subtrópicos de todo el mundo.',
+    facts:['La familia de plantas con flores más grande (25.000+ especies)','Pueden vivir más de 100 años en la naturaleza','La vainilla proviene de una orquídea tropical','Simbolizan elegancia, lujo y amor refinado'],
+  },
+  lirio: {
+    emoji:'💐', name:'Lirio', sci:'Lilium candidum',
+    origin:'Asia y Europa. Cultivado desde hace 3.500 años.',
+    facts:['Símbolo de pureza y renovación','Aparece en el arte desde el antiguo Egipto','Su bulbo y pétalos pueden ser tóxicos para los gatos','Tiene una fragancia intensa que atrae a las polillas'],
+  },
+  jazmin: {
+    emoji:'🌸', name:'Jazmín', sci:'Jasminum officinale',
+    origin:'Asia Meridional (India, Himalaya). Cultivado en el Mediterráneo.',
+    facts:['Florece principalmente de noche para atraer insectos','Se usa en los perfumes más lujosos del mundo','El té de jazmín es el más aromático del mundo','En India simboliza el amor divino y la pureza'],
+  },
+  hortensia: {
+    emoji:'💜', name:'Hortensia', sci:'Hydrangea macrophylla',
+    origin:'Asia Oriental (Japón, China) y América del Norte.',
+    facts:['Su color varía según el pH del suelo (azul=ácido, rosa=alcalino)','El nombre significa "vasija de agua" en griego','Puede cambiar de color si cambias la acidez de la tierra','Simboliza gratitud, gracia y belleza genuina'],
+  },
+  peonia: {
+    emoji:'🌺', name:'Peonía', sci:'Paeonia lactiflora',
+    origin:'China, Siberia y Europa. Flor nacional de China.',
+    facts:['Puede vivir más de 100 años en el mismo lugar','Su nombre viene del dios médico griego Peán','Es la flor más popular en los ramos de boda en Asia','Simboliza prosperidad, romanticismo y buena suerte'],
+  },
+  lavanda: {
+    emoji:'🫐', name:'Lavanda', sci:'Lavandula angustifolia',
+    origin:'Mediterráneo, especialmente Provenza (Francia).',
+    facts:['Sus propiedades relajantes reducen el estrés y la ansiedad','Se ha usado desde el antiguo Egipto para embalsamar','El color "lavender" lleva su nombre','Los campos de lavanda en flor son visitados por millones de personas cada año'],
+  },
+};
+
+function initFlowers() {
+  const container = document.getElementById('boulevardFlowers');
+  const popup = document.getElementById('flowerPopup');
+  const closeBtn = document.getElementById('flowerPopupClose');
+  if (!container || !popup) return;
+
+  let activePin = null;
+
+  container.querySelectorAll('.flower-pin').forEach(pin => {
+    pin.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = pin.dataset.flower;
+      const data = FLOWER_DATA[key];
+      if (!data) return;
+
+      if (activePin === pin && popup.classList.contains('is-visible')) {
+        popup.classList.remove('is-visible');
+        popup.setAttribute('aria-hidden', 'true');
+        activePin = null;
+        return;
+      }
+
+      document.getElementById('flowerEmoji').textContent = data.emoji;
+      document.getElementById('flowerName').textContent = data.name;
+      document.getElementById('flowerSci').textContent = data.sci;
+      document.getElementById('flowerOrigin').textContent = data.origin;
+      const ul = document.getElementById('flowerFacts');
+      ul.innerHTML = data.facts.map(f => `<li>${f}</li>`).join('');
+
+      // Position popup near pin (fixed, viewport-relative)
+      const pinRect = pin.getBoundingClientRect();
+      popup.style.position = 'fixed';
+      popup.style.left = `${pinRect.left + pinRect.width/2}px`;
+      popup.style.top  = `${Math.max(8, pinRect.top - 14)}px`;
+      popup.style.bottom = 'auto';
+      popup.style.transform = 'translateX(-50%) translateY(-100%)';
+
+      popup.classList.add('is-visible');
+      popup.setAttribute('aria-hidden', 'false');
+      activePin = pin;
+    });
+  });
+
+  closeBtn && closeBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    popup.classList.remove('is-visible');
+    popup.setAttribute('aria-hidden', 'true');
+    activePin = null;
+  });
+
+  document.addEventListener('click', e => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('flower-pin')) {
+      popup.classList.remove('is-visible');
+      popup.setAttribute('aria-hidden', 'true');
+      activePin = null;
+    }
   });
 }
 
@@ -908,6 +1394,7 @@ document.addEventListener('DOMContentLoaded', () => {
   populateSongSelect();
   initAddMemory();
   initBoulevard();
+  initFlowers();
   initMusic();
   initLoveButton();
   initReveal();
