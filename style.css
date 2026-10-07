@@ -403,25 +403,37 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 
 .card-modal__layout {
   position:relative;z-index:1;
-  display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:start;
-  max-width:min(1000px,100%);max-height:90vh;overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(280px,0.9fr);
+  gap:32px;align-items:start;
+  max-width:min(1100px,100%);max-height:92vh;overflow:hidden;
 }
 
-.card-modal__card-wrap { display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.card-modal__card-wrap {
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
 
 .poke-card-full {
-  width:290px;height:406px;border-radius:22px;position:relative;overflow:hidden;
-  cursor:crosshair;flex-shrink:0;
+  /* Mucho más grande — la imagen se ve bien */
+  width:clamp(280px,38vw,440px);
+  height:auto;
+  aspect-ratio:63/88;
+  border-radius:22px;position:relative;overflow:hidden;
+  cursor:crosshair;
   transform:perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));
   transition:transform 0.08s linear,box-shadow 0.3s ease;
+  box-shadow:0 24px 64px rgba(0,0,0,0.7),0 0 0 2px rgba(255,255,255,0.07);
 }
-.poke-card-full .pcr-name { font-size:0.92rem; }
-.poke-card-full .pcr-stars { font-size:0.82rem; }
+.poke-card-full .pcr-name { font-size:clamp(0.9rem,1.5vw,1.1rem); }
+.poke-card-full .pcr-stars { font-size:0.9rem; }
 .poke-card-full .pcr-holo,
 .poke-card-full .pcr-sparkle { z-index:6; }
+/* Overlay más legible en la carta grande */
+.poke-card-full .pcr-overlay { padding:50px 18px 18px; }
+.poke-card-full .pcr-top { padding:14px 16px 36px; }
 
 .card-modal__info {
-  position:relative;z-index:1;max-height:85vh;
+  position:relative;z-index:1;max-height:88vh;
   overflow-y:auto;overscroll-behavior:contain;padding:8px;
 }
 .card-modal__info-scroll { padding:8px 0; }
@@ -795,8 +807,8 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
   .topbar { width:min(100vw - 20px,1180px); }
   .intro-section,.timeline-grid,.counter-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .counter-card--wide { grid-column:span 2; }
-  .card-modal__layout { grid-template-columns:1fr;justify-items:center;gap:20px; }
-  .poke-card-full { width:250px;height:350px; }
+  .card-modal__layout { grid-template-columns:1fr;justify-items:center;gap:20px;overflow-y:auto;max-height:92vh; }
+  .poke-card-full { width:clamp(260px,60vw,360px); }
 }
 
 /* ============================
@@ -814,6 +826,7 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
   .poke-card-slot { width:200px;height:280px;margin-left:-100px;margin-top:-140px; }
   .card-modal__layout { grid-template-columns:1fr;justify-items:center;gap:16px;overflow-y:auto;max-height:95vh;padding:0 0 20px; }
   .poke-card-full { width:220px;height:308px; }
+  .poke-card-full { width:clamp(240px,72vw,340px); }
   .card-modal__nav--prev { left:4px; }
   .card-modal__nav--next { right:4px; }
   .gallery-modal__panel { grid-template-columns:1fr; }
