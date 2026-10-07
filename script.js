@@ -157,6 +157,40 @@ function saveUserMemories(arr) { try { localStorage.setItem('userMemories', JSON
 function loadBoulevardDreams() { try { const d = localStorage.getItem('boulevardDreams2'); return d ? JSON.parse(d) : null; } catch { return null; } }
 function saveBoulevardDreams(arr) { try { localStorage.setItem('boulevardDreams2', JSON.stringify(arr)); } catch {} }
 
+/* ─────────────── MEDIADB — IndexedDB para fotos grandes ─────────────── */
+const MediaDB = (() => {
+  let _db = null;
+  function open() {
+    if (_db) return Promise.resolve(_db);
+    return new Promise((res, rej) => {
+      const r = indexedDB.open('albumMediaV1', 1);
+      r.onupgradeneeded = e => e.target.result.createObjectStore('media');
+      r.onsuccess = e => { _db = e.target.result; res(_db); };
+      r.onerror = () => rej(r.error);
+    });
+  }
+  return {
+    save(key, file) {
+      return open().then(d => new Promise((res, rej) => {
+        const tx = d.transaction('media','readwrite');
+        tx.objectStore('media').put(file, key);
+        tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error);
+      }));
+    },
+    load(key) {
+      return open().then(d => new Promise((res, rej) => {
+        const req = d.transaction('media').objectStore('media').get(key);
+        req.onsuccess = () => res(req.result); req.onerror = () => rej(req.error);
+      }));
+    },
+  };
+})();
+
+function resolveIdbSrc(src, cb) {
+  if (!src || !src.startsWith('idb:')) { cb(src); return; }
+  MediaDB.load(src.slice(4)).then(blob => cb(blob ? URL.createObjectURL(blob) : '')).catch(() => cb(''));
+}
+
 /* Gradient fallback per rarity for missing images */
 const RARITY_GRADIENT = {
   comun:     'linear-gradient(145deg,#1a1a2a,#0d0d18)',
@@ -373,9 +407,11 @@ function createPokeCardElement(cardData, index, isAdd) {
   const num    = String(index + 1).padStart(3, '0');
   const bg     = RARITY_GRADIENT[rarity];
 
-  let mediaHtml = isVideoFile(cardData.image)
-    ? `<video src="${cardData.image}" class="pcr-photo" autoplay muted loop playsinline></video>`
-    : `<img src="${cardData.image||''}" class="pcr-photo" alt="${cardData.title}" loading="lazy"
+  const rawSrc = cardData.image || '';
+  const thumbSrc = rawSrc.startsWith('idb:') ? '' : rawSrc;
+  let mediaHtml = isVideoFile(rawSrc)
+    ? `<video src="${thumbSrc}" class="pcr-photo" autoplay muted loop playsinline></video>`
+    : `<img src="${thumbSrc}" class="pcr-photo" alt="${cardData.title}" loading="lazy"
             onerror="this.style.display='none'"/>`;
 
   slot.innerHTML = `
@@ -460,6 +496,12 @@ function renderCarousel() {
   state.allCards.forEach((card, i) => {
     const slot = createPokeCardElement(card, i, false);
     slot.addEventListener('click', () => handleCardClick(i));
+    if (card.image && card.image.startsWith('idb:')) {
+      resolveIdbSrc(card.image, url => {
+        const m = slot.querySelector('.pcr-photo');
+        if (m) m.src = url;
+      });
+    }
     el.carouselRing.appendChild(slot);
   });
 
@@ -543,9 +585,10 @@ function buildFullCard(cardData, index) {
   const stars  = RARITY_STARS[rarity];
   const num    = String(index + 1).padStart(3, '0');
   const bg     = RARITY_GRADIENT[rarity];
+  const imgSrc = (cardData.image || '').startsWith('idb:') ? '' : (cardData.image || '');
   const media  = isVideoFile(cardData.image)
-    ? `<video src="${cardData.image}" class="pcr-photo" autoplay muted loop playsinline></video>`
-    : `<img src="${cardData.image||''}" class="pcr-photo" alt="${cardData.title}"
+    ? `<video src="${imgSrc}" class="pcr-photo" autoplay muted loop playsinline></video>`
+    : `<img src="${imgSrc}" class="pcr-photo" alt="${cardData.title}"
             onerror="this.style.display='none'"/>`;
 
   return `
@@ -571,6 +614,13 @@ function openCardModal(index) {
   el.cardModalCard.className = `poke-card-full rarity-${rarity}`;
   el.cardModalCard.style.background = RARITY_GRADIENT[rarity];
   el.cardModalCard.innerHTML = buildFullCard(card, index);
+  // Resolve idb: image async
+  if (card.image && card.image.startsWith('idb:')) {
+    resolveIdbSrc(card.image, url => {
+      const m = el.cardModalCard.querySelector('.pcr-photo');
+      if (m) m.src = url;
+    });
+  }
 
   el.cardModalRarityLabel.className = `card-modal__rarity-label rarity-${rarity}`;
   el.cardModalRarityLabel.textContent = `${RARITY_STARS[rarity]} ${rarity.charAt(0).toUpperCase()+rarity.slice(1)} • ${card.type||'Memoria'}`;
@@ -595,6 +645,22 @@ function openCardModal(index) {
       el.cardModalSong.innerHTML = '';
       el.cardModalSong.style.display = 'none';
     }
+  }
+
+  // Edit / delete for user-added memories
+  const infoScroll = el.cardModalInfo.querySelector('.card-modal__info-scroll');
+  let editRow = el.cardModalInfo.querySelector('.card-modal__edit-row');
+  if (!editRow) { editRow = document.createElement('div'); editRow.className = 'card-modal__edit-row'; infoScroll.appendChild(editRow); }
+  const isUserMemory = index >= APP_DATA.gallery.length;
+  if (isUserMemory) {
+    const memIndex = index - APP_DATA.gallery.length;
+    editRow.innerHTML = `
+      <button class="ghost-button" style="width:100%;justify-content:center;gap:6px;margin-top:8px;">✏️ Editar recuerdo</button>
+      <button class="ghost-button" style="width:100%;justify-content:center;gap:6px;color:rgba(255,120,120,0.85);">🗑️ Eliminar recuerdo</button>`;
+    editRow.children[0].onclick = () => { closeCardModal(); openEditMemory(memIndex, card); };
+    editRow.children[1].onclick = () => deleteUserMemory(memIndex);
+  } else {
+    editRow.innerHTML = '';
   }
 
   el.cardModal.classList.add('is-open');
@@ -710,15 +776,52 @@ function populateSongSelect() {
   });
 }
 
+let _memEditIndex = -1;
+
 function openAddMemoryModal() {
+  _memEditIndex = -1;
   el.addMemoryModal.classList.add('is-open');
   el.addMemoryModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
 }
 function closeAddMemoryModal() {
+  _memEditIndex = -1;
   el.addMemoryModal.classList.remove('is-open');
   el.addMemoryModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+}
+
+function openEditMemory(memIndex, card) {
+  _memEditIndex = memIndex;
+  // Pre-fill form
+  const f = el.addMemoryForm;
+  if (f.elements.title)  f.elements.title.value  = card.title  || '';
+  if (f.elements.date)   f.elements.date.value   = card.date   || '';
+  if (f.elements.text)   f.elements.text.value   = card.text   || '';
+  if (f.elements.rarity) f.elements.rarity.value = card.rarity || 'comun';
+  if (el.addMemorySongSelect) el.addMemorySongSelect.value = card.songIndex ?? '';
+  // Show note about image
+  const note = f.querySelector('.edit-image-note') || (() => {
+    const p = document.createElement('p');
+    p.className = 'edit-image-note';
+    p.style.cssText = 'font-size:0.78rem;color:rgba(255,200,120,0.8);margin:0 0 8px;';
+    p.textContent = 'Deja el campo de imagen vacío para conservar la foto actual.';
+    f.querySelector('.file-upload-area').before(p);
+    return p;
+  })();
+  note.style.display = 'block';
+  el.addMemoryModal.classList.add('is-open');
+  el.addMemoryModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function deleteUserMemory(memIndex) {
+  if (!confirm('¿Eliminar este recuerdo para siempre?')) return;
+  const memories = loadUserMemories();
+  memories.splice(memIndex, 1);
+  saveUserMemories(memories);
+  closeCardModal();
+  renderCarousel();
 }
 
 function initAddMemory() {
@@ -758,17 +861,25 @@ function initAddMemory() {
     const rarityHp = {comun:60,raro:75,ultra:88,legendario:100};
 
     const finalize = (imageSrc) => {
+      const memories = loadUserMemories();
+      const existingImage = _memEditIndex >= 0 ? (memories[_memEditIndex]?.image || '') : '';
+      const finalImage = imageSrc || existingImage;
       const memory = {
-        title, date, text, rarity, image: imageSrc,
+        title, date, text, rarity, image: finalImage,
         type: 'Memoria', hp: rarityHp[rarity] || 60,
         songIndex: songIndex >= 0 ? songIndex : undefined,
         customSongSrc: pendingAudioBlob || undefined,
         customSongName: pendingAudioBlob ? pendingAudioName : undefined,
       };
-      const memories = loadUserMemories();
-      memories.push(memory);
+      if (_memEditIndex >= 0) {
+        memories[_memEditIndex] = memory;
+      } else {
+        memories.push(memory);
+      }
       saveUserMemories(memories);
       el.addMemoryForm.reset();
+      const note = el.addMemoryForm.querySelector('.edit-image-note');
+      if (note) note.style.display = 'none';
       el.filePreview.style.display = 'none';
       el.fileUploadContent.style.display = 'flex';
       pendingMedia = null; pendingAudioBlob = null; pendingAudioName = '';
@@ -779,8 +890,18 @@ function initAddMemory() {
     };
 
     if (pendingMedia) {
-      if (isVideoFile(pendingMedia.name) || pendingMedia.size > 8 * 1024 * 1024) {
+      if (isVideoFile(pendingMedia.name)) {
         finalize(URL.createObjectURL(pendingMedia));
+      } else if (pendingMedia.size > 10 * 1024 * 1024) {
+        // Foto grande → IndexedDB para persistencia entre recargas
+        const key = 'img_' + Date.now();
+        MediaDB.save(key, pendingMedia)
+          .then(() => finalize('idb:' + key))
+          .catch(() => {
+            const fr = new FileReader();
+            fr.onload = ev => finalize(ev.target.result);
+            fr.readAsDataURL(pendingMedia);
+          });
       } else {
         const reader = new FileReader();
         reader.onload = ev => finalize(ev.target.result);
@@ -1025,9 +1146,37 @@ function openUniverse() {
 
   const ctx = canvas.getContext('2d');
   let W, H, raf, running = true, t2 = 0;
+  let galaxyAngleOffset = 0, isDragging = false, lastDragX = 0;
 
   function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
   resize();
+
+  // Drag to spin 360°
+  canvas.style.cursor = 'grab';
+  canvas.addEventListener('mousedown', e => { isDragging = true; lastDragX = e.clientX; canvas.style.cursor = 'grabbing'; });
+  canvas.addEventListener('mousemove', e => { if (!isDragging) return; galaxyAngleOffset += (e.clientX - lastDragX) * 0.008; lastDragX = e.clientX; });
+  canvas.addEventListener('mouseup', () => { isDragging = false; canvas.style.cursor = 'grab'; });
+  canvas.addEventListener('mouseleave', () => { isDragging = false; canvas.style.cursor = 'grab'; });
+  canvas.addEventListener('touchstart', e => { isDragging = true; lastDragX = e.touches[0].clientX; }, {passive:true});
+  canvas.addEventListener('touchmove', e => { if (!isDragging) return; galaxyAngleOffset += (e.touches[0].clientX - lastDragX) * 0.012; lastDragX = e.touches[0].clientX; }, {passive:true});
+  canvas.addEventListener('touchend', () => { isDragging = false; });
+
+  // Palabras nuestras
+  const OUR_WORDS = [
+    {text:'Karen 💕', hue:330}, {text:'Sebastian 💙', hue:220},
+    {text:'Te Amo ❤️', hue:350}, {text:'Mi Todo', hue:40},
+    {text:'Para Siempre ✨', hue:60}, {text:'Mi Corazón', hue:10},
+    {text:'Eres mi mundo', hue:280}, {text:'Contigo', hue:200},
+    {text:'Tu sonrisa ☀️', hue:50}, {text:'Mi amor 💖', hue:340},
+    {text:'Juntos', hue:150}, {text:'Siempre 💫', hue:270},
+  ];
+  const wordParts = OUR_WORDS.map((w, i) => ({
+    ...w,
+    angle: (i / OUR_WORDS.length) * Math.PI * 2,
+    dist: 130 + (i % 3) * 52,
+    da: 0.0014 * (i % 2 === 0 ? 1 : -0.7),
+    alpha: 0,
+  }));
 
   // Galaxy particles
   const gParticles = Array.from({length:600}, (_, i) => {
@@ -1179,8 +1328,8 @@ function openUniverse() {
     // Galaxy particles (spin around couple)
     gParticles.forEach(p => {
       p.angle += p.da;
-      p.x = cx + Math.cos(p.angle) * p.dist;
-      p.y = cy - 30 + Math.sin(p.angle) * p.dist * 0.42;
+      p.x = cx + Math.cos(p.angle + galaxyAngleOffset) * p.dist;
+      p.y = cy - 30 + Math.sin(p.angle + galaxyAngleOffset) * p.dist * 0.42;
       const ga = p.a * (0.55 + 0.45*Math.sin(t2*1.8 + p.angle));
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
@@ -1196,11 +1345,29 @@ function openUniverse() {
     ctx.fillStyle = ng;
     ctx.beginPath(); ctx.arc(cx, cy-30, 200, 0, Math.PI*2); ctx.fill();
 
+    // Words nuestras — draw before couple
+    wordParts.forEach(w => {
+      w.angle += w.da;
+      w.alpha = Math.min(0.88, w.alpha + 0.003);
+      const wx = cx + Math.cos(w.angle + galaxyAngleOffset) * w.dist;
+      const wy = (cy - 30) + Math.sin(w.angle + galaxyAngleOffset) * w.dist * 0.4;
+      const pulse = 0.55 + 0.45 * Math.sin(t2 * 1.5 + w.angle);
+      ctx.globalAlpha = w.alpha * pulse;
+      ctx.font = 'bold 11px Cinzel,serif';
+      ctx.fillStyle = `hsl(${w.hue},90%,78%)`;
+      ctx.textAlign = 'center';
+      ctx.shadowColor = `hsl(${w.hue},80%,65%)`;
+      ctx.shadowBlur = 7;
+      ctx.fillText(w.text, wx, wy);
+      ctx.shadowBlur = 0;
+    });
+    ctx.globalAlpha = 1; ctx.textAlign = 'left';
+
     // Orbiting planets
     planets.forEach(pl => {
       pl.angle += pl.da;
-      const px = cx + Math.cos(pl.angle) * pl.dist;
-      const py = cy - 30 + Math.sin(pl.angle) * pl.dist * 0.42;
+      const px = cx + Math.cos(pl.angle + galaxyAngleOffset) * pl.dist;
+      const py = cy - 30 + Math.sin(pl.angle + galaxyAngleOffset) * pl.dist * 0.42;
       const pg = ctx.createRadialGradient(px,py,0,px,py,pl.r*3.5);
       pg.addColorStop(0, pl.color+'cc'); pg.addColorStop(1, 'transparent');
       ctx.fillStyle = pg;
@@ -1241,7 +1408,7 @@ function openUniverse() {
 
     // Floating hearts around couple
     for (let i = 0; i < 6; i++) {
-      const ha = t2 * 0.8 + i * Math.PI / 3;
+      const ha = t2 * 0.8 + i * Math.PI / 3 + galaxyAngleOffset * 0.25;
       const hd = 85 + 18 * Math.sin(t2 + i);
       const hx = cx + Math.cos(ha) * hd;
       const hy = cy - 30 + Math.sin(ha) * hd * 0.5;

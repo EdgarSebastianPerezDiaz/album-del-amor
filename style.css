@@ -1033,13 +1033,19 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
     opacity:1;
   }
   .boulevard-toolbar { flex-direction:column;gap:8px;align-items:stretch;text-align:center; }
-  /* Flores más pequeñas y debajo de las notas en móvil */
-  .boulevard-flowers { z-index:3; pointer-events:none; }
+  /* Flores encima del tablero en móvil */
+  .boulevard-flowers { z-index:8 !important; }
   .flower-pin { font-size:1.3rem;padding:3px 4px;pointer-events:all; }
   .flower-popup { width:min(88vw,280px); }
   .rarity-legend { flex-wrap:wrap;gap:6px;justify-content:center; }
   .hero-card { padding:clamp(24px,6vw,48px) clamp(18px,5vw,40px); }
   .hero-card h1 { font-size:clamp(1.8rem,8vw,3.2rem); }
+  /* Card modal: scrollable so song section is reachable */
+  .card-modal { overflow-y:auto;-webkit-overflow-scrolling:touch;align-items:flex-start;padding-top:52px; }
+  .card-modal__layout { max-height:none !important;overflow-y:visible !important;width:100%; }
+  .card-modal__info { max-height:none !important;overflow-y:visible !important; }
+  /* Edit/delete buttons en modal */
+  .card-modal__edit-row { display:flex;flex-direction:column;gap:6px;margin-top:14px; }
 }
 @media (max-height:760px) {
   .gallery-modal__panel { grid-template-columns:1fr;gap:12px; }
