@@ -435,6 +435,23 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 .card-modal__rarity-label.rarity-legendario { background:rgba(245,158,11,0.12);color:var(--rarity-legendario-b); }
 .card-modal__info h3 { font-size:clamp(1.4rem,3vw,2.2rem);margin:0 0 16px;color:var(--text); }
 .card-modal__info p { color:var(--muted);line-height:1.88;font-size:clamp(0.92rem,1.6vw,1.05rem); }
+.card-modal__song {
+  margin-top:18px;padding:12px 16px;border-radius:999px;
+  background:rgba(216,180,92,0.1);border:1px solid rgba(216,180,92,0.25);
+  color:var(--gold);font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  transition:background 0.2s;
+}
+.card-modal__song:hover { background:rgba(216,180,92,0.18); }
+.card-modal__song:empty { display:none; }
+.audio-upload-row {
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:10px 14px;border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);
+  background:rgba(255,255,255,0.04);
+}
+.form-label-text { font-size:0.82rem;color:var(--muted);letter-spacing:0.06em; }
+.audio-upload-label input[type=file] { color:var(--muted);font-size:0.82rem; }
+.audio-upload-name { font-size:0.78rem;color:var(--gold);font-style:italic; }
 
 .card-modal__nav {
   position:absolute;top:50%;z-index:10;width:52px;height:52px;border-radius:50%;
@@ -511,25 +528,17 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 .boulevard-board {
   border-radius:var(--radius-xl);overflow:hidden;
   position:relative;
-  /* Cinematic atmospheric background — night boulevard */
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(255,160,40,0.12) 0%, transparent 45%),
-    radial-gradient(ellipse at 15% 40%, rgba(255,140,30,0.09) 0%, transparent 35%),
-    radial-gradient(ellipse at 85% 60%, rgba(180,100,20,0.07) 0%, transparent 35%),
-    radial-gradient(ellipse at 50% 100%, rgba(100,60,20,0.1) 0%, transparent 40%),
-    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 100%),
-    linear-gradient(170deg, #0c0804, #080503, #0f0a05);
+  background:#060408;
   border:1px solid rgba(200,150,50,0.18);
   box-shadow:0 0 0 1px rgba(200,150,50,0.08), 0 30px 80px rgba(0,0,0,0.6);
   min-height:640px;
 }
 
-/* Film grain via pseudo-element */
-.boulevard-board::before {
-  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-  opacity:0.35;mix-blend-mode:overlay;
+/* SVG night scene background */
+.boulevard-bg {
+  position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
 }
+.boulevard-bg svg { width:100%;height:100%;display:block; }
 
 /* ---- Quote strip (top cinematic quotes) ---- */
 .boulevard-quotes {
@@ -603,41 +612,89 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 .boulevard-strings { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1; }
 .boulevard-notes { position:relative;z-index:2;min-height:480px; }
 
-/* ---- Sticky notes ---- */
+/* ---- Sticky notes (estilo crayón) ---- */
 .dream-note {
-  position:absolute;width:172px;min-height:128px;
-  padding:26px 12px 14px;border-radius:2px;
+  position:absolute;width:180px;min-height:140px;
+  padding:30px 14px 42px;
   cursor:move;user-select:none;
-  transition:box-shadow 0.2s;
-  box-shadow:3px 4px 10px rgba(0,0,0,0.55),0 0 0 1px rgba(0,0,0,0.12);
+  transition:box-shadow 0.2s,transform 0.15s;
+  box-shadow:
+    4px 5px 12px rgba(0,0,0,0.6),
+    inset 0 0 0 2px rgba(0,0,0,0.06);
   z-index:2;will-change:transform;word-break:break-word;
+  border-radius:3px;
+  /* Paper texture via repeating lines */
+  background-image:repeating-linear-gradient(
+    transparent, transparent 23px,
+    rgba(0,0,0,0.06) 23px, rgba(0,0,0,0.06) 24px
+  );
 }
-.dream-note:hover { box-shadow:5px 7px 18px rgba(0,0,0,0.65),0 0 0 1px rgba(0,0,0,0.15);z-index:10; }
-.dream-note.is-dragging { box-shadow:10px 14px 28px rgba(0,0,0,0.7);z-index:20; }
+.dream-note:hover { box-shadow:6px 8px 20px rgba(0,0,0,0.7);z-index:10; }
+.dream-note.is-dragging { box-shadow:12px 16px 32px rgba(0,0,0,0.75);z-index:20;transform:scale(1.05) rotate(1deg) !important; }
 
 /* Pushpin */
 .dream-note::before {
-  content:'📌';position:absolute;top:3px;left:50%;transform:translateX(-50%);
-  font-size:1.05rem;z-index:3;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+  content:'📌';position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  font-size:1.1rem;z-index:4;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.6));
 }
 /* Folded corner */
 .dream-note::after {
-  content:'';position:absolute;bottom:0;right:0;width:22px;height:22px;
-  background:linear-gradient(225deg,rgba(0,0,0,0.18) 50%,transparent 50%);
-  border-radius:0 0 2px 0;
+  content:'';position:absolute;bottom:0;right:0;width:24px;height:24px;
+  background:linear-gradient(225deg,rgba(0,0,0,0.2) 50%,transparent 50%);
+  border-radius:0 0 3px 0;
 }
 
-.dream-note--yellow  { background:linear-gradient(170deg,#fef9c3,#fef08a);color:#2e2600; }
-.dream-note--pink    { background:linear-gradient(170deg,#fce7f3,#fbcfe8);color:#4a1530; }
-.dream-note--blue    { background:linear-gradient(170deg,#dbeafe,#bfdbfe);color:#0f2d50; }
-.dream-note--green   { background:linear-gradient(170deg,#d1fae5,#a7f3d0);color:#044020; }
-.dream-note--lavender{ background:linear-gradient(170deg,#ede9fe,#ddd6fe);color:#2d1458; }
+/* Crayon color variants */
+.dream-note--yellow  { background-color:#fef9c3;color:#2e2600;border:2px solid #d4a017; }
+.dream-note--pink    { background-color:#fce7f3;color:#4a1530;border:2px solid #c05880; }
+.dream-note--blue    { background-color:#dbeafe;color:#0f2d50;border:2px solid #3b82c4; }
+.dream-note--green   { background-color:#d1fae5;color:#044020;border:2px solid #22a060; }
+.dream-note--lavender{ background-color:#ede9fe;color:#2d1458;border:2px solid #7c3abd; }
 
-.dream-note p { margin:0;font-size:0.83rem;line-height:1.55;font-family:'Lato',sans-serif;color:inherit; }
-.dream-note__actions { position:absolute;top:5px;right:5px;display:flex;gap:3px;opacity:0;transition:opacity 0.2s; }
-.dream-note:hover .dream-note__actions { opacity:1; }
-.dream-note__del { width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,0.18);border:none;cursor:pointer;font-size:0.6rem;display:grid;place-items:center;color:rgba(0,0,0,0.55);transition:background 0.2s; }
-.dream-note__del:hover { background:rgba(200,0,0,0.28);color:#900; }
+/* Crayon text — Caveat handwritten font */
+.dream-note p {
+  margin:0;font-size:1.02rem;line-height:1.55;
+  font-family:'Caveat','Comic Sans MS',cursive;
+  font-weight:600;color:inherit;
+  position:relative;z-index:1;
+}
+
+/* Note actions bar at bottom */
+.dream-note__actions {
+  position:absolute;bottom:6px;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 8px;gap:4px;
+}
+.dream-note__done-btn {
+  flex:1;padding:4px 8px;border-radius:999px;border:1.5px solid currentColor;
+  background:transparent;cursor:pointer;
+  font-family:'Caveat',cursive;font-size:0.82rem;font-weight:700;
+  color:rgba(0,0,0,0.5);transition:background 0.2s,color 0.2s;
+  line-height:1;
+}
+.dream-note__done-btn:hover { background:rgba(0,180,0,0.15);color:#006600; }
+.dream-note__del {
+  width:22px;height:22px;flex-shrink:0;border-radius:50%;
+  background:rgba(0,0,0,0.12);border:none;cursor:pointer;
+  font-size:0.65rem;display:grid;place-items:center;color:rgba(0,0,0,0.5);
+  transition:background 0.2s;
+}
+.dream-note__del:hover { background:rgba(200,0,0,0.25);color:#900; }
+
+/* Done state */
+.dream-note.is-done {
+  opacity:0.72;
+}
+.dream-note.is-done::before { content:'✅'; }
+.dream-note.is-done p { text-decoration:line-through;opacity:0.65; }
+.dream-note.is-done .dream-note__done-btn {
+  color:rgba(0,130,0,0.7);border-color:rgba(0,130,0,0.5);
+}
+.dream-note--yellow.is-done  { border-color:rgba(0,130,0,0.4); }
+.dream-note--pink.is-done    { border-color:rgba(0,130,0,0.4); }
+.dream-note--blue.is-done    { border-color:rgba(0,130,0,0.4); }
+.dream-note--green.is-done   { border-color:rgba(0,130,0,0.6); }
+.dream-note--lavender.is-done{ border-color:rgba(0,130,0,0.4); }
 
 /* Boulevard strings */
 .boulevard-string { stroke:rgba(220,170,70,0.28);stroke-width:1.5;fill:none; }

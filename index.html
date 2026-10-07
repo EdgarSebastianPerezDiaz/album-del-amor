@@ -7,7 +7,7 @@
     <title>Karen Julieth ❤️ Edgar Sebastian</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
   </head>
   <body>
 
@@ -21,7 +21,7 @@
 
     <!-- CORTINA DE INICIO -->
     <div id="startCurtain" class="start-curtain">
-      <div class="hero-card glass-panel hero-card--start">
+      <div class="hero-card glass-panel">
         <div class="hero-card__crown">♛</div>
         <span class="eyebrow">Edgar Sebastian Perez Diaz &amp; Karen Julieth Verdugo Rodriguez</span>
         <h1>Nuestra historia<br/>de amor ❤️</h1>
@@ -43,8 +43,8 @@
           <span class="music-wave music-wave--three"></span>
         </span>
         <span class="music-button__copy">
-          <strong>Música</strong>
-          <span id="musicStatus">Lista para sonar</span>
+          <strong id="musicTitle">Música</strong>
+          <span id="musicStatus">Toca para reproducir</span>
         </span>
       </button>
       <div class="topbar-counter glass-panel">
@@ -81,26 +81,11 @@
           <p>El reloj late con nosotros desde la noche en que empezamos oficialmente esta historia.</p>
         </div>
         <div class="counter-grid">
-          <article class="counter-card glass-panel">
-            <span>Meses</span>
-            <strong id="counterMonths">00</strong>
-          </article>
-          <article class="counter-card glass-panel">
-            <span>Días</span>
-            <strong id="counterDays">00</strong>
-          </article>
-          <article class="counter-card glass-panel">
-            <span>Horas</span>
-            <strong id="counterHours">00</strong>
-          </article>
-          <article class="counter-card glass-panel">
-            <span>Minutos</span>
-            <strong id="counterMinutes">00</strong>
-          </article>
-          <article class="counter-card glass-panel counter-card--wide">
-            <span>Segundos</span>
-            <strong id="counterSeconds">00</strong>
-          </article>
+          <article class="counter-card glass-panel"><span>Meses</span><strong id="counterMonths">00</strong></article>
+          <article class="counter-card glass-panel"><span>Días</span><strong id="counterDays">00</strong></article>
+          <article class="counter-card glass-panel"><span>Horas</span><strong id="counterHours">00</strong></article>
+          <article class="counter-card glass-panel"><span>Minutos</span><strong id="counterMinutes">00</strong></article>
+          <article class="counter-card glass-panel counter-card--wide"><span>Segundos</span><strong id="counterSeconds">00</strong></article>
         </div>
       </section>
 
@@ -109,64 +94,37 @@
         <div class="section-copy section-copy--center">
           <span class="section-kicker">Línea de tiempo</span>
           <h2>Momentos importantes de nosotros</h2>
-          <p>Fragmentos románticos unidos a nuestros recuerdos reales.</p>
         </div>
         <div id="timelineGrid" class="timeline-grid"></div>
       </section>
 
-      <!-- ===== CARTAS POKÉMON (CIRCULAR) ===== -->
+      <!-- ===== CARTAS ROULETTE ===== -->
       <section class="section cards-section" id="cardsSection" data-reveal>
         <div class="section-copy section-copy--center">
           <span class="section-kicker">Álbum de Momentos</span>
           <h2>Nuestras Cartas de Recuerdos</h2>
           <p>20 cartas únicas de nuestra historia. Selecciona una para abrir el recuerdo completo.</p>
         </div>
-
         <div class="rarity-legend">
           <span class="rarity-badge rarity-comun">Común ★</span>
           <span class="rarity-badge rarity-raro">Raro ★★</span>
           <span class="rarity-badge rarity-ultra">Ultra Raro ★★★</span>
           <span class="rarity-badge rarity-legendario">Legendario ★★★★</span>
         </div>
-
         <div class="carousel-wrapper">
           <div class="carousel-viewport" id="carouselViewport">
             <div class="carousel-ring" id="carouselRing"></div>
           </div>
           <div class="carousel-controls">
-            <button class="carousel-btn" id="carouselPrev" aria-label="Carta anterior">&#9664;</button>
+            <button class="carousel-btn" id="carouselPrev" aria-label="Anterior">&#9664;</button>
             <div class="carousel-counter-wrap">
               <span class="carousel-counter" id="carouselCounter">1 / 21</span>
               <span class="carousel-card-name" id="carouselCardName"></span>
             </div>
-            <button class="carousel-btn" id="carouselNext" aria-label="Carta siguiente">&#9654;</button>
+            <button class="carousel-btn" id="carouselNext" aria-label="Siguiente">&#9654;</button>
           </div>
           <p class="carousel-hint">← Arrastra o usa las flechas · Toca la carta central para abrirla →</p>
         </div>
-      </section>
-
-      <!-- MINI LIBRO -->
-      <section class="section letter-section" id="letterSection" data-reveal>
-        <div class="section-copy section-copy--center">
-          <span class="section-kicker">Mini Libro</span>
-          <h2>Cartas de un Amor con Realismo Mágico</h2>
-          <p>La carta I es la introducción. Desde la carta II, cada una corresponde a una foto.</p>
-        </div>
-        <article class="letter-paper glass-panel">
-          <div class="letter-book__meta">
-            <span id="letterBookProgress" class="card-meta">Carta 1 de 21</span>
-            <span id="letterBookSong" class="letter-book__song">Canción asociada: Intro</span>
-          </div>
-          <div class="letter-book__controls">
-            <button id="letterPrev" class="ghost-button" type="button">Carta anterior</button>
-            <button id="letterNext" class="ghost-button" type="button">Carta siguiente</button>
-            <button id="letterPlaySong" class="ghost-button" type="button">Reproducir canción</button>
-            <button id="letterOpenPhoto" class="ghost-button" type="button">Ver foto relacionada</button>
-            <button id="letterPetals" class="ghost-button" type="button">Lluvia de amor</button>
-          </div>
-          <div id="letterText" class="letter-text letter-text--book" aria-live="polite"></div>
-          <div id="letterRail" class="letter-rail"></div>
-        </article>
       </section>
 
       <!-- ===== BOULEVARD DE SUEÑOS ===== -->
@@ -174,10 +132,77 @@
         <div class="section-copy section-copy--center">
           <span class="section-kicker">Nuestros Sueños</span>
           <h2>Boulevard de Sueños</h2>
-          <p>Un tablero interactivo donde escribimos los sueños y planes que queremos cumplir juntos. Arrastra las notas, agrega nuevas.</p>
+          <p>Un tablero interactivo donde escribimos los sueños y planes que queremos cumplir juntos.</p>
         </div>
 
         <div class="boulevard-board" id="boulevardBoard">
+
+          <!-- Fondo cinematográfico (night boulevard SVG) -->
+          <div class="boulevard-bg" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="bSky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#020108"/><stop offset="55%" stop-color="#06040f"/><stop offset="100%" stop-color="#0c0910"/>
+                </linearGradient>
+                <linearGradient id="bRoad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#0a0806"/><stop offset="100%" stop-color="#1c1610"/>
+                </linearGradient>
+                <radialGradient id="bLamp" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#ffe060" stop-opacity="1"/><stop offset="35%" stop-color="#ffa020" stop-opacity="0.55"/><stop offset="100%" stop-color="#ff8000" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="bLampB" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#ffe060" stop-opacity="1"/><stop offset="40%" stop-color="#ffa020" stop-opacity="0.45"/><stop offset="100%" stop-color="#ff8000" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="bVan" cx="50%" cy="100%" r="50%">
+                  <stop offset="0%" stop-color="#c8903c" stop-opacity="0.22"/><stop offset="100%" stop-color="#c8903c" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <rect width="1200" height="520" fill="url(#bSky)"/>
+              <!-- Stars -->
+              <circle cx="42" cy="18" r="1.1" fill="#fff8e0" opacity="0.75"/><circle cx="105" cy="32" r="0.7" fill="#fff8e0" opacity="0.5"/><circle cx="198" cy="12" r="1.4" fill="#fff8e0" opacity="0.65"/><circle cx="278" cy="42" r="0.8" fill="#fff8e0" opacity="0.4"/><circle cx="385" cy="22" r="1.0" fill="#fff8e0" opacity="0.6"/><circle cx="455" cy="8" r="0.6" fill="#fff8e0" opacity="0.5"/><circle cx="528" cy="38" r="1.2" fill="#fff8e0" opacity="0.55"/><circle cx="610" cy="14" r="0.9" fill="#fff8e0" opacity="0.7"/><circle cx="695" cy="28" r="1.3" fill="#fff8e0" opacity="0.45"/><circle cx="778" cy="16" r="0.7" fill="#fff8e0" opacity="0.6"/><circle cx="862" cy="36" r="1.1" fill="#fff8e0" opacity="0.5"/><circle cx="940" cy="20" r="0.8" fill="#fff8e0" opacity="0.65"/><circle cx="1025" cy="45" r="1.0" fill="#fff8e0" opacity="0.4"/><circle cx="1118" cy="10" r="1.4" fill="#fff8e0" opacity="0.7"/><circle cx="1175" cy="30" r="0.8" fill="#fff8e0" opacity="0.5"/><circle cx="160" cy="55" r="0.6" fill="#fff8e0" opacity="0.35"/><circle cx="730" cy="52" r="0.9" fill="#fff8e0" opacity="0.4"/>
+              <!-- Buildings LEFT -->
+              <rect x="0" y="80" width="128" height="240" fill="#030206"/><rect x="0" y="55" width="72" height="265" fill="#020105"/><rect x="118" y="105" width="85" height="215" fill="#040307"/><rect x="195" y="128" width="62" height="192" fill="#030206"/><rect x="250" y="148" width="45" height="172" fill="#040307"/>
+              <!-- Windows LEFT -->
+              <rect x="12" y="95" width="11" height="9" fill="#ffd040" opacity="0.13" rx="1"/><rect x="32" y="95" width="11" height="9" fill="#ffd040" opacity="0.09" rx="1"/><rect x="52" y="95" width="11" height="9" fill="#ffd040" opacity="0.15" rx="1"/><rect x="12" y="122" width="11" height="9" fill="#ffd040" opacity="0.1" rx="1"/><rect x="52" y="122" width="11" height="9" fill="#ffd040" opacity="0.08" rx="1"/><rect x="12" y="149" width="11" height="9" fill="#ffd040" opacity="0.12" rx="1"/><rect x="130" y="125" width="11" height="9" fill="#ffd040" opacity="0.1" rx="1"/><rect x="152" y="125" width="11" height="9" fill="#ffd040" opacity="0.09" rx="1"/><rect x="205" y="148" width="10" height="9" fill="#ffd040" opacity="0.09" rx="1"/>
+              <!-- Buildings RIGHT -->
+              <rect x="1000" y="80" width="200" height="240" fill="#030206"/><rect x="1110" y="55" width="90" height="265" fill="#020105"/><rect x="1010" y="110" width="72" height="210" fill="#040307"/><rect x="958" y="132" width="55" height="188" fill="#030206"/><rect x="912" y="150" width="52" height="170" fill="#040307"/>
+              <!-- Windows RIGHT -->
+              <rect x="1012" y="100" width="11" height="9" fill="#ffd040" opacity="0.12" rx="1"/><rect x="1032" y="100" width="11" height="9" fill="#ffd040" opacity="0.08" rx="1"/><rect x="1052" y="100" width="11" height="9" fill="#ffd040" opacity="0.1" rx="1"/><rect x="1012" y="128" width="11" height="9" fill="#ffd040" opacity="0.09" rx="1"/><rect x="1052" y="128" width="11" height="9" fill="#ffd040" opacity="0.12" rx="1"/><rect x="1120" y="88" width="11" height="9" fill="#ffd040" opacity="0.11" rx="1"/><rect x="1142" y="88" width="11" height="9" fill="#ffd040" opacity="0.09" rx="1"/><rect x="1162" y="88" width="11" height="9" fill="#ffd040" opacity="0.13" rx="1"/><rect x="968" y="152" width="10" height="9" fill="#ffd040" opacity="0.09" rx="1"/>
+              <!-- Road -->
+              <polygon points="0,520 1200,520 758,268 442,268" fill="url(#bRoad)"/>
+              <line x1="442" y1="268" x2="0" y2="520" stroke="#2a2216" stroke-width="2" opacity="0.7"/>
+              <line x1="758" y1="268" x2="1200" y2="520" stroke="#2a2216" stroke-width="2" opacity="0.7"/>
+              <line x1="600" y1="268" x2="570" y2="520" stroke="#2e2618" stroke-width="2.5" stroke-dasharray="22,18" opacity="0.5"/>
+              <!-- Lamps LEFT -->
+              <line x1="492" y1="272" x2="358" y2="342" stroke="#201c14" stroke-width="2.5"/>
+              <ellipse cx="358" cy="332" rx="52" ry="52" fill="url(#bLamp)" opacity="0.75"/>
+              <circle cx="358" cy="330" r="5" fill="#fff0a0"/><circle cx="358" cy="330" r="2" fill="#fff"/>
+              <ellipse cx="358" cy="415" rx="72" ry="22" fill="#ffa020" opacity="0.06"/>
+              <line x1="458" y1="292" x2="242" y2="402" stroke="#201c14" stroke-width="3.5"/>
+              <ellipse cx="242" cy="390" rx="78" ry="78" fill="url(#bLampB)" opacity="0.68"/>
+              <circle cx="242" cy="388" r="7" fill="#fff0a0"/><circle cx="242" cy="388" r="3" fill="#fff"/>
+              <ellipse cx="242" cy="465" rx="105" ry="30" fill="#ffa020" opacity="0.07"/>
+              <line x1="418" y1="320" x2="60" y2="495" stroke="#201c14" stroke-width="4.5"/>
+              <ellipse cx="60" cy="480" rx="120" ry="110" fill="url(#bLampB)" opacity="0.45"/>
+              <ellipse cx="60" cy="515" rx="150" ry="35" fill="#ffa020" opacity="0.07"/>
+              <!-- Lamps RIGHT -->
+              <line x1="708" y1="272" x2="842" y2="342" stroke="#201c14" stroke-width="2.5"/>
+              <ellipse cx="842" cy="332" rx="52" ry="52" fill="url(#bLamp)" opacity="0.75"/>
+              <circle cx="842" cy="330" r="5" fill="#fff0a0"/><circle cx="842" cy="330" r="2" fill="#fff"/>
+              <ellipse cx="842" cy="415" rx="72" ry="22" fill="#ffa020" opacity="0.06"/>
+              <line x1="742" y1="292" x2="958" y2="402" stroke="#201c14" stroke-width="3.5"/>
+              <ellipse cx="958" cy="390" rx="78" ry="78" fill="url(#bLampB)" opacity="0.68"/>
+              <circle cx="958" cy="388" r="7" fill="#fff0a0"/><circle cx="958" cy="388" r="3" fill="#fff"/>
+              <ellipse cx="958" cy="465" rx="105" ry="30" fill="#ffa020" opacity="0.07"/>
+              <line x1="782" y1="320" x2="1140" y2="495" stroke="#201c14" stroke-width="4.5"/>
+              <ellipse cx="1140" cy="480" rx="120" ry="110" fill="url(#bLampB)" opacity="0.45"/>
+              <ellipse cx="1140" cy="515" rx="150" ry="35" fill="#ffa020" opacity="0.07"/>
+              <!-- Vanishing point glow + fog + overlay -->
+              <ellipse cx="600" cy="268" rx="190" ry="75" fill="url(#bVan)" opacity="0.9"/>
+              <ellipse cx="600" cy="510" rx="700" ry="120" fill="#c8903c" opacity="0.04"/>
+              <rect width="1200" height="520" fill="rgba(0,0,0,0.50)"/>
+            </svg>
+          </div>
 
           <!-- Frases cinematográficas -->
           <div class="boulevard-quotes">
@@ -216,7 +241,7 @@
 
     </main>
 
-    <!-- ===== MODAL CARTA POKÉMON ===== -->
+    <!-- ===== MODAL CARTA ===== -->
     <div id="cardModal" class="card-modal" aria-hidden="true" role="dialog" aria-label="Carta de recuerdo">
       <div class="card-modal__backdrop" id="cardModalBackdrop"></div>
       <div class="card-modal__layout">
@@ -229,11 +254,12 @@
             <span class="card-modal__rarity-label" id="cardModalRarityLabel"></span>
             <h3 id="cardModalTitle"></h3>
             <p id="cardModalText"></p>
+            <div class="card-modal__song" id="cardModalSong"></div>
           </div>
         </div>
       </div>
-      <button class="card-modal__nav card-modal__nav--prev" id="cardModalPrev" aria-label="Carta anterior">&#9664;</button>
-      <button class="card-modal__nav card-modal__nav--next" id="cardModalNext" aria-label="Carta siguiente">&#9654;</button>
+      <button class="card-modal__nav card-modal__nav--prev" id="cardModalPrev" aria-label="Anterior">&#9664;</button>
+      <button class="card-modal__nav card-modal__nav--next" id="cardModalNext" aria-label="Siguiente">&#9654;</button>
     </div>
 
     <!-- ===== MODAL AGREGAR RECUERDO ===== -->
@@ -251,28 +277,40 @@
             <label class="form-label">Título del Recuerdo
               <input type="text" name="title" placeholder="¿Qué pasó ese día?" required class="form-input" />
             </label>
-            <label class="form-label">Fecha del Recuerdo
+            <label class="form-label">Fecha
               <input type="date" name="date" class="form-input" />
             </label>
           </div>
           <label class="form-label">Historia completa
-            <textarea name="text" rows="4" placeholder="Cuéntalo todo... cada detalle importa." class="form-input form-textarea"></textarea>
+            <textarea name="text" rows="4" placeholder="Cuéntalo todo..." class="form-input form-textarea"></textarea>
           </label>
           <label class="file-upload-area" id="fileUploadArea">
             <input type="file" name="media" accept="image/*,video/*" id="addMemoryFile" class="file-input" />
             <div class="file-upload-content" id="fileUploadContent">
               <span class="file-upload-icon">📸</span>
-              <span class="file-upload-text">Toca para subir una foto o video</span>
-              <span class="file-upload-sub">Soporta JPG, PNG, MP4, MOV</span>
+              <span class="file-upload-text">Foto o video</span>
+              <span class="file-upload-sub">JPG, PNG, MP4, MOV</span>
             </div>
             <div class="file-preview" id="filePreview" style="display:none"></div>
           </label>
-          <label class="form-label">Importancia de este recuerdo
+          <label class="form-label">Canción para este recuerdo
+            <select name="songIndex" class="form-input form-select" id="addMemorySongSelect">
+              <option value="">— Sin canción —</option>
+            </select>
+          </label>
+          <div class="audio-upload-row">
+            <span class="form-label-text">O carga tu propia canción (MP3/M4A):</span>
+            <label class="audio-upload-label">
+              <input type="file" name="audio" accept="audio/*" id="addMemoryAudio" class="file-input" style="position:static;opacity:1;width:auto;height:auto;" />
+            </label>
+            <span id="audioUploadName" class="audio-upload-name"></span>
+          </div>
+          <label class="form-label">Importancia
             <select name="rarity" class="form-input form-select">
-              <option value="comun">Común ★ — Un momento bonito</option>
-              <option value="raro">Raro ★★ — Un momento especial</option>
-              <option value="ultra">Ultra Raro ★★★ — Un momento único</option>
-              <option value="legendario">Legendario ★★★★ — Un momento que cambió todo</option>
+              <option value="comun">Común ★</option>
+              <option value="raro">Raro ★★</option>
+              <option value="ultra">Ultra Raro ★★★</option>
+              <option value="legendario">Legendario ★★★★</option>
             </select>
           </label>
           <button type="submit" class="primary-button add-memory-submit">
@@ -293,44 +331,21 @@
         <form id="addDreamForm">
           <textarea id="dreamText" name="dream" rows="4" placeholder="Ej: Visitar las playas de Cartagena juntos..." required class="form-input form-textarea"></textarea>
           <div class="note-color-row">
-            <span>Color de nota:</span>
+            <span>Color:</span>
             <div class="note-colors">
-              <button type="button" data-color="yellow" class="note-color-btn active" style="background:#fef08a" title="Amarillo"></button>
-              <button type="button" data-color="pink" class="note-color-btn" style="background:#fce7f3" title="Rosa"></button>
-              <button type="button" data-color="blue" class="note-color-btn" style="background:#dbeafe" title="Azul"></button>
-              <button type="button" data-color="green" class="note-color-btn" style="background:#d1fae5" title="Verde"></button>
-              <button type="button" data-color="lavender" class="note-color-btn" style="background:#ede9fe" title="Lavanda"></button>
+              <button type="button" data-color="yellow"   class="note-color-btn active" style="background:#fef08a"></button>
+              <button type="button" data-color="pink"     class="note-color-btn"        style="background:#fce7f3"></button>
+              <button type="button" data-color="blue"     class="note-color-btn"        style="background:#dbeafe"></button>
+              <button type="button" data-color="green"    class="note-color-btn"        style="background:#d1fae5"></button>
+              <button type="button" data-color="lavender" class="note-color-btn"        style="background:#ede9fe"></button>
             </div>
           </div>
-          <button type="submit" class="primary-button">
-            <span class="btn-shimmer"></span>
-            Fijar al tablero 📌
-          </button>
+          <button type="submit" class="primary-button"><span class="btn-shimmer"></span>Fijar al tablero 📌</button>
         </form>
       </div>
     </div>
 
-    <!-- MODAL GALERÍA (legacy, para compatibilidad con mini libro) -->
-    <section id="galleryModal" class="gallery-modal" aria-hidden="true">
-      <div class="gallery-modal__backdrop" data-modal-close></div>
-      <article class="gallery-modal__panel glass-panel">
-        <button class="modal-close" type="button" data-modal-close aria-label="Cerrar galería">×</button>
-        <button id="modalPrev" class="modal-nav modal-nav--prev" type="button" aria-label="Imagen anterior">Anterior</button>
-        <button id="modalNext" class="modal-nav modal-nav--next" type="button" aria-label="Imagen siguiente">Siguiente</button>
-        <div class="gallery-modal__media">
-          <img id="modalImage" alt="" />
-          <video id="modalVideo" controls playsinline style="display:none;width:100%;height:100%;object-fit:contain;background:#000;"></video>
-        </div>
-        <div class="gallery-modal__copy">
-          <span id="modalDate" class="gallery-modal__date"></span>
-          <span id="modalSong" class="gallery-modal__song"></span>
-          <h3 id="modalTitle"></h3>
-          <p id="modalCaption"></p>
-        </div>
-      </article>
-    </section>
-
-    <noscript>Esta experiencia necesita JavaScript para animaciones, contador, galería y carta interactiva.</noscript>
+    <noscript>Esta experiencia necesita JavaScript.</noscript>
     <script src="script.js"></script>
   </body>
 </html>

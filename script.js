@@ -1,262 +1,186 @@
 /* =====================================================
    Karen Julieth & Edgar Sebastian — Album de Amor
    ===================================================== */
-
 'use strict';
 
-/* ───────────────────────────── DATA ───────────────────────────── */
+/* ─────────────── DATA ─────────────── */
 const APP_DATA = {
   startDate: new Date('2026-06-07T19:00:00'),
+
+  /* Canciones — agrega más MP3 en assets/music/ y añádelas aquí */
   songs: [
-    { title: 'Perfect',  artist: 'Ed Sheeran',    src: '' },
-    { title: 'Happier',  artist: 'Ed Sheeran',    src: '' },
-    { title: 'Die With A Smile', artist: 'Bruno Mars & Lady Gaga', src: '' },
-    { title: 'All of Me',        artist: 'John Legend',            src: '' },
-    { title: 'Lover',            artist: 'Taylor Swift',           src: '' },
-    { title: 'Can\'t Help Falling In Love', artist: 'Elvis Presley', src: '' },
-    { title: 'A Thousand Years', artist: 'Christina Perri',        src: '' },
-    { title: 'Thinking Out Loud',artist: 'Ed Sheeran',             src: '' },
-    { title: 'Tenerife Sea',     artist: 'Ed Sheeran',             src: '' },
-    { title: 'Make You Feel My Love', artist: 'Adele',             src: '' },
-    { title: 'Just The Way You Are', artist: 'Bruno Mars',         src: '' },
-    { title: 'I Will Always Love You', artist: 'Whitney Houston',  src: '' },
-    { title: 'My Heart Will Go On', artist: 'Celine Dion',         src: '' },
-    { title: 'Endless Love',     artist: 'Diana Ross & Lionel Richie', src: '' },
-    { title: 'At Last',          artist: 'Etta James',             src: '' },
-    { title: 'La Vie En Rose',   artist: 'Édith Piaf',             src: '' },
-    { title: 'Fly Me To The Moon', artist: 'Frank Sinatra',        src: '' },
-    { title: 'Stand By Me',      artist: 'Ben E. King',            src: '' },
-    { title: 'Your Song',        artist: 'Elton John',             src: '' },
-    { title: 'Something',        artist: 'The Beatles',            src: '' },
+    { title: 'Solo Para Ti',          artist: 'Camila',                        src: 'assets/music/Camila - Solo Para Ti (Alt. Version).mp3' },
+    { title: 'Prometo',               artist: 'Fonseca',                       src: 'assets/music/Fonseca - Prometo (LyricLetra).mp3' },
+    { title: 'Para Tu Amor',          artist: 'Juanes',                        src: 'assets/music/Juanes - Para Tu Amor (Official Music Video).mp3' },
+    { title: 'Estar Contigo',         artist: 'Alex Ubago ft. La Oreja de Van Gogh', src: 'assets/music/Alex Ubago - Estar contigo ft. La oreja de Van Gogh (Videoclip Oficial).mp3' },
+    { title: 'Lo Poco Que Yo Quiero', artist: 'Morat & Silvestre Dangond',     src: 'assets/music/Morat, Silvestre Dangond - Lo poco que yo quiero (Video Oficial).mp3' },
+    { title: 'Me Cambiaste la Vida',  artist: 'Río Roma',                      src: 'assets/music/Río Roma - Me Cambiaste la Vida (Videoclip).mp3' },
+    { title: 'Amor del Bueno',        artist: 'Reyli Barba',                   src: 'assets/music/Reyli Barba - Amor del Bueno (Video).mp3' },
+    { title: 'Sabrás',                artist: 'Herencia de Timbiquí',          src: 'assets/music/Sabrás, Herencia de Timbiquí - Video Oficial.mp3' },
+    { title: 'Mi Suerte',             artist: '',                              src: 'assets/music/Mi Suerte.mp3' },
+    { title: 'The Reason',            artist: 'Hoobastank',                    src: 'assets/music/Hoobastank - The Reason (Official Music Video).mp3' },
+    /* Andrés Cepeda — pon el MP3 en assets/music/ con este nombre exacto */
+    { title: 'Tan Solo Un Momento',   artist: 'Andrés Cepeda',                 src: 'assets/music/Andres Cepeda - Tan Solo Un Momento.mp3' },
+    { title: 'El Camino',             artist: 'Andrés Cepeda',                 src: 'assets/music/Andres Cepeda - El Camino.mp3' },
+    { title: 'Mañana',                artist: 'Andrés Cepeda',                 src: 'assets/music/Andres Cepeda - Manana.mp3' },
+    /* Santiago Cruz */
+    { title: 'Eres',                  artist: 'Santiago Cruz',                 src: 'assets/music/Santiago Cruz - Eres.mp3' },
+    { title: 'La Respuesta',          artist: 'Santiago Cruz',                 src: 'assets/music/Santiago Cruz - La Respuesta.mp3' },
+    { title: 'Un Millón de Recuerdos',artist: 'Santiago Cruz',                 src: 'assets/music/Santiago Cruz - Un Millon de Recuerdos.mp3' },
+    /* Manuel Medrano */
+    { title: 'Sueños',                artist: 'Manuel Medrano',                src: 'assets/music/Manuel Medrano - Suenos.mp3' },
+    { title: 'Tu Nombre',             artist: 'Manuel Medrano',                src: 'assets/music/Manuel Medrano - Tu Nombre.mp3' },
+    { title: 'No Te Vayas',           artist: 'Manuel Medrano',                src: 'assets/music/Manuel Medrano - No Te Vayas.mp3' },
   ],
+
   gallery: [
-    { date: 'El primer beso',              title: 'El Primer Beso',           image: '3.jpeg',  rarity:'legendario', type:'Amor',     hp:100, text:'El instante en que todo cambió. El universo pausó su respiración para que nosotros empezáramos la nuestra juntos. Ese beso que selló nuestro primer sí.' },
-    { date: 'Las madrugadas de Instagram', title: 'Madrugadas de Instagram',  image: '1.jpeg',  rarity:'raro',       type:'Memoria',  hp:70,  text:'Horas que se convirtieron en puentes. Cada mensaje una confesión, cada emoji una caricia digital que cruzaba la distancia antes de que supiéramos que éramos esto.' },
-    { date: 'La primera foto juntos',      title: 'Primera Foto',             image: '2.jpeg',  rarity:'ultra',      type:'Historia', hp:85,  text:'La primera vez que la cámara nos capturó como un "nosotros". Esa foto guarda más que una imagen: guarda el inicio de todo.' },
-    { date: 'Nuestro primer plan',         title: 'El Primer Plan',           image: '4.jpeg',  rarity:'raro',       type:'Aventura', hp:75,  text:'El día que dijimos "vamos" sin saber bien a dónde, pero sabiendo que juntos era suficiente brújula para cualquier camino.' },
-    { date: 'Cuando me dijiste que sí',    title: 'El Gran Sí',               image: '5.jpeg',  rarity:'legendario', type:'Amor',     hp:100, text:'El momento exacto en que Karen Julieth dijo sí y mi corazón escribió la página más importante de toda su historia.' },
-    { date: 'La primera vez que cocinamos',title: 'Cocinando Juntos',         image: '6.jpeg',  rarity:'comun',      type:'Hogar',    hp:60,  text:'Harina en la ropa, risas en la cocina y el descubrimiento de que incluso los errores culinarios saben mejor cuando los compartimos.' },
-    { date: 'Ese atardecer inolvidable',   title: 'El Atardecer',             image: '7.jpeg',  rarity:'ultra',      type:'Magia',    hp:90,  text:'El cielo pintó naranja y rosa como si supiera que estábamos ahí. Nos quedamos en silencio porque las palabras sobraban.' },
-    { date: 'La noche de estrellas',       title: 'Noche de Estrellas',       image: '8.jpeg',  rarity:'ultra',      type:'Magia',    hp:88,  text:'Acostados mirando el cielo, cada estrella se convirtió en una promesa que no necesitaba palabras para ser real y eterna.' },
-    { date: 'Nuestro primer viaje',        title: 'Primer Viaje',             image: '9.jpeg',  rarity:'legendario', type:'Aventura', hp:95,  text:'El primer mapa que dibujamos juntos. La primera maleta compartida. El primer horizonte que fue nuestro y no mío o tuyo.' },
-    { date: 'La llamada de medianoche',    title: 'Llamada de Medianoche',    image: '10.jpeg', rarity:'raro',       type:'Conexión', hp:72,  text:'A las 2am, cuando el mundo dormía, nuestras voces se encontraron y la distancia dejó de existir por un rato mágico.' },
-    { date: 'Bailando bajo la lluvia',     title: 'Lluvia y Baile',           image: '11.jpeg', rarity:'ultra',      type:'Alegría',  hp:87,  text:'La lluvia llegó de sorpresa y tú dijiste "vamos" y bailamos sin música más que la del cielo, mojados y absolutamente felices.' },
-    { date: 'El día que lloramos juntos',  title: 'Lágrimas Compartidas',     image: '12.jpeg', rarity:'raro',       type:'Verdad',   hp:80,  text:'Descubrimos que el amor también es llorar sin vergüenza, sostenerse cuando todo tiembla y saber que no estás solo en la tormenta.' },
-    { date: 'Nuestra canción favorita',    title: 'Nuestra Canción',          image: '13.jpeg', rarity:'comun',      type:'Música',   hp:65,  text:'La primera vez que una canción se convirtió en "nuestra". Cada vez que suena, regresamos a ese momento como si el tiempo no existiera.' },
-    { date: 'El cumpleaños especial',      title: 'Cumpleaños Especial',      image: '14.jpeg', rarity:'ultra',      type:'Celebración', hp:92, text:'Un año más de ella en el mundo y yo queriendo que todos los años siguientes tengan su nombre en la primera página.' },
-    { date: 'La promesa del futuro',       title: 'Promesa del Futuro',       image: '15.jpeg', rarity:'legendario', type:'Amor',     hp:100, text:'El día que el mañana dejó de ser incierto porque lo prometimos juntos. El futuro tiene nuestros nombres escritos lado a lado.' },
-    { date: 'Nuestro lugar secreto',       title: 'Lugar Secreto',            image: '16.jpeg', rarity:'ultra',      type:'Refugio',  hp:88,  text:'Ese rincón del mundo que nadie más conoce, donde el tiempo corre diferente y siempre podemos ser exactamente quienes somos.' },
-    { date: 'La sorpresa perfecta',        title: 'La Gran Sorpresa',         image: '17.jpeg', rarity:'raro',       type:'Magia',    hp:78,  text:'Planifiqué todo durante semanas y cuando lo viste, tu sonrisa valió más que cualquier regalo que el dinero pueda comprar.' },
-    { date: 'Nuestro primer año',          title: 'Un Año Juntos',            image: '18.jpeg', rarity:'legendario', type:'Hito',     hp:100, text:'365 días llenos de aprendizajes, crecimientos, complicidades y la certeza de que elegirte fue la mejor decisión de mi vida.' },
-    { date: 'La selfie del corazón',       title: 'Selfie del Corazón',       image: '19.jpeg', rarity:'comun',      type:'Cotidiano',hp:62,  text:'Una foto cualquiera que guarda extraordinario: el destello en tus ojos cuando estás feliz y sé que soy parte de ese brillo.' },
-    { date: 'Hoy y siempre',              title: 'Hoy y Siempre',            image: '20.jpeg', rarity:'legendario', type:'Amor',     hp:100, text:'Este recuerdo aún se está escribiendo. Cada día que pasa agrega palabras nuevas a esta historia que no tiene final planeado.' },
+    { date:'El primer beso',              title:'El Primer Beso',           image:'assets/img/3.jpeg',  rarity:'legendario', type:'Amor',       hp:100, songIndex:0,  text:'El instante en que todo cambió. El universo pausó su respiración para que nosotros empezáramos la nuestra juntos. Ese beso que selló nuestro primer sí.' },
+    { date:'Las madrugadas de Instagram', title:'Madrugadas de Instagram',  image:'assets/img/1.jpeg',  rarity:'raro',       type:'Memoria',    hp:70,  songIndex:1,  text:'Horas que se convirtieron en puentes. Cada mensaje una confesión, cada emoji una caricia digital que cruzaba la distancia.' },
+    { date:'La primera foto juntos',      title:'Primera Foto Juntos',      image:'assets/img/2.jpeg',  rarity:'ultra',      type:'Historia',   hp:85,  songIndex:2,  text:'La primera vez que la cámara nos capturó como un "nosotros". Esa foto guarda el inicio de todo.' },
+    { date:'Nuestro primer plan',         title:'El Primer Plan',           image:'assets/img/4.jpeg',  rarity:'raro',       type:'Aventura',   hp:75,  songIndex:3,  text:'El día que dijimos "vamos" sin saber a dónde, pero sabiendo que juntos era suficiente brújula.' },
+    { date:'Cuando me dijiste que sí',    title:'El Gran Sí',               image:'assets/img/5.jpeg',  rarity:'legendario', type:'Amor',       hp:100, songIndex:4,  text:'El momento exacto en que Karen Julieth dijo sí y mi corazón escribió la página más importante de su historia.' },
+    { date:'La primera vez que cocinamos',title:'Cocinando Juntos',         image:'assets/img/6.jpeg',  rarity:'comun',      type:'Hogar',      hp:60,  songIndex:5,  text:'Harina en la ropa, risas en la cocina. Descubrimos que incluso los errores culinarios saben mejor juntos.' },
+    { date:'Ese atardecer inolvidable',   title:'El Atardecer',             image:'assets/img/7.jpeg',  rarity:'ultra',      type:'Magia',      hp:90,  songIndex:6,  text:'El cielo pintó naranja y rosa. Nos quedamos en silencio porque las palabras sobraban.' },
+    { date:'La noche de estrellas',       title:'Noche de Estrellas',       image:'assets/img/8.jpeg',  rarity:'ultra',      type:'Magia',      hp:88,  songIndex:7,  text:'Acostados mirando el cielo, cada estrella testigo de que este amor es real, luminoso y nuestro.' },
+    { date:'Nuestro primer viaje',        title:'Primer Viaje',             image:'assets/img/9.jpeg',  rarity:'legendario', type:'Aventura',   hp:95,  songIndex:8,  text:'El primer mapa que dibujamos juntos. La primera maleta compartida. El primer horizonte que fue nuestro.' },
+    { date:'La llamada de medianoche',    title:'Llamada de Medianoche',    image:'assets/img/10.jpeg', rarity:'raro',       type:'Conexión',   hp:72,  songIndex:9,  text:'A las 2am, cuando el mundo dormía, nuestras voces se encontraron y la distancia dejó de existir.' },
+    { date:'Bailando bajo la lluvia',     title:'Lluvia y Baile',           image:'assets/img/11.jpeg', rarity:'ultra',      type:'Alegría',    hp:87,  songIndex:10, text:'La lluvia llegó de sorpresa y tú dijiste "vamos" y bailamos mojados y absolutamente felices.' },
+    { date:'El día que lloramos juntos',  title:'Lágrimas Compartidas',     image:'assets/img/12.jpeg', rarity:'raro',       type:'Verdad',     hp:80,  songIndex:11, text:'Descubrimos que el amor también es llorar sin vergüenza, sostenerse cuando todo tiembla.' },
+    { date:'Nuestra canción favorita',    title:'Nuestra Canción',          image:'assets/img/13.jpeg', rarity:'comun',      type:'Música',     hp:65,  songIndex:12, text:'Una canción que se convirtió en nuestra. Ahora cada vez que suena el mundo se detiene.' },
+    { date:'El cumpleaños especial',      title:'Cumpleaños Especial',      image:'assets/img/14.jpeg', rarity:'ultra',      type:'Celebración',hp:92,  songIndex:13, text:'Un año más de ella en el mundo y yo queriendo celebrar cada uno de esos años.' },
+    { date:'La promesa del futuro',       title:'Promesa del Futuro',       image:'assets/img/15.jpeg', rarity:'legendario', type:'Amor',       hp:100, songIndex:14, text:'El día que prometimos el mañana juntos. El futuro dejó de ser incierto.' },
+    { date:'Nuestro lugar secreto',       title:'Lugar Secreto',            image:'assets/img/16.jpeg', rarity:'ultra',      type:'Refugio',    hp:88,  songIndex:15, text:'Ese rincón del mundo donde el tiempo corre diferente y somos exactamente quienes somos.' },
+    { date:'La sorpresa perfecta',        title:'La Gran Sorpresa',         image:'assets/img/17.jpeg', rarity:'raro',       type:'Magia',      hp:78,  songIndex:16, text:'Planifiqué todo durante semanas y cuando la viste, tu cara valió más que todo el esfuerzo.' },
+    { date:'Nuestro primer año',          title:'Un Año Juntos',            image:'assets/img/18.jpeg', rarity:'legendario', type:'Hito',       hp:100, songIndex:17, text:'365 días aprendiendo a amarte mejor. Un año entero eligiéndote.' },
+    { date:'La selfie del corazón',       title:'Selfie del Corazón',       image:'assets/img/19.jpeg', rarity:'comun',      type:'Cotidiano',  hp:62,  songIndex:18, text:'Una foto cualquiera que guarda algo extraordinario: el destello en tus ojos cuando eres feliz.' },
+    { date:'Hoy y siempre',              title:'Hoy y Siempre',            image:'assets/img/20.jpeg', rarity:'legendario', type:'Amor',       hp:100, songIndex:0,  text:'Este recuerdo aún se está escribiendo. Cada día que pasa agrega palabras nuevas a esta historia sin final.' },
   ],
+
   timeline: [
-    { date: 'Junio 2026',       title: 'El comienzo oficial',           image: '3.jpeg', text: 'El día que dijimos sí y el mundo adquirió un nuevo significado. Primer capítulo de la historia más bonita.' },
-    { date: 'Antes de nosotros', title: 'Las madrugadas previas',       image: '1.jpeg', text: 'Mensajes a deshoras, risa fácil, el presentimiento de que algo grande estaba naciendo entre palabras.' },
-    { date: 'La primera foto',   title: 'Primera imagen juntos',        image: '2.jpeg', text: 'El universo quiso dejar constancia visual de que éramos reales. Una foto para la historia.' },
-    { date: 'En construcción',   title: 'Todo lo que viene',            image: '4.jpeg', text: 'El futuro lleno de planes, aventuras y momentos que todavía no existen pero ya los esperamos con el corazón abierto.' },
-  ],
-  letters: [
-    { title: 'Carta I — El inicio', song: 'Perfect — Ed Sheeran', text: `Querida Karen Julieth,\n\nHubo un momento exacto en que el universo decidió que nuestros caminos debían cruzarse, y ese momento tiene nombre, hora y una sonrisa tuya que no he podido borrar de la memoria.\n\nEsta página existe porque algunas historias merecen ser guardadas con cuidado, como se guardan las cartas de amor: en un lugar seguro, lejos del tiempo que todo lo consume.\n\nCon todo mi amor,\nEdgar Sebastian ♥` },
-    { title: 'Carta II — El primer beso',     song: 'A Thousand Years — Christina Perri',  text: `Karen,\n\nHay besos que son sólo besos. Y luego está ese, el nuestro, que fue una declaración entera. Un poema sin palabras. Una respuesta a todas las preguntas que no sabía que me estaba haciendo.\n\nCuando cerraste los ojos, cerré el capítulo de la soledad para siempre.\n\nTuyo,\nEdgar ♥` },
-    { title: 'Carta III — Las madrugadas',    song: 'Thinking Out Loud — Ed Sheeran',      text: `Para Karen,\n\nLas 2am contigo son diferentes. El mundo duerme pero nosotros inventábamos universos en letras y emojis. Cada notificación era un regalo anticipado.\n\nEn esas madrugadas aprendí que el tiempo contigo no se pierde: se invierte en algo que vale la eternidad.\n\nSiempre,\nEdgar ♥` },
-    { title: 'Carta IV — La primera foto',    song: 'All of Me — John Legend',             text: `Mi Karen,\n\nLa primera foto juntos guarda más que imagen: guarda el instante preciso en que dejamos de ser dos historias separadas para convertirnos en un capítulo conjunto.\n\nMira esa foto y verás en mis ojos que ya sabía que eras todo.\n\nCon amor,\nEdgar ♥` },
-    { title: 'Carta V — El primer plan',      song: 'Happier — Ed Sheeran',                text: `Karen Julieth,\n\nEse día tomamos la decisión más sencilla del mundo: estar juntos en algún lugar del mapa. No importaba el destino. Tú eras el destino.\n\nAprendí que el mejor viaje es cualquiera que hagas a mi lado.\n\nPara siempre tuyo,\nEdgar ♥` },
-    { title: 'Carta VI — El gran sí',         song: 'Can\'t Help Falling in Love — Elvis', text: `Mi amor,\n\nCuando dijiste sí, el tiempo se detuvo. El corazón aceleró. El mundo adquirió colores que no tenía antes.\n\nEse sí tuyo es la respuesta más hermosa que he recibido en toda mi vida. Y la más importante.\n\nCompletamente tuyo,\nEdgar ♥` },
-    { title: 'Carta VII — Cocinando',         song: 'Your Song — Elton John',              text: `Para Karen,\n\nLa harina en la ropa y las risas en la cocina me enseñaron que los momentos imperfectos contigo son perfectos. Que no necesito planearlo todo para que salga bien, si estás tú presente.\n\nCon cariño,\nEdgar ♥` },
-    { title: 'Carta VIII — El atardecer',     song: 'La Vie En Rose — Édith Piaf',         text: `Karen,\n\nEl cielo pintó naranja ese atardecer y yo sólo pude mirarte a ti. Porque ningún color del mundo compite con la luz que tienes cuando eres feliz.\n\nEse silencio que compartimos fue la conversación más profunda de mi vida.\n\nTuyo,\nEdgar ♥` },
-    { title: 'Carta IX — Noche de estrellas', song: 'Fly Me To The Moon — Frank Sinatra',  text: `Mi Karen,\n\nAcostados bajo el cielo contándote cosas que nunca le he dicho a nadie. Cada estrella testigo de que este amor es real y luminoso y nuestro.\n\nEl universo entero conspira para que sigamos aquí, juntos.\n\nSiempre,\nEdgar ♥` },
-    { title: 'Carta X — El primer viaje',     song: 'Stand By Me — Ben E. King',           text: `Para Karen Julieth,\n\nEl primer viaje juntos redefinió todo lo que sabía sobre la aventura. Resultó que el mejor destino no está en el mapa sino en la persona que lleva tu mano en el camino.\n\nContigo quiero perderme en todos los mapas del mundo.\n\nCon amor eterno,\nEdgar ♥` },
-    { title: 'Carta XI — Medianoche',         song: 'Tenerife Sea — Ed Sheeran',           text: `Karen,\n\nA las 2am cuando el mundo duerme, tu voz es el único sonido que necesito. Cada llamada un puente entre tu mundo y el mío, construido en segundos, sólido como el amor.\n\nTuyo a cualquier hora,\nEdgar ♥` },
-    { title: 'Carta XII — La lluvia',         song: 'Die With A Smile — Bruno Mars',       text: `Mi Karen,\n\nBailaste bajo la lluvia sin importarte nada y en ese momento te vi como eres: libre, luminosa, completamente viva. El agua no te mojó, te reveló.\n\nEnamorado de ti para siempre,\nEdgar ♥` },
-    { title: 'Carta XIII — Las lágrimas',     song: 'Make You Feel My Love — Adele',       text: `Para Karen,\n\nEl día que lloramos juntos descubrí que el amor verdadero no es sólo risa sino también abrazo en la tormenta, mano tendida en la oscuridad, presencia cuando más duele.\n\nAquí estaré siempre,\nEdgar ♥` },
-    { title: 'Carta XIV — Nuestra canción',   song: 'Something — The Beatles',             text: `Karen Julieth,\n\nUna canción que se convirtió en nuestra cuando la escuchamos juntos. Ahora cada vez que suena el mundo se detiene y sólo existimos nosotros dos en ese segundo perfecto.\n\nCon música y amor,\nEdgar ♥` },
-    { title: 'Carta XV — Tu cumpleaños',      song: 'Lover — Taylor Swift',                text: `Mi Karen,\n\nUn año más de ti en el mundo y yo queriendo celebrar cada uno de esos años. No sólo tu cumpleaños sino el regalo que significa tu existencia entera para mí.\n\nFeliz de compartir el tiempo contigo,\nEdgar ♥` },
-    { title: 'Carta XVI — La promesa',        song: 'Endless Love — Diana Ross',           text: `Para Karen,\n\nEl día que prometimos el mañana juntos, el futuro dejó de ser incierto. Ahora lo que viene tiene dirección, tiene nombre, tiene tus ojos como brújula.\n\nPrometido para siempre,\nEdgar ♥` },
-    { title: 'Carta XVII — Lugar secreto',    song: 'I Will Always Love You — Whitney',    text: `Karen mía,\n\nEse lugar que sólo nosotros conocemos, donde el tiempo corre diferente y somos exactamente quienes somos sin máscaras ni miedo. Ese rincón del mundo tiene tu perfume.\n\nTuyo en ese lugar y en todos,\nEdgar ♥` },
-    { title: 'Carta XVIII — La sorpresa',     song: 'Just The Way You Are — Bruno Mars',   text: `Mi amor,\n\nPlanifiqué la sorpresa durante semanas y cuando la viste, tu cara valió más que todo el esfuerzo combinado. Ese momento guardado para siempre en los archivos del corazón.\n\nSiempre queriendo sorprenderte,\nEdgar ♥` },
-    { title: 'Carta XIX — Un año',            song: 'At Last — Etta James',                text: `Para Karen Julieth,\n\n365 días. 8760 horas. Un año entero aprendiendo a amarte mejor cada día. Un año entero eligiéndote y descubriendo que es la decisión más fácil y más importante de mi vida.\n\nCon un año de amor y toda la vida por delante,\nEdgar ♥` },
-    { title: 'Carta XX — Hoy y siempre',      song: 'My Heart Will Go On — Celine Dion',   text: `Mi Karen Julieth,\n\nEste recuerdo aún se está escribiendo. Hoy, mañana, todos los días que vienen. El amor no tiene punto final, tiene puntos suspensivos que se convierten en nuevos capítulos.\n\nHoy y siempre,\nEdgar Sebastian Perez Diaz ♥` },
-    { title: 'Carta XXI — Nuestro álbum',     song: 'Perfect — Ed Sheeran',                text: `Querida Karen,\n\nSi llegas a esta carta XXI es porque alguien la creó para guardar un momento nuevo, un recuerdo que se sumó a nuestra historia. Esta página crece contigo, con nosotros.\n\nCada carta guardada es un capítulo más de esta historia infinita.\n\nCon todo el amor del mundo,\nEdgar Sebastian ♥` },
+    { date:'Junio 2026',       title:'El comienzo oficial',    image:'assets/img/3.jpeg',  text:'El día que dijimos sí y el mundo adquirió un nuevo significado.' },
+    { date:'Antes de nosotros', title:'Las madrugadas previas', image:'assets/img/1.jpeg',  text:'Mensajes a deshoras, risa fácil, el presentimiento de que algo grande estaba naciendo.' },
+    { date:'La primera foto',   title:'Primera imagen juntos',  image:'assets/img/2.jpeg',  text:'El universo quiso dejar constancia visual de que éramos reales.' },
+    { date:'En construcción',   title:'Todo lo que viene',      image:'assets/img/4.jpeg',  text:'El futuro lleno de planes y aventuras que todavía no existen pero ya los esperamos.' },
   ],
 };
 
 const RARITY_STARS = { comun:'★', raro:'★★', ultra:'★★★', legendario:'★★★★' };
 
-/* ───────────── BOULEVARD QUOTES ───────────── */
+/* ─────────────── BOULEVARD QUOTES ─────────────── */
 const BOULEVARD_QUOTES = [
-  { text: '"A veces hay que caminar por el boulevard más oscuro para encontrar la luz que siempre estuvo dentro de ti."', attr: '— Boulevard, 2014' },
-  { text: '"No es tarde para empezar a vivir la vida que siempre soñaste. Nunca lo es."', attr: '— Boulevard, 2014' },
-  { text: '"El amor verdadero no busca el camino más corto. Busca el camino correcto, aunque sea largo y tortuoso."', attr: '— Boulevard, 2014' },
-  { text: '"Hay quienes sueñan con ojos cerrados y quienes construyen el sueño con ojos abiertos. Sé de los segundos."', attr: '— Boulevard, 2014' },
-  { text: '"Cada paso en el boulevard es una historia. Cada historia es una vida. Cada vida merece ser vivida completamente."', attr: '— Boulevard, 2014' },
-  { text: '"El futuro pertenece a quienes creen en la belleza de sus sueños y tienen el valor de perseguirlos."', attr: '— Eleanor Roosevelt' },
-  { text: '"Los sueños son el mapa del alma: te dicen a dónde ir cuando el mundo intenta decirte que te quedes quieto."', attr: '— Anónimo' },
-  { text: '"Soñar juntos no es duplicar el sueño. Es multiplicarlo por infinito."', attr: '— Karen & Sebastian' },
+  { text: '"A veces hay que caminar por el boulevard más oscuro para encontrar la luz que siempre estuvo dentro de ti."',          attr: '— Boulevard, 2014' },
+  { text: '"No es tarde para empezar a vivir la vida que siempre soñaste. Nunca lo es."',                                          attr: '— Boulevard, 2014' },
+  { text: '"El amor verdadero no busca el camino más corto. Busca el camino correcto, aunque sea largo y tortuoso."',              attr: '— Boulevard, 2014' },
+  { text: '"Hay quienes sueñan con ojos cerrados y quienes construyen el sueño con ojos abiertos. Sé de los segundos."',          attr: '— Boulevard, 2014' },
+  { text: '"Cada paso en el boulevard es una historia. Cada historia es una vida. Cada vida merece ser vivida completamente."',    attr: '— Boulevard, 2014' },
+  { text: '"El futuro pertenece a quienes creen en la belleza de sus sueños y tienen el valor de perseguirlos."',                  attr: '— Eleanor Roosevelt' },
+  { text: '"Los sueños son el mapa del alma: te dicen a dónde ir cuando el mundo intenta decirte que te quedes quieto."',         attr: '— Anónimo' },
+  { text: '"Soñar juntos no es duplicar el sueño. Es multiplicarlo por infinito."',                                                attr: '— Karen & Sebastian' },
 ];
 
-/* ───────────── STATE ───────────── */
+/* ─────────────── STATE ─────────────── */
 const state = {
-  carouselIndex: 0,
-  carouselTotal: 0,
-  allCards: [],
-  modalIndex: 0,
-  letterIndex: 0,
-  galleryIndex: 0,
-  galleryItems: [],
-  userMemories: [],
+  carouselIndex: 0, carouselTotal: 0, allCards: [],
+  modalIndex: 0, quoteIndex: 0,
   selectedColor: 'yellow',
-  quoteIndex: 0,
-  quoteTimer: null,
+  audio: null, currentSongIndex: -1, audioPlaying: false,
 };
 
-/* ───────────── ELEMENTS ───────────── */
+/* ─────────────── ELEMENTS ─────────────── */
 const $ = id => document.getElementById(id);
-const elements = {
-  startCurtain: $('startCurtain'),
-  startButton: $('startButton'),
-  carouselRing: $('carouselRing'),
-  carouselPrev: $('carouselPrev'),
-  carouselNext: $('carouselNext'),
-  carouselCounter: $('carouselCounter'),
-  carouselCardName: $('carouselCardName'),
-  carouselViewport: $('carouselViewport'),
-  cardModal: $('cardModal'),
-  cardModalClose: $('cardModalClose'),
-  cardModalBackdrop: $('cardModalBackdrop'),
-  cardModalCard: $('cardModalCard'),
-  cardModalInfo: $('cardModalInfo'),
-  cardModalTitle: $('cardModalTitle'),
-  cardModalText: $('cardModalText'),
-  cardModalRarityLabel: $('cardModalRarityLabel'),
-  cardModalPrev: $('cardModalPrev'),
-  cardModalNext: $('cardModalNext'),
-  addMemoryModal: $('addMemoryModal'),
-  addMemoryClose: $('addMemoryClose'),
-  addMemoryBackdrop: $('addMemoryBackdrop'),
-  addMemoryForm: $('addMemoryForm'),
-  addMemoryFile: $('addMemoryFile'),
-  fileUploadContent: $('fileUploadContent'),
-  filePreview: $('filePreview'),
-  addDreamModal: $('addDreamModal'),
-  addDreamClose: $('addDreamClose'),
-  addDreamBackdrop: $('addDreamBackdrop'),
-  addDreamForm: $('addDreamForm'),
-  dreamText: $('dreamText'),
-  boulevardAddBtn: $('boulevardAddBtn'),
-  boulevardNotes: $('boulevardNotes'),
-  boulevardStrings: $('boulevardStrings'),
-  boulevardQuoteText: $('boulevardQuoteText'),
-  boulevardQuoteAttr: $('boulevardQuoteAttr'),
-  galleryModal: $('galleryModal'),
-  modalImage: $('modalImage'),
-  modalVideo: $('modalVideo'),
-  modalDate: $('modalDate'),
-  modalSong: $('modalSong'),
-  modalTitle: $('modalTitle'),
-  modalCaption: $('modalCaption'),
-  modalPrev: $('modalPrev'),
-  modalNext: $('modalNext'),
-  musicButton: $('musicButton'),
-  musicStatus: $('musicStatus'),
+const el = {
+  startCurtain: $('startCurtain'), startButton: $('startButton'),
+  carouselRing: $('carouselRing'), carouselPrev: $('carouselPrev'), carouselNext: $('carouselNext'),
+  carouselCounter: $('carouselCounter'), carouselCardName: $('carouselCardName'), carouselViewport: $('carouselViewport'),
+  cardModal: $('cardModal'), cardModalClose: $('cardModalClose'), cardModalBackdrop: $('cardModalBackdrop'),
+  cardModalCard: $('cardModalCard'), cardModalTitle: $('cardModalTitle'), cardModalText: $('cardModalText'),
+  cardModalRarityLabel: $('cardModalRarityLabel'), cardModalSong: $('cardModalSong'),
+  cardModalPrev: $('cardModalPrev'), cardModalNext: $('cardModalNext'),
+  addMemoryModal: $('addMemoryModal'), addMemoryClose: $('addMemoryClose'), addMemoryBackdrop: $('addMemoryBackdrop'),
+  addMemoryForm: $('addMemoryForm'), addMemoryFile: $('addMemoryFile'),
+  fileUploadContent: $('fileUploadContent'), filePreview: $('filePreview'),
+  addMemorySongSelect: $('addMemorySongSelect'), addMemoryAudio: $('addMemoryAudio'), audioUploadName: $('audioUploadName'),
+  addDreamModal: $('addDreamModal'), addDreamClose: $('addDreamClose'), addDreamBackdrop: $('addDreamBackdrop'),
+  addDreamForm: $('addDreamForm'), dreamText: $('dreamText'),
+  boulevardAddBtn: $('boulevardAddBtn'), boulevardNotes: $('boulevardNotes'), boulevardStrings: $('boulevardStrings'),
+  boulevardQuoteText: $('boulevardQuoteText'), boulevardQuoteAttr: $('boulevardQuoteAttr'),
+  musicButton: $('musicButton'), musicTitle: $('musicTitle'), musicStatus: $('musicStatus'),
   loveButton: $('loveButton'),
-  letterPrev: $('letterPrev'),
-  letterNext: $('letterNext'),
-  letterPlaySong: $('letterPlaySong'),
-  letterOpenPhoto: $('letterOpenPhoto'),
-  letterPetals: $('letterPetals'),
-  letterText: $('letterText'),
-  letterRail: $('letterRail'),
-  letterBookProgress: $('letterBookProgress'),
-  letterBookSong: $('letterBookSong'),
-  topbarCounterValue: $('topbarCounterValue'),
-  skyCanvas: $('skyCanvas'),
-  fxLayer: $('fxLayer'),
+  topbarCounterValue: $('topbarCounterValue'), skyCanvas: $('skyCanvas'), fxLayer: $('fxLayer'),
 };
 
-/* ─────────────────── UTILS ─────────────────── */
-function isVideoFile(src) {
-  if (!src) return false;
-  return /\.(mp4|webm|ogg|mov|avi)$/i.test(src) || src.startsWith('blob:');
-}
+/* ─────────────── UTILS ─────────────── */
+function isVideoFile(src) { return src && /\.(mp4|webm|ogg|mov|avi)$/i.test(src); }
+function loadUserMemories() { try { return JSON.parse(localStorage.getItem('userMemories') || '[]'); } catch { return []; } }
+function saveUserMemories(arr) { try { localStorage.setItem('userMemories', JSON.stringify(arr)); } catch {} }
+function loadBoulevardDreams() { try { const d = localStorage.getItem('boulevardDreams2'); return d ? JSON.parse(d) : null; } catch { return null; } }
+function saveBoulevardDreams(arr) { try { localStorage.setItem('boulevardDreams2', JSON.stringify(arr)); } catch {} }
 
-function loadUserMemories() {
-  try { return JSON.parse(localStorage.getItem('userMemories') || '[]'); } catch { return []; }
-}
-function saveUserMemories(arr) {
-  try { localStorage.setItem('userMemories', JSON.stringify(arr)); } catch {}
-}
-function loadBoulevardDreams() {
-  try { const d = localStorage.getItem('boulevardDreams'); return d ? JSON.parse(d) : null; } catch { return null; }
-}
-function saveBoulevardDreams(arr) {
-  try { localStorage.setItem('boulevardDreams', JSON.stringify(arr)); } catch {}
-}
+/* Gradient fallback per rarity for missing images */
+const RARITY_GRADIENT = {
+  comun:     'linear-gradient(145deg,#1a1a2a,#0d0d18)',
+  raro:      'linear-gradient(145deg,#0d1a2e,#071020)',
+  ultra:     'linear-gradient(145deg,#1a0d2e,#0d0720)',
+  legendario:'linear-gradient(145deg,#2a1a00,#1a0e00)',
+};
 
-/* ─────────────────── CANVAS SKY ─────────────────── */
+/* ─────────────── SKY CANVAS ─────────────── */
 function initSky() {
-  const canvas = elements.skyCanvas;
-  if (!canvas) return;
+  const canvas = el.skyCanvas; if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let W, H, stars = [], particles = [];
-
+  let W, H;
+  const stars = Array.from({length:200}, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.5 + 0.3,
+    a: Math.random(), da: (Math.random() - 0.5) * 0.005,
+  }));
   function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-
-  for (let i = 0; i < 180; i++) {
-    stars.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.4 + 0.3, a: Math.random(), da: (Math.random() - 0.5) * 0.006 });
-  }
-
-  function tick() {
+  resize(); window.addEventListener('resize', resize);
+  (function tick() {
     ctx.clearRect(0, 0, W, H);
     stars.forEach(s => {
-      s.a = Math.max(0.1, Math.min(1, s.a + s.da));
-      if (s.a <= 0.1 || s.a >= 1) s.da *= -1;
-      ctx.beginPath();
-      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,240,200,${s.a * 0.7})`;
-      ctx.fill();
+      s.a = Math.max(0.08, Math.min(1, s.a + s.da));
+      if (s.a <= 0.08 || s.a >= 1) s.da *= -1;
+      ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,240,200,${s.a * 0.65})`; ctx.fill();
     });
     requestAnimationFrame(tick);
-  }
-  tick();
+  })();
 }
 
-/* ─────────────────── COUNTER ─────────────────── */
+/* ─────────────── COUNTER ─────────────── */
 function initCounter() {
   function update() {
     const diff = Date.now() - APP_DATA.startDate.getTime();
-    if (diff < 0) { if (elements.topbarCounterValue) elements.topbarCounterValue.textContent = 'Pronto...'; return; }
+    if (diff < 0) { if (el.topbarCounterValue) el.topbarCounterValue.textContent = 'Muy pronto...'; return; }
     const tot = Math.floor(diff / 1000);
     const months = Math.floor(tot / (30.44 * 24 * 3600));
-    const days = Math.floor((tot % (30.44 * 24 * 3600)) / (24 * 3600));
-    const hours = Math.floor((tot % (24 * 3600)) / 3600);
-    const mins = Math.floor((tot % 3600) / 60);
-    const secs = tot % 60;
-    const fmt = n => String(n).padStart(2, '0');
-    const str = `${fmt(months)}m ${fmt(days)}d ${fmt(hours)}h ${fmt(mins)}m ${fmt(secs)}s`;
-    if (elements.topbarCounterValue) elements.topbarCounterValue.textContent = str;
-    if ($('counterMonths')) $('counterMonths').textContent = fmt(months);
-    if ($('counterDays')) $('counterDays').textContent = fmt(days);
-    if ($('counterHours')) $('counterHours').textContent = fmt(hours);
-    if ($('counterMinutes')) $('counterMinutes').textContent = fmt(mins);
-    if ($('counterSeconds')) $('counterSeconds').textContent = fmt(secs);
+    const days   = Math.floor((tot % (30.44 * 24 * 3600)) / (24 * 3600));
+    const hours  = Math.floor((tot % (24 * 3600)) / 3600);
+    const mins   = Math.floor((tot % 3600) / 60);
+    const secs   = tot % 60;
+    const f = n => String(n).padStart(2, '0');
+    if (el.topbarCounterValue) el.topbarCounterValue.textContent = `${f(months)}m ${f(days)}d ${f(hours)}h ${f(mins)}m ${f(secs)}s`;
+    if ($('counterMonths'))  $('counterMonths').textContent  = f(months);
+    if ($('counterDays'))    $('counterDays').textContent    = f(days);
+    if ($('counterHours'))   $('counterHours').textContent   = f(hours);
+    if ($('counterMinutes')) $('counterMinutes').textContent = f(mins);
+    if ($('counterSeconds')) $('counterSeconds').textContent = f(secs);
   }
-  update();
-  setInterval(update, 1000);
+  update(); setInterval(update, 1000);
 }
 
-/* ─────────────────── TIMELINE ─────────────────── */
+/* ─────────────── TIMELINE ─────────────── */
 function initTimeline() {
-  const grid = $('timelineGrid');
-  if (!grid) return;
+  const grid = $('timelineGrid'); if (!grid) return;
   APP_DATA.timeline.forEach(item => {
     const card = document.createElement('article');
     card.className = 'timeline-card glass-panel';
     card.innerHTML = `
-      <div class="timeline-media"><img src="${item.image}" alt="${item.title}" loading="lazy"/></div>
+      <div class="timeline-media">
+        <img src="${item.image}" alt="${item.title}" loading="lazy"
+             onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(145deg,#1a1220,#0d0a18)'"/>
+      </div>
       <div class="timeline-card__body">
         <span class="card-meta">${item.date}</span>
         <h3>${item.title}</h3>
@@ -270,19 +194,14 @@ function initTimeline() {
    ★★★  COVERFLOW CAROUSEL  ★★★
    ═══════════════════════════════════════════════════════ */
 
-/* Coverflow transform per offset from center */
 function getCoverflowTransform(offset) {
-  const abs = Math.abs(offset);
-  const sign = Math.sign(offset) || 1;
-  /* On mobile scale everything down */
-  const isMobile = window.innerWidth < 760;
-  const xMul = isMobile ? 0.58 : 1;
-
-  if (abs === 0) return { x: 0, z: 0, ry: 0, scale: isMobile ? 1.0 : 1.05, opacity: 1, filter: 'none', zi: 100 };
-  if (abs === 1) return { x: sign * (isMobile ? 148 : 260), z: -80, ry: -sign * 44, scale: isMobile ? 0.82 : 0.86, opacity: 0.78, filter: 'brightness(0.82)', zi: 80 };
-  if (abs === 2) return { x: sign * (isMobile ? 258 : 472), z: -200, ry: -sign * 63, scale: isMobile ? 0.65 : 0.68, opacity: 0.52, filter: 'brightness(0.58)', zi: 60 };
-  if (abs === 3) return { x: sign * (isMobile ? 330 : 630), z: -340, ry: -sign * 76, scale: 0.50, opacity: 0.18, filter: 'brightness(0.3)', zi: 40 };
-  return { x: sign * 800, z: -500, ry: -sign * 85, scale: 0.32, opacity: 0, filter: 'brightness(0.1)', zi: 20 };
+  const abs = Math.abs(offset), sign = Math.sign(offset) || 1;
+  const mob = window.innerWidth < 760;
+  if (abs === 0) return { x:0,        z:0,    ry:0,       scale:mob?1.0:1.06, opacity:1,    filter:'none',              zi:100 };
+  if (abs === 1) return { x:sign*(mob?148:258), z:-80,  ry:-sign*44, scale:mob?0.82:0.86,opacity:0.78, filter:'brightness(0.82)',  zi:80  };
+  if (abs === 2) return { x:sign*(mob?258:470), z:-200, ry:-sign*62, scale:mob?0.65:0.69,opacity:0.52, filter:'brightness(0.58)',  zi:60  };
+  if (abs === 3) return { x:sign*(mob?330:620), z:-340, ry:-sign*75, scale:0.50,           opacity:0.18, filter:'brightness(0.3)',   zi:40  };
+  return { x:sign*800, z:-500, ry:-sign*85, scale:0.32, opacity:0, filter:'brightness(0.1)', zi:20 };
 }
 
 function circularOffset(i, active, total) {
@@ -293,109 +212,91 @@ function circularOffset(i, active, total) {
 }
 
 function buildAllCards() {
-  state.userMemories = loadUserMemories();
-  state.allCards = [...APP_DATA.gallery, ...state.userMemories];
+  const memories = loadUserMemories();
+  state.allCards = [...APP_DATA.gallery, ...memories];
 }
 
 function createPokeCardElement(cardData, index, isAdd) {
   const slot = document.createElement('div');
-  slot.className = `poke-card-slot${isAdd ? ' add-card' : ''} rarity-${cardData.rarity || 'comun'}`;
+  slot.className = `poke-card-slot${isAdd?' add-card':''} rarity-${cardData.rarity||'comun'}`;
   slot.setAttribute('data-slot-index', index);
 
   if (isAdd) {
-    slot.innerHTML = `
-      <div class="poke-card-roulette">
-        <span class="pcr-add-icon">✦</span>
-        <p class="pcr-add-text">Agregar<br/>nuevo recuerdo</p>
-      </div>`;
+    slot.innerHTML = `<div class="poke-card-roulette"><span class="pcr-add-icon">✦</span><p class="pcr-add-text">Agregar<br/>nuevo recuerdo</p></div>`;
     return slot;
   }
 
   const rarity = cardData.rarity || 'comun';
-  const stars = RARITY_STARS[rarity] || '★';
-  const num = String(index + 1).padStart(3, '0');
-  const isVideo = isVideoFile(cardData.image);
+  const stars  = RARITY_STARS[rarity];
+  const num    = String(index + 1).padStart(3, '0');
+  const bg     = RARITY_GRADIENT[rarity];
 
-  let mediaHtml = '';
-  if (isVideo) {
-    mediaHtml = `<video src="${cardData.image}" class="pcr-photo" autoplay muted loop playsinline></video>`;
-  } else {
-    mediaHtml = `<img src="${cardData.image || ''}" class="pcr-photo" alt="${cardData.title}" loading="lazy"/>`;
-  }
+  let mediaHtml = isVideoFile(cardData.image)
+    ? `<video src="${cardData.image}" class="pcr-photo" autoplay muted loop playsinline></video>`
+    : `<img src="${cardData.image||''}" class="pcr-photo" alt="${cardData.title}" loading="lazy"
+            onerror="this.style.display='none'"/>`;
 
   slot.innerHTML = `
-    <div class="poke-card-roulette">
+    <div class="poke-card-roulette" style="background:${bg}">
       <div class="pcr-photo-wrap">${mediaHtml}</div>
       <div class="pcr-top">
         <span class="pcr-num">#${num}</span>
-        <span class="pcr-type-badge">${cardData.type || 'Memoria'}</span>
+        <span class="pcr-type-badge">${cardData.type||'Memoria'}</span>
       </div>
       <div class="pcr-overlay">
         <span class="pcr-name">${cardData.title}</span>
         <div class="pcr-bottom-row">
           <span class="pcr-stars">${stars}</span>
-          <span class="pcr-hp">♥ ${cardData.hp || 60} HP</span>
+          <span class="pcr-hp">♥ ${cardData.hp||60} HP</span>
         </div>
       </div>
-      <div class="pcr-corner pcr-corner--tl"></div>
-      <div class="pcr-corner pcr-corner--tr"></div>
-      <div class="pcr-corner pcr-corner--bl"></div>
-      <div class="pcr-corner pcr-corner--br"></div>
-      <div class="pcr-holo"></div>
-      <div class="pcr-sparkle"></div>
+      <div class="pcr-corner pcr-corner--tl"></div><div class="pcr-corner pcr-corner--tr"></div>
+      <div class="pcr-corner pcr-corner--bl"></div><div class="pcr-corner pcr-corner--br"></div>
+      <div class="pcr-holo"></div><div class="pcr-sparkle"></div>
     </div>`;
-
   return slot;
 }
 
 function updateCoverflowPositions(animate = true) {
-  const slots = elements.carouselRing.querySelectorAll('.poke-card-slot');
-  const total = state.carouselTotal;
-
+  const slots = el.carouselRing.querySelectorAll('.poke-card-slot');
   slots.forEach((slot, i) => {
-    const offset = circularOffset(i, state.carouselIndex, total);
-    const cfg = getCoverflowTransform(offset);
+    const off = circularOffset(i, state.carouselIndex, state.carouselTotal);
+    const cfg = getCoverflowTransform(off);
     slot.style.transition = animate
       ? 'transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.65s ease,filter 0.65s ease'
       : 'none';
-    slot.style.transform = `translateX(${cfg.x}px) translateZ(${cfg.z}px) rotateY(${cfg.ry}deg) scale(${cfg.scale})`;
-    slot.style.opacity = cfg.opacity;
-    slot.style.filter = cfg.filter;
-    slot.style.zIndex = cfg.zi;
-    slot.style.pointerEvents = Math.abs(offset) <= 3 ? 'auto' : 'none';
-
-    /* is-center marker for hint text */
-    if (offset === 0) slot.classList.add('is-center');
+    slot.style.transform  = `translateX(${cfg.x}px) translateZ(${cfg.z}px) rotateY(${cfg.ry}deg) scale(${cfg.scale})`;
+    slot.style.opacity    = cfg.opacity;
+    slot.style.filter     = cfg.filter;
+    slot.style.zIndex     = cfg.zi;
+    slot.style.pointerEvents = Math.abs(off) <= 3 ? 'auto' : 'none';
+    if (off === 0) slot.classList.add('is-center');
     else slot.classList.remove('is-center');
   });
 }
 
 function updateCarouselCounter() {
-  const total = state.carouselTotal;
   const i = state.carouselIndex;
-  if (elements.carouselCounter) elements.carouselCounter.textContent = `${i + 1} / ${total}`;
+  if (el.carouselCounter) el.carouselCounter.textContent = `${i+1} / ${state.carouselTotal}`;
   const card = state.allCards[i];
-  if (elements.carouselCardName) elements.carouselCardName.textContent = card ? card.title : 'Agregar recuerdo';
+  if (el.carouselCardName) el.carouselCardName.textContent = card ? card.title : 'Agregar recuerdo';
 }
 
 function renderCarousel() {
   buildAllCards();
-  const ring = elements.carouselRing;
-  ring.innerHTML = '';
-
-  const total = state.allCards.length + 1; /* +1 for add card */
+  el.carouselRing.innerHTML = '';
+  const total = state.allCards.length + 1;
   state.carouselTotal = total;
 
-  for (let i = 0; i < state.allCards.length; i++) {
-    const slot = createPokeCardElement(state.allCards[i], i, false);
+  state.allCards.forEach((card, i) => {
+    const slot = createPokeCardElement(card, i, false);
     slot.addEventListener('click', () => handleCardClick(i));
-    ring.appendChild(slot);
-  }
+    el.carouselRing.appendChild(slot);
+  });
 
-  /* Add-card slot */
-  const addSlot = createPokeCardElement({ rarity: 'comun' }, state.allCards.length, true);
+  const addSlot = createPokeCardElement({rarity:'comun'}, state.allCards.length, true);
   addSlot.addEventListener('click', openAddMemoryModal);
-  ring.appendChild(addSlot);
+  el.carouselRing.appendChild(addSlot);
 
   updateCoverflowPositions(false);
   updateCarouselCounter();
@@ -403,242 +304,226 @@ function renderCarousel() {
 }
 
 function handleCardClick(i) {
-  if (i === state.carouselIndex) {
-    /* Second click on active card → open modal */
-    openCardModal(i);
-  } else {
-    /* First click → navigate */
-    state.carouselIndex = i;
-    updateCoverflowPositions(true);
-    updateCarouselCounter();
-  }
+  if (i === state.carouselIndex) openCardModal(i);
+  else { state.carouselIndex = i; updateCoverflowPositions(true); updateCarouselCounter(); }
 }
 
 function initHolographicEffects() {
-  const slots = elements.carouselRing.querySelectorAll('.poke-card-slot:not(.add-card)');
-  slots.forEach(slot => {
-    const inner = slot.querySelector('.poke-card-roulette');
-    if (!inner) return;
-
+  el.carouselRing.querySelectorAll('.poke-card-slot:not(.add-card)').forEach(slot => {
+    const inner = slot.querySelector('.poke-card-roulette'); if (!inner) return;
     inner.addEventListener('mousemove', e => {
-      const rect = inner.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
+      const r = inner.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
       const angle = Math.atan2(y - 0.5, x - 0.5) * (180 / Math.PI);
-      inner.style.setProperty('--holo-angle', `${angle + 135}deg`);
+      inner.style.setProperty('--holo-angle', `${angle+135}deg`);
       inner.style.setProperty('--holo-opacity', '0.55');
-      inner.style.setProperty('--sparkle-x', `${x * 100}%`);
-      inner.style.setProperty('--sparkle-y', `${y * 100}%`);
+      inner.style.setProperty('--sparkle-x', `${x*100}%`);
+      inner.style.setProperty('--sparkle-y', `${y*100}%`);
       inner.style.setProperty('--sparkle-opacity', '0.65');
     });
     inner.addEventListener('mouseleave', () => {
-      const rarity = slot.className.includes('legendario') ? 'legendario' : 'none';
-      inner.style.setProperty('--holo-opacity', rarity === 'legendario' ? '0.45' : '0');
-      inner.style.setProperty('--sparkle-opacity', rarity === 'legendario' ? '0.55' : '0');
+      const isLeg = slot.className.includes('legendario');
+      inner.style.setProperty('--holo-opacity', isLeg ? '0.45' : '0');
+      inner.style.setProperty('--sparkle-opacity', isLeg ? '0.55' : '0');
     });
   });
 }
 
 function initCarouselNav() {
-  elements.carouselPrev.addEventListener('click', () => {
-    state.carouselIndex = (state.carouselIndex - 1 + state.carouselTotal) % state.carouselTotal;
-    updateCoverflowPositions(true);
-    updateCarouselCounter();
-  });
-  elements.carouselNext.addEventListener('click', () => {
-    state.carouselIndex = (state.carouselIndex + 1) % state.carouselTotal;
-    updateCoverflowPositions(true);
-    updateCarouselCounter();
-  });
+  el.carouselPrev.addEventListener('click', () => { state.carouselIndex = (state.carouselIndex - 1 + state.carouselTotal) % state.carouselTotal; updateCoverflowPositions(true); updateCarouselCounter(); });
+  el.carouselNext.addEventListener('click', () => { state.carouselIndex = (state.carouselIndex + 1) % state.carouselTotal; updateCoverflowPositions(true); updateCarouselCounter(); });
 
-  /* Touch/swipe on viewport */
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let isDragging = false;
-
-  elements.carouselViewport.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-  elements.carouselViewport.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
+  /* Touch swipe */
+  let tx0 = 0, ty0 = 0;
+  el.carouselViewport.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY; }, {passive:true});
+  el.carouselViewport.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx0, dy = e.changedTouches[0].clientY - ty0;
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 38) {
-      if (dx < 0) {
-        state.carouselIndex = (state.carouselIndex + 1) % state.carouselTotal;
-      } else {
-        state.carouselIndex = (state.carouselIndex - 1 + state.carouselTotal) % state.carouselTotal;
-      }
-      updateCoverflowPositions(true);
-      updateCarouselCounter();
+      state.carouselIndex = (state.carouselIndex + (dx < 0 ? 1 : -1) + state.carouselTotal) % state.carouselTotal;
+      updateCoverflowPositions(true); updateCarouselCounter();
     }
-  }, { passive: true });
+  }, {passive:true});
 
   /* Mouse drag */
-  let mouseStartX = 0;
-  elements.carouselViewport.addEventListener('mousedown', e => {
-    mouseStartX = e.clientX;
-    isDragging = false;
-  });
-  elements.carouselViewport.addEventListener('mousemove', e => {
-    if (Math.abs(e.clientX - mouseStartX) > 5) isDragging = true;
-  });
-  elements.carouselViewport.addEventListener('mouseup', e => {
-    const dx = e.clientX - mouseStartX;
-    if (isDragging && Math.abs(dx) > 40) {
-      if (dx < 0) state.carouselIndex = (state.carouselIndex + 1) % state.carouselTotal;
-      else state.carouselIndex = (state.carouselIndex - 1 + state.carouselTotal) % state.carouselTotal;
-      updateCoverflowPositions(true);
-      updateCarouselCounter();
+  let mx0 = 0, dragging = false;
+  el.carouselViewport.addEventListener('mousedown', e => { mx0 = e.clientX; dragging = false; });
+  el.carouselViewport.addEventListener('mousemove', e => { if (Math.abs(e.clientX - mx0) > 5) dragging = true; });
+  el.carouselViewport.addEventListener('mouseup', e => {
+    const dx = e.clientX - mx0;
+    if (dragging && Math.abs(dx) > 40) {
+      state.carouselIndex = (state.carouselIndex + (dx < 0 ? 1 : -1) + state.carouselTotal) % state.carouselTotal;
+      updateCoverflowPositions(true); updateCarouselCounter();
     }
-    isDragging = false;
+    dragging = false;
   });
 
-  /* Keyboard */
   document.addEventListener('keydown', e => {
-    if (elements.cardModal.classList.contains('is-open')) return;
-    if (e.key === 'ArrowLeft') elements.carouselPrev.click();
-    if (e.key === 'ArrowRight') elements.carouselNext.click();
+    if (el.cardModal.classList.contains('is-open')) return;
+    if (e.key === 'ArrowLeft') el.carouselPrev.click();
+    if (e.key === 'ArrowRight') el.carouselNext.click();
   });
-
-  /* Reposition on resize */
   window.addEventListener('resize', () => updateCoverflowPositions(false));
 }
 
 /* ═══════════════════════════════════════════════════════
-   ★★★  CARD MODAL (full view)  ★★★
+   CARD MODAL
    ═══════════════════════════════════════════════════════ */
 
 function buildFullCard(cardData, index) {
   const rarity = cardData.rarity || 'comun';
-  const stars = RARITY_STARS[rarity];
-  const num = String(index + 1).padStart(3, '0');
-  const isVideo = isVideoFile(cardData.image);
-
-  let mediaHtml = '';
-  if (isVideo) {
-    mediaHtml = `<video src="${cardData.image}" class="pcr-photo" autoplay muted loop playsinline></video>`;
-  } else {
-    mediaHtml = `<img src="${cardData.image || ''}" class="pcr-photo" alt="${cardData.title}"/>`;
-  }
-
-  /* Rarity-specific backgrounds for full card */
-  const rarityBg = {
-    comun: 'linear-gradient(160deg,#1a1a2a,#0d0d18)',
-    raro: 'linear-gradient(160deg,#0d1a2e,#071020)',
-    ultra: 'linear-gradient(160deg,#1a0d2e,#0d0720)',
-    legendario: 'linear-gradient(160deg,#2a1a00,#1a0e00)',
-  };
+  const stars  = RARITY_STARS[rarity];
+  const num    = String(index + 1).padStart(3, '0');
+  const bg     = RARITY_GRADIENT[rarity];
+  const media  = isVideoFile(cardData.image)
+    ? `<video src="${cardData.image}" class="pcr-photo" autoplay muted loop playsinline></video>`
+    : `<img src="${cardData.image||''}" class="pcr-photo" alt="${cardData.title}"
+            onerror="this.style.display='none'"/>`;
 
   return `
-    <style>
-      #cardModalCard { background:${rarityBg[rarity]}; }
-      #cardModalCard .pcr-holo { --holo-opacity:0.35; }
-    </style>
-    <div class="pcr-photo-wrap">${mediaHtml}</div>
+    <div class="pcr-photo-wrap" style="background:${bg}">${media}</div>
     <div class="pcr-top">
       <span class="pcr-num">#${num}</span>
-      <span class="pcr-type-badge">${cardData.type || 'Memoria'}</span>
+      <span class="pcr-type-badge">${cardData.type||'Memoria'}</span>
     </div>
     <div class="pcr-overlay">
       <span class="pcr-name">${cardData.title}</span>
-      <div class="pcr-bottom-row">
-        <span class="pcr-stars">${stars}</span>
-        <span class="pcr-hp">♥ ${cardData.hp || 60} HP</span>
-      </div>
+      <div class="pcr-bottom-row"><span class="pcr-stars">${stars}</span><span class="pcr-hp">♥ ${cardData.hp||60} HP</span></div>
     </div>
-    <div class="pcr-corner pcr-corner--tl"></div>
-    <div class="pcr-corner pcr-corner--tr"></div>
-    <div class="pcr-corner pcr-corner--bl"></div>
-    <div class="pcr-corner pcr-corner--br"></div>
-    <div class="pcr-holo"></div>
-    <div class="pcr-sparkle"></div>`;
+    <div class="pcr-corner pcr-corner--tl"></div><div class="pcr-corner pcr-corner--tr"></div>
+    <div class="pcr-corner pcr-corner--bl"></div><div class="pcr-corner pcr-corner--br"></div>
+    <div class="pcr-holo" style="--holo-opacity:0.35"></div><div class="pcr-sparkle"></div>`;
 }
 
 function openCardModal(index) {
-  const card = state.allCards[index];
-  if (!card) return;
+  const card = state.allCards[index]; if (!card) return;
   state.modalIndex = index;
 
   const rarity = card.rarity || 'comun';
-  elements.cardModalCard.className = `poke-card-full rarity-${rarity}`;
-  elements.cardModalCard.innerHTML = buildFullCard(card, index);
+  el.cardModalCard.className = `poke-card-full rarity-${rarity}`;
+  el.cardModalCard.style.background = RARITY_GRADIENT[rarity];
+  el.cardModalCard.innerHTML = buildFullCard(card, index);
 
-  elements.cardModalRarityLabel.className = `card-modal__rarity-label rarity-${rarity}`;
-  elements.cardModalRarityLabel.textContent = `${RARITY_STARS[rarity]} ${rarity.charAt(0).toUpperCase() + rarity.slice(1)} • ${card.type || 'Memoria'}`;
-  elements.cardModalTitle.textContent = card.title;
-  elements.cardModalText.textContent = card.text || '';
+  el.cardModalRarityLabel.className = `card-modal__rarity-label rarity-${rarity}`;
+  el.cardModalRarityLabel.textContent = `${RARITY_STARS[rarity]} ${rarity.charAt(0).toUpperCase()+rarity.slice(1)} • ${card.type||'Memoria'}`;
+  el.cardModalTitle.textContent = card.title;
+  el.cardModalText.textContent = card.text || '';
 
-  elements.cardModal.classList.add('is-open');
-  elements.cardModal.setAttribute('aria-hidden', 'false');
+  /* Song info + play button */
+  const si = card.songIndex ?? card.songBlobIndex ?? -1;
+  const song = (si >= 0 && si < APP_DATA.songs.length) ? APP_DATA.songs[si] : null;
+  const customSrc = card.customSongSrc || null;
+
+  if (el.cardModalSong) {
+    if (song || customSrc) {
+      const label = customSrc ? (card.customSongName || 'Canción adjunta') : `♪ ${song.title}${song.artist?' — '+song.artist:''}`;
+      el.cardModalSong.innerHTML = `<span>♪</span> ${label} <small style="opacity:0.6;margin-left:8px;">Toca para escuchar</small>`;
+      el.cardModalSong.style.display = 'flex';
+      el.cardModalSong.onclick = () => {
+        const src = customSrc || (song ? song.src : '');
+        if (src) playAudio(src, si, song);
+      };
+    } else {
+      el.cardModalSong.innerHTML = '';
+      el.cardModalSong.style.display = 'none';
+    }
+  }
+
+  el.cardModal.classList.add('is-open');
+  el.cardModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
-
-  initFullCardHolographic(elements.cardModalCard, rarity);
+  initFullCardHolo(el.cardModalCard, rarity);
 }
 
-function initFullCardHolographic(cardEl, rarity) {
+function initFullCardHolo(cardEl, rarity) {
   if (!cardEl) return;
-  const holo = cardEl.querySelector('.pcr-holo');
-  const sparkle = cardEl.querySelector('.pcr-sparkle');
+  const holo = cardEl.querySelector('.pcr-holo'), sparkle = cardEl.querySelector('.pcr-sparkle');
   if (!holo || !sparkle) return;
-
   cardEl.addEventListener('mousemove', e => {
-    const rect = cardEl.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    const tx = (y - 0.5) * -18;
-    const ty = (x - 0.5) * 18;
-    const angle = Math.atan2(y - 0.5, x - 0.5) * (180 / Math.PI);
-    cardEl.style.transform = `perspective(900px) rotateX(${tx}deg) rotateY(${ty}deg)`;
-    holo.style.setProperty('--holo-angle', `${angle + 135}deg`);
+    const r = cardEl.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    cardEl.style.transform = `perspective(900px) rotateX(${(y-0.5)*-18}deg) rotateY(${(x-0.5)*18}deg)`;
+    holo.style.setProperty('--holo-angle', `${Math.atan2(y-0.5,x-0.5)*(180/Math.PI)+135}deg`);
     holo.style.setProperty('--holo-opacity', '0.65');
-    sparkle.style.setProperty('--sparkle-x', `${x * 100}%`);
-    sparkle.style.setProperty('--sparkle-y', `${y * 100}%`);
+    sparkle.style.setProperty('--sparkle-x', `${x*100}%`);
+    sparkle.style.setProperty('--sparkle-y', `${y*100}%`);
     sparkle.style.setProperty('--sparkle-opacity', '0.75');
   });
   cardEl.addEventListener('mouseleave', () => {
     cardEl.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-    if (rarity !== 'legendario') {
-      holo.style.setProperty('--holo-opacity', '0.35');
-      sparkle.style.setProperty('--sparkle-opacity', '0');
-    }
+    if (rarity !== 'legendario') { holo.style.setProperty('--holo-opacity','0.35'); sparkle.style.setProperty('--sparkle-opacity','0'); }
   });
-
-  /* DeviceOrientation for mobile */
   if (window.DeviceOrientationEvent) {
     window.addEventListener('deviceorientation', e => {
-      if (!elements.cardModal.classList.contains('is-open')) return;
+      if (!el.cardModal.classList.contains('is-open')) return;
       const tx = Math.max(-12, Math.min(12, (e.beta - 45) * 0.3));
       const ty = Math.max(-12, Math.min(12, e.gamma * 0.3));
       cardEl.style.transform = `perspective(900px) rotateX(${-tx}deg) rotateY(${ty}deg)`;
-    }, { passive: true });
+    }, {passive:true});
   }
 }
 
 function closeCardModal() {
-  elements.cardModal.classList.remove('is-open');
-  elements.cardModal.setAttribute('aria-hidden', 'true');
+  el.cardModal.classList.remove('is-open');
+  el.cardModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
 }
 
 function initCardModal() {
-  elements.cardModalClose.addEventListener('click', closeCardModal);
-  elements.cardModalBackdrop.addEventListener('click', closeCardModal);
-
-  elements.cardModalPrev.addEventListener('click', () => {
+  el.cardModalClose.addEventListener('click', closeCardModal);
+  el.cardModalBackdrop.addEventListener('click', closeCardModal);
+  el.cardModalPrev.addEventListener('click', () => {
     state.modalIndex = (state.modalIndex - 1 + state.allCards.length) % state.allCards.length;
     openCardModal(state.modalIndex);
-    /* Also sync carousel */
-    state.carouselIndex = state.modalIndex;
-    updateCoverflowPositions(true);
-    updateCarouselCounter();
+    state.carouselIndex = state.modalIndex; updateCoverflowPositions(true); updateCarouselCounter();
   });
-  elements.cardModalNext.addEventListener('click', () => {
+  el.cardModalNext.addEventListener('click', () => {
     state.modalIndex = (state.modalIndex + 1) % state.allCards.length;
     openCardModal(state.modalIndex);
-    state.carouselIndex = state.modalIndex;
-    updateCoverflowPositions(true);
-    updateCarouselCounter();
+    state.carouselIndex = state.modalIndex; updateCoverflowPositions(true); updateCarouselCounter();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   MUSIC PLAYER
+   ═══════════════════════════════════════════════════════ */
+
+function initMusic() {
+  state.audio = new Audio();
+  state.audio.addEventListener('ended', () => {
+    state.audioPlaying = false;
+    document.body.classList.remove('music-playing');
+  });
+
+  el.musicButton.addEventListener('click', () => {
+    if (state.audioPlaying) {
+      state.audio.pause();
+      state.audioPlaying = false;
+      document.body.classList.remove('music-playing');
+      el.musicButton.setAttribute('aria-pressed', 'false');
+    } else {
+      /* Play current song or first available */
+      const idx = state.currentSongIndex >= 0 ? state.currentSongIndex : 0;
+      const song = APP_DATA.songs[idx];
+      if (song && song.src) playAudio(song.src, idx, song);
+      else {
+        if (el.musicStatus) el.musicStatus.textContent = 'Pon el MP3 en assets/music/';
+      }
+    }
+  });
+}
+
+function playAudio(src, songIndex, songData) {
+  if (!src) return;
+  state.audio.src = src;
+  state.audio.play().then(() => {
+    state.audioPlaying = true;
+    state.currentSongIndex = songIndex;
+    document.body.classList.add('music-playing');
+    el.musicButton.setAttribute('aria-pressed', 'true');
+    if (el.musicTitle) el.musicTitle.textContent = songData ? songData.title : 'Reproduciendo';
+    if (el.musicStatus) el.musicStatus.textContent = songData && songData.artist ? songData.artist : '♪';
+  }).catch(() => {
+    if (el.musicStatus) el.musicStatus.textContent = 'No se pudo cargar ♪';
   });
 }
 
@@ -646,91 +531,96 @@ function initCardModal() {
    ADD MEMORY
    ═══════════════════════════════════════════════════════ */
 
-function openAddMemoryModal() {
-  elements.addMemoryModal.classList.add('is-open');
-  elements.addMemoryModal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+function populateSongSelect() {
+  if (!el.addMemorySongSelect) return;
+  APP_DATA.songs.forEach((s, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${s.title}${s.artist ? ' — ' + s.artist : ''}`;
+    el.addMemorySongSelect.appendChild(opt);
+  });
 }
 
+function openAddMemoryModal() {
+  el.addMemoryModal.classList.add('is-open');
+  el.addMemoryModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
 function closeAddMemoryModal() {
-  elements.addMemoryModal.classList.remove('is-open');
-  elements.addMemoryModal.setAttribute('aria-hidden', 'true');
+  el.addMemoryModal.classList.remove('is-open');
+  el.addMemoryModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
 }
 
 function initAddMemory() {
-  elements.addMemoryClose.addEventListener('click', closeAddMemoryModal);
-  elements.addMemoryBackdrop.addEventListener('click', closeAddMemoryModal);
+  el.addMemoryClose.addEventListener('click', closeAddMemoryModal);
+  el.addMemoryBackdrop.addEventListener('click', closeAddMemoryModal);
 
-  let pendingFile = null;
+  let pendingMedia = null;
+  let pendingAudioBlob = null;
+  let pendingAudioName = '';
 
-  elements.addMemoryFile.addEventListener('change', e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    pendingFile = file;
-    elements.filePreview.style.display = 'block';
-    elements.fileUploadContent.style.display = 'none';
-
-    if (isVideoFile(file.name) || file.size > 8 * 1024 * 1024) {
-      const url = URL.createObjectURL(file);
-      if (isVideoFile(file.name)) {
-        elements.filePreview.innerHTML = `<video src="${url}" controls style="max-height:220px;width:100%;border-radius:12px;"></video>`;
-      } else {
-        elements.filePreview.innerHTML = `<img src="${url}" alt="preview" style="max-height:220px;width:100%;object-fit:contain;border-radius:12px;"/>`;
-      }
-    } else {
-      const reader = new FileReader();
-      reader.onload = ev => {
-        elements.filePreview.innerHTML = `<img src="${ev.target.result}" alt="preview" style="max-height:220px;width:100%;object-fit:contain;border-radius:12px;"/>`;
-      };
-      reader.readAsDataURL(file);
-    }
+  el.addMemoryFile.addEventListener('change', e => {
+    const file = e.target.files[0]; if (!file) return;
+    pendingMedia = file;
+    el.filePreview.style.display = 'block';
+    el.fileUploadContent.style.display = 'none';
+    const url = URL.createObjectURL(file);
+    el.filePreview.innerHTML = isVideoFile(file.name)
+      ? `<video src="${url}" controls style="max-height:220px;width:100%;border-radius:12px;"></video>`
+      : `<img src="${url}" alt="preview" style="max-height:220px;width:100%;object-fit:contain;border-radius:12px;"/>`;
   });
 
-  elements.addMemoryForm.addEventListener('submit', e => {
+  el.addMemoryAudio.addEventListener('change', e => {
+    const file = e.target.files[0]; if (!file) return;
+    pendingAudioBlob = URL.createObjectURL(file);
+    pendingAudioName = file.name.replace(/\.[^.]+$/, '');
+    if (el.audioUploadName) el.audioUploadName.textContent = '♪ ' + pendingAudioName;
+  });
+
+  el.addMemoryForm.addEventListener('submit', e => {
     e.preventDefault();
-    const data = new FormData(elements.addMemoryForm);
+    const data = new FormData(el.addMemoryForm);
     const title = data.get('title') || 'Nuevo Recuerdo';
     const date = data.get('date') || new Date().toISOString().split('T')[0];
     const text = data.get('text') || '';
     const rarity = data.get('rarity') || 'comun';
+    const songIndex = data.get('songIndex') !== '' ? parseInt(data.get('songIndex')) : -1;
+    const rarityHp = {comun:60,raro:75,ultra:88,legendario:100};
 
-    let imageSrc = '';
-    if (pendingFile) {
-      if (isVideoFile(pendingFile.name) || pendingFile.size > 8 * 1024 * 1024) {
-        imageSrc = URL.createObjectURL(pendingFile);
+    const finalize = (imageSrc) => {
+      const memory = {
+        title, date, text, rarity, image: imageSrc,
+        type: 'Memoria', hp: rarityHp[rarity] || 60,
+        songIndex: songIndex >= 0 ? songIndex : undefined,
+        customSongSrc: pendingAudioBlob || undefined,
+        customSongName: pendingAudioBlob ? pendingAudioName : undefined,
+      };
+      const memories = loadUserMemories();
+      memories.push(memory);
+      saveUserMemories(memories);
+      el.addMemoryForm.reset();
+      el.filePreview.style.display = 'none';
+      el.fileUploadContent.style.display = 'flex';
+      pendingMedia = null; pendingAudioBlob = null; pendingAudioName = '';
+      if (el.audioUploadName) el.audioUploadName.textContent = '';
+      closeAddMemoryModal();
+      renderCarousel();
+      spawnParticles('hearts');
+    };
+
+    if (pendingMedia) {
+      if (isVideoFile(pendingMedia.name) || pendingMedia.size > 8 * 1024 * 1024) {
+        finalize(URL.createObjectURL(pendingMedia));
       } else {
         const reader = new FileReader();
-        reader.onload = ev => {
-          imageSrc = ev.target.result;
-          finalizeMemory(title, date, text, rarity, imageSrc);
-        };
-        reader.readAsDataURL(pendingFile);
-        return;
+        reader.onload = ev => finalize(ev.target.result);
+        reader.readAsDataURL(pendingMedia);
       }
+    } else {
+      finalize('');
     }
-    finalizeMemory(title, date, text, rarity, imageSrc);
   });
-
-  function finalizeMemory(title, date, text, rarity, image) {
-    const rarityHp = { comun: 60, raro: 75, ultra: 88, legendario: 100 };
-    const memory = {
-      title, date, text, rarity, image,
-      type: 'Memoria',
-      hp: rarityHp[rarity] || 60,
-    };
-    state.userMemories.push(memory);
-    saveUserMemories(state.userMemories);
-
-    elements.addMemoryForm.reset();
-    elements.filePreview.style.display = 'none';
-    elements.fileUploadContent.style.display = 'flex';
-    pendingFile = null;
-
-    closeAddMemoryModal();
-    renderCarousel();
-    spawnParticles('hearts');
-  }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -738,57 +628,57 @@ function initAddMemory() {
    ═══════════════════════════════════════════════════════ */
 
 const DEFAULT_DREAMS = [
-  { text: '✈️ Viajar a Europa juntos y perdernos por las calles de París', color: 'yellow',  x: 6,  y: 8,  rotate: -3 },
-  { text: '🏖️ Pasar una semana completa en la playa, sin celulares', color: 'blue',    x: 25, y: 6,  rotate: 2  },
-  { text: '🌙 Acampar bajo las estrellas y contarnos todo bajo el cielo abierto', color: 'lavender', x: 48, y: 10, rotate: -2 },
-  { text: '🏡 Tener nuestro primer hogar propio, decorarlo juntos', color: 'pink',    x: 70, y: 7,  rotate: 1  },
-  { text: '🎭 Ir al teatro y al cine clásico una vez al mes', color: 'green',   x: 4,  y: 48, rotate: 2  },
-  { text: '📚 Leer el mismo libro y discutirlo juntos tomando café', color: 'yellow',  x: 22, y: 52, rotate: -1 },
-  { text: '🌅 Ver cada amanecer por un año entero, al menos una vez al mes', color: 'blue',    x: 44, y: 50, rotate: 3  },
-  { text: '🎸 Aprender a bailar salsa juntos de verdad', color: 'pink',    x: 65, y: 53, rotate: -2 },
-  { text: '🌿 Hacer un jardín juntos y verlo crecer con el tiempo', color: 'green',   x: 12, y: 76, rotate: 1  },
-  { text: '💍 Construir un futuro lleno de amor, risas y aventuras', color: 'lavender', x: 52, y: 74, rotate: -3 },
+  { text:'✈️ Viajar a Europa juntos y perdernos por las calles de París', color:'yellow',  x:6,  y:8,  rotate:-3, done:false },
+  { text:'🏖️ Pasar una semana en la playa, sin celulares',               color:'blue',    x:25, y:6,  rotate:2,  done:false },
+  { text:'🌙 Acampar bajo las estrellas y contarnos todo bajo el cielo', color:'lavender',x:48, y:10, rotate:-2, done:false },
+  { text:'🏡 Tener nuestro primer hogar propio, decorarlo juntos',       color:'pink',    x:70, y:7,  rotate:1,  done:false },
+  { text:'🎭 Ir al teatro y al cine clásico una vez al mes',             color:'green',   x:4,  y:48, rotate:2,  done:false },
+  { text:'📚 Leer el mismo libro y discutirlo juntos tomando café',      color:'yellow',  x:22, y:52, rotate:-1, done:false },
+  { text:'🌅 Ver cada amanecer juntos, al menos una vez al mes',         color:'blue',    x:44, y:50, rotate:3,  done:false },
+  { text:'🎸 Aprender a bailar salsa juntos de verdad',                  color:'pink',    x:65, y:53, rotate:-2, done:false },
+  { text:'🌿 Hacer un jardín juntos y verlo crecer',                     color:'green',   x:12, y:76, rotate:1,  done:false },
+  { text:'💍 Construir un futuro lleno de amor, risas y aventuras',      color:'lavender',x:52, y:74, rotate:-3, done:false },
 ];
 
 let boulevardDreams = [];
 
 function initBoulevardQuotes() {
-  if (!elements.boulevardQuoteText) return;
-
-  function showQuote(idx) {
+  if (!el.boulevardQuoteText) return;
+  function show(idx) {
     const q = BOULEVARD_QUOTES[idx % BOULEVARD_QUOTES.length];
-    elements.boulevardQuoteText.classList.add('is-fading');
+    el.boulevardQuoteText.classList.add('is-fading');
     setTimeout(() => {
-      elements.boulevardQuoteText.textContent = q.text;
-      if (elements.boulevardQuoteAttr) elements.boulevardQuoteAttr.textContent = q.attr;
-      elements.boulevardQuoteText.classList.remove('is-fading');
+      el.boulevardQuoteText.textContent = q.text;
+      if (el.boulevardQuoteAttr) el.boulevardQuoteAttr.textContent = q.attr;
+      el.boulevardQuoteText.classList.remove('is-fading');
     }, 500);
   }
-
-  showQuote(0);
-  state.quoteTimer = setInterval(() => {
-    state.quoteIndex = (state.quoteIndex + 1) % BOULEVARD_QUOTES.length;
-    showQuote(state.quoteIndex);
-  }, 7000);
+  show(0);
+  setInterval(() => { state.quoteIndex = (state.quoteIndex + 1) % BOULEVARD_QUOTES.length; show(state.quoteIndex); }, 7000);
 }
 
 function renderBoulevardNote(dream, index) {
+  const rot = dream.rotate ?? ((Math.random() - 0.5) * 8);
   const note = document.createElement('div');
-  const rot = dream.rotate || ((Math.random() - 0.5) * 8);
-  note.className = `dream-note dream-note--${dream.color || 'yellow'}`;
-  note.style.left = `${dream.x}%`;
-  note.style.top = `${dream.y}%`;
-  note.style.transform = `rotate(${rot}deg)`;
+  note.className = `dream-note dream-note--${dream.color||'yellow'}${dream.done?' is-done':''}`;
+  note.style.cssText = `left:${dream.x}%;top:${dream.y}%;transform:rotate(${rot}deg);`;
   note.style.setProperty('--note-transform', `rotate(${rot}deg)`);
-  note.style.animation = `noteAppear 0.4s ease ${index * 0.06}s both`;
+  note.style.animation = `noteAppear 0.4s ease ${index * 0.07}s both`;
   note.setAttribute('data-index', index);
 
   note.innerHTML = `
+    <p>${dream.text}</p>
     <div class="dream-note__actions">
-      <button class="dream-note__del" aria-label="Eliminar nota" data-del="${index}">✕</button>
-    </div>
-    <p>${dream.text}</p>`;
+      <button class="dream-note__done-btn" data-done="${index}">${dream.done ? '✓ Cumplida' : '◌ Pendiente'}</button>
+      <button class="dream-note__del" aria-label="Eliminar" data-del="${index}">✕</button>
+    </div>`;
 
+  note.querySelector('[data-done]').addEventListener('click', e => {
+    e.stopPropagation();
+    boulevardDreams[index].done = !boulevardDreams[index].done;
+    saveBoulevardDreams(boulevardDreams);
+    renderBoulevard();
+  });
   note.querySelector('[data-del]').addEventListener('click', e => {
     e.stopPropagation();
     boulevardDreams.splice(index, 1);
@@ -801,78 +691,49 @@ function renderBoulevardNote(dream, index) {
 }
 
 function renderBoulevard() {
-  const container = elements.boulevardNotes;
-  const svg = elements.boulevardStrings;
-  if (!container) return;
-  container.innerHTML = '';
-  if (svg) svg.innerHTML = '';
-
-  boulevardDreams.forEach((dream, i) => {
-    container.appendChild(renderBoulevardNote(dream, i));
-  });
-
-  setTimeout(drawStrings, 80);
+  el.boulevardNotes.innerHTML = '';
+  el.boulevardStrings.innerHTML = '';
+  boulevardDreams.forEach((dream, i) => el.boulevardNotes.appendChild(renderBoulevardNote(dream, i)));
+  setTimeout(drawStrings, 100);
 }
 
 function drawStrings() {
-  const svg = elements.boulevardStrings;
-  const canvas = $('boulevardCanvas');
-  if (!svg || !canvas) return;
-
+  const canvas = $('boulevardCanvas'); if (!el.boulevardStrings || !canvas) return;
   const notes = canvas.querySelectorAll('.dream-note');
   if (notes.length < 2) return;
-
   const cRect = canvas.getBoundingClientRect();
-
   const centers = Array.from(notes).map(n => {
     const r = n.getBoundingClientRect();
-    return { x: r.left - cRect.left + r.width / 2, y: r.top - cRect.top + r.height / 2 };
+    return { x: r.left - cRect.left + r.width/2, y: r.top - cRect.top + r.height/2 };
   });
-
-  svg.innerHTML = '';
+  el.boulevardStrings.innerHTML = '';
   for (let i = 0; i < centers.length - 1; i++) {
-    const a = centers[i];
-    const b = centers[i + 1];
-    const mx = (a.x + b.x) / 2;
-    const my = (a.y + b.y) / 2 + 28;
+    const a = centers[i], b = centers[i+1];
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('class', 'boulevard-string');
-    path.setAttribute('d', `M ${a.x},${a.y} Q ${mx},${my} ${b.x},${b.y}`);
-    svg.appendChild(path);
+    path.setAttribute('d', `M ${a.x},${a.y} Q ${(a.x+b.x)/2},${(a.y+b.y)/2+30} ${b.x},${b.y}`);
+    el.boulevardStrings.appendChild(path);
   }
 }
 
 function makeDraggable(note, idx) {
-  let startX, startY, origLeft, origTop, dragging = false;
-
-  function startDrag(clientX, clientY) {
-    dragging = true;
-    startX = clientX;
-    startY = clientY;
-    const parent = note.parentElement;
-    const pRect = parent ? parent.getBoundingClientRect() : { width: 600, height: 480 };
-    origLeft = (parseFloat(note.style.left) / 100) * pRect.width;
-    origTop = (parseFloat(note.style.top) / 100) * pRect.height;
-    note.classList.add('is-dragging');
-    note.style.zIndex = 20;
+  let sx, sy, ol, ot, dragging = false;
+  function start(cx, cy) {
+    dragging = true; sx = cx; sy = cy;
+    const p = note.parentElement, pr = p ? p.getBoundingClientRect() : {width:600,height:480};
+    ol = (parseFloat(note.style.left)/100) * pr.width;
+    ot = (parseFloat(note.style.top)/100) * pr.height;
+    note.classList.add('is-dragging'); note.style.zIndex = 20;
   }
-
-  function moveDrag(clientX, clientY) {
+  function move(cx, cy) {
     if (!dragging) return;
-    const parent = note.parentElement;
-    if (!parent) return;
-    const pRect = parent.getBoundingClientRect();
-    const dx = clientX - startX;
-    const dy = clientY - startY;
-    const newL = Math.max(0, Math.min(pRect.width - note.offsetWidth, origLeft + dx));
-    const newT = Math.max(0, Math.min(pRect.height - note.offsetHeight, origTop + dy));
-    note.style.left = `${(newL / pRect.width) * 100}%`;
-    note.style.top = `${(newT / pRect.height) * 100}%`;
+    const p = note.parentElement; if (!p) return;
+    const pr = p.getBoundingClientRect();
+    note.style.left = `${Math.max(0, Math.min(pr.width - note.offsetWidth,  ol + cx - sx)) / pr.width * 100}%`;
+    note.style.top  = `${Math.max(0, Math.min(pr.height - note.offsetHeight, ot + cy - sy)) / pr.height * 100}%`;
   }
-
-  function endDrag() {
-    if (!dragging) return;
-    dragging = false;
+  function end() {
+    if (!dragging) return; dragging = false;
     note.classList.remove('is-dragging');
     if (boulevardDreams[idx]) {
       boulevardDreams[idx].x = parseFloat(note.style.left);
@@ -881,42 +742,26 @@ function makeDraggable(note, idx) {
     }
     drawStrings();
   }
-
-  note.addEventListener('mousedown', e => {
-    if (e.target.closest('.dream-note__actions')) return;
-    e.preventDefault();
-    startDrag(e.clientX, e.clientY);
-  });
-  document.addEventListener('mousemove', e => moveDrag(e.clientX, e.clientY));
-  document.addEventListener('mouseup', endDrag);
-
-  note.addEventListener('touchstart', e => {
-    if (e.target.closest('.dream-note__actions')) return;
-    startDrag(e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: true });
-  note.addEventListener('touchmove', e => {
-    moveDrag(e.touches[0].clientX, e.touches[0].clientY);
-    e.preventDefault();
-  }, { passive: false });
-  note.addEventListener('touchend', endDrag);
+  note.addEventListener('mousedown',  e => { if (e.target.closest('.dream-note__actions')) return; e.preventDefault(); start(e.clientX, e.clientY); });
+  document.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+  document.addEventListener('mouseup', end);
+  note.addEventListener('touchstart', e => { if (e.target.closest('.dream-note__actions')) return; start(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
+  note.addEventListener('touchmove',  e => { move(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, {passive:false});
+  note.addEventListener('touchend', end);
 }
 
 function initBoulevard() {
   const saved = loadBoulevardDreams();
-  boulevardDreams = saved && saved.length ? saved : JSON.parse(JSON.stringify(DEFAULT_DREAMS));
-
+  boulevardDreams = (saved && saved.length) ? saved : JSON.parse(JSON.stringify(DEFAULT_DREAMS));
   renderBoulevard();
   initBoulevardQuotes();
 
-  if (elements.boulevardAddBtn) {
-    elements.boulevardAddBtn.addEventListener('click', () => {
-      elements.addDreamModal.classList.add('is-open');
-      elements.addDreamModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    });
-  }
+  el.boulevardAddBtn.addEventListener('click', () => {
+    el.addDreamModal.classList.add('is-open');
+    el.addDreamModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  });
 
-  /* Color picker */
   document.querySelectorAll('.note-color-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.note-color-btn').forEach(b => b.classList.remove('active'));
@@ -925,278 +770,94 @@ function initBoulevard() {
     });
   });
 
-  /* Add dream form */
-  if (elements.addDreamForm) {
-    elements.addDreamForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const text = elements.dreamText.value.trim();
-      if (!text) return;
-      const newDream = {
-        text, color: state.selectedColor,
-        x: Math.random() * 60 + 5,
-        y: Math.random() * 60 + 5,
-        rotate: (Math.random() - 0.5) * 8,
-      };
-      boulevardDreams.push(newDream);
-      saveBoulevardDreams(boulevardDreams);
-      renderBoulevard();
-      elements.dreamText.value = '';
-      elements.addDreamModal.classList.remove('is-open');
-      elements.addDreamModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    });
-  }
+  el.addDreamForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const text = el.dreamText.value.trim(); if (!text) return;
+    boulevardDreams.push({ text, color: state.selectedColor, x: Math.random()*60+5, y: Math.random()*60+5, rotate: (Math.random()-0.5)*8, done: false });
+    saveBoulevardDreams(boulevardDreams);
+    renderBoulevard();
+    el.dreamText.value = '';
+    el.addDreamModal.classList.remove('is-open');
+    el.addDreamModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  });
 
-  elements.addDreamClose.addEventListener('click', () => {
-    elements.addDreamModal.classList.remove('is-open');
-    elements.addDreamModal.setAttribute('aria-hidden', 'true');
+  [el.addDreamClose, el.addDreamBackdrop].forEach(el2 => el2.addEventListener('click', () => {
+    el.addDreamModal.classList.remove('is-open');
+    el.addDreamModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-  });
-  elements.addDreamBackdrop.addEventListener('click', () => {
-    elements.addDreamModal.classList.remove('is-open');
-    elements.addDreamModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  });
+  }));
 
   window.addEventListener('resize', drawStrings);
 }
 
 /* ═══════════════════════════════════════════════════════
-   MUSIC
-   ═══════════════════════════════════════════════════════ */
-
-function initMusic() {
-  const audio = new Audio();
-  let playing = false, songIdx = 0;
-
-  function playSong(idx) {
-    const s = APP_DATA.songs[idx % APP_DATA.songs.length];
-    if (!s.src) {
-      if (elements.musicStatus) elements.musicStatus.textContent = s.title + ' — ' + s.artist;
-      return;
-    }
-    audio.src = s.src;
-    audio.play().catch(() => {});
-    if (elements.musicStatus) elements.musicStatus.textContent = s.title + ' — ' + s.artist;
-  }
-
-  audio.addEventListener('ended', () => { songIdx = (songIdx + 1) % APP_DATA.songs.length; playSong(songIdx); });
-
-  if (elements.musicButton) {
-    elements.musicButton.addEventListener('click', () => {
-      playing = !playing;
-      if (playing) {
-        document.body.classList.add('music-playing');
-        playSong(songIdx);
-        elements.musicButton.setAttribute('aria-pressed', 'true');
-      } else {
-        document.body.classList.remove('music-playing');
-        audio.pause();
-        elements.musicButton.setAttribute('aria-pressed', 'false');
-      }
-    });
-  }
-
-  window.playLetterSong = idx => {
-    const s = APP_DATA.songs[idx % APP_DATA.songs.length];
-    if (!s.src) return;
-    audio.src = s.src;
-    playing = true;
-    document.body.classList.add('music-playing');
-    audio.play().catch(() => {});
-    if (elements.musicStatus) elements.musicStatus.textContent = s.title + ' — ' + s.artist;
-  };
-}
-
-/* ═══════════════════════════════════════════════════════
-   MINI LETTER BOOK
-   ═══════════════════════════════════════════════════════ */
-
-function initLetterBook() {
-  function renderLetter(i) {
-    const letters = [...APP_DATA.letters];
-    const l = letters[i];
-    if (!l) return;
-
-    elements.letterBookProgress.textContent = `Carta ${i + 1} de ${letters.length}`;
-    elements.letterBookSong.textContent = `Canción: ${l.song}`;
-    elements.letterText.classList.add('is-fading');
-    setTimeout(() => {
-      elements.letterText.innerHTML = l.text.split('\n').map(p => p ? `<p>${p}</p>` : '').join('');
-      elements.letterText.classList.remove('is-fading');
-    }, 240);
-
-    elements.letterPrev.disabled = i === 0;
-    elements.letterNext.disabled = i === letters.length - 1;
-    state.letterIndex = i;
-
-    /* Rail */
-    Array.from(elements.letterRail.children).forEach((item, ri) => {
-      item.classList.toggle('is-active', ri === i);
-    });
-  }
-
-  /* Build rail */
-  APP_DATA.letters.forEach((_, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'letter-rail__item';
-    btn.textContent = i + 1;
-    btn.addEventListener('click', () => renderLetter(i));
-    elements.letterRail.appendChild(btn);
-  });
-
-  renderLetter(0);
-
-  elements.letterPrev.addEventListener('click', () => { if (state.letterIndex > 0) renderLetter(state.letterIndex - 1); });
-  elements.letterNext.addEventListener('click', () => { if (state.letterIndex < APP_DATA.letters.length - 1) renderLetter(state.letterIndex + 1); });
-  elements.letterPlaySong.addEventListener('click', () => {
-    if (window.playLetterSong) window.playLetterSong(state.letterIndex);
-  });
-  elements.letterOpenPhoto.addEventListener('click', () => {
-    const photoIdx = state.letterIndex - 1;
-    if (photoIdx >= 0 && photoIdx < APP_DATA.gallery.length) openGalleryModal(photoIdx);
-  });
-  elements.letterPetals.addEventListener('click', () => spawnParticles('petals'));
-}
-
-/* ═══════════════════════════════════════════════════════
-   GALLERY MODAL (for letter book)
-   ═══════════════════════════════════════════════════════ */
-
-function openGalleryModal(index) {
-  state.galleryItems = APP_DATA.gallery;
-  state.galleryIndex = index;
-  renderGallerySlide(index);
-  elements.galleryModal.classList.add('is-open');
-  elements.galleryModal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-}
-
-function renderGallerySlide(index) {
-  const item = state.galleryItems[index];
-  if (!item) return;
-
-  const isVid = isVideoFile(item.image);
-  elements.modalImage.style.display = isVid ? 'none' : 'block';
-  elements.modalVideo.style.display = isVid ? 'block' : 'none';
-
-  if (isVid) {
-    elements.modalVideo.src = item.image;
-  } else {
-    elements.modalImage.src = item.image || '';
-    elements.modalImage.alt = item.title;
-  }
-
-  elements.modalDate.textContent = item.date;
-  elements.modalTitle.textContent = item.title;
-  elements.modalCaption.textContent = item.text || '';
-  const songData = APP_DATA.songs[index % APP_DATA.songs.length];
-  elements.modalSong.textContent = songData ? `♪ ${songData.title} — ${songData.artist}` : '';
-  state.galleryIndex = index;
-}
-
-function initGalleryModal() {
-  elements.modalPrev.addEventListener('click', () => {
-    const prev = (state.galleryIndex - 1 + state.galleryItems.length) % state.galleryItems.length;
-    renderGallerySlide(prev);
-  });
-  elements.modalNext.addEventListener('click', () => {
-    const next = (state.galleryIndex + 1) % state.galleryItems.length;
-    renderGallerySlide(next);
-  });
-
-  const close = () => {
-    elements.galleryModal.classList.remove('is-open');
-    elements.galleryModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    elements.modalVideo.pause();
-  };
-
-  document.querySelectorAll('[data-modal-close]').forEach(el => el.addEventListener('click', close));
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      if (elements.cardModal.classList.contains('is-open')) closeCardModal();
-      if (elements.galleryModal.classList.contains('is-open')) close();
-      if (elements.addMemoryModal.classList.contains('is-open')) closeAddMemoryModal();
-    }
-  });
-}
-
-/* ═══════════════════════════════════════════════════════
-   PARTICLES & FX
+   PARTICLES
    ═══════════════════════════════════════════════════════ */
 
 function spawnParticles(type) {
-  const fx = elements.fxLayer;
-  if (!fx) return;
-  const count = type === 'hearts' ? 16 : 24;
-
-  for (let i = 0; i < count; i++) {
-    const el = document.createElement('span');
-    const x = Math.random() * 100;
-    const drift = (Math.random() - 0.5) * 160;
-    el.style.left = `${x}vw`;
-    el.style.bottom = `${Math.random() * 30}vh`;
-    el.style.setProperty('--drift', `${drift}px`);
-
+  const fx = el.fxLayer; if (!fx) return;
+  for (let i = 0; i < (type === 'hearts' ? 16 : 24); i++) {
+    const e2 = document.createElement('span');
+    e2.style.cssText = `left:${Math.random()*100}vw;bottom:${Math.random()*30}vh;`;
+    e2.style.setProperty('--drift', `${(Math.random()-0.5)*200}px`);
     if (type === 'hearts') {
-      el.className = 'heart-particle';
-      el.textContent = ['❤️','💕','💖','✨','💫'][Math.floor(Math.random() * 5)];
+      e2.className = 'heart-particle';
+      e2.textContent = ['❤️','💕','💖','✨','💫'][Math.floor(Math.random()*5)];
     } else {
-      el.className = 'confetti-piece';
-      el.style.background = `hsl(${Math.random() * 360},80%,65%)`;
-      el.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
+      e2.className = 'confetti-piece';
+      e2.style.background = `hsl(${Math.random()*360},80%,65%)`;
     }
-
-    fx.appendChild(el);
-    setTimeout(() => el.remove(), 3500);
+    fx.appendChild(e2);
+    setTimeout(() => e2.remove(), 3500);
   }
 }
 
 /* ═══════════════════════════════════════════════════════
-   LOVE BUTTON
+   REVEAL, START, LOVE
    ═══════════════════════════════════════════════════════ */
 
-function initLoveButton() {
-  if (!elements.loveButton) return;
-  elements.loveButton.addEventListener('click', () => {
+function initReveal() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); } });
+  }, {threshold:0.1});
+  document.querySelectorAll('[data-reveal]').forEach(e2 => io.observe(e2));
+}
+
+function initStart() {
+  if (!el.startButton) return;
+  el.startButton.addEventListener('click', () => {
+    el.startCurtain.classList.add('is-hidden');
+    document.body.classList.add('story-started');
+    setTimeout(() => el.startCurtain.style.display = 'none', 1000);
     spawnParticles('hearts');
-    spawnParticles('petals');
+  });
+}
+
+function initLoveButton() {
+  if (!el.loveButton) return;
+  el.loveButton.addEventListener('click', () => {
+    spawnParticles('hearts'); spawnParticles('petals');
     document.body.classList.add('final-mode');
   });
 }
 
 /* ═══════════════════════════════════════════════════════
-   INTERSECTION OBSERVER (reveal)
+   GLOBAL ESC
    ═══════════════════════════════════════════════════════ */
-
-function initReveal() {
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
-}
-
-/* ═══════════════════════════════════════════════════════
-   START CURTAIN
-   ═══════════════════════════════════════════════════════ */
-
-function initStart() {
-  if (!elements.startButton) return;
-  elements.startButton.addEventListener('click', () => {
-    elements.startCurtain.classList.add('is-hidden');
-    document.body.classList.add('story-started');
-    setTimeout(() => { elements.startCurtain.style.display = 'none'; }, 1000);
-    spawnParticles('hearts');
-  });
-}
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (el.cardModal.classList.contains('is-open')) closeCardModal();
+  if (el.addMemoryModal.classList.contains('is-open')) closeAddMemoryModal();
+  if (el.addDreamModal.classList.contains('is-open')) {
+    el.addDreamModal.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+});
 
 /* ═══════════════════════════════════════════════════════
    BOOT
    ═══════════════════════════════════════════════════════ */
-
 document.addEventListener('DOMContentLoaded', () => {
   initSky();
   initStart();
@@ -1205,9 +866,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCarousel();
   initCarouselNav();
   initCardModal();
+  populateSongSelect();
   initAddMemory();
-  initLetterBook();
-  initGalleryModal();
   initBoulevard();
   initMusic();
   initLoveButton();
