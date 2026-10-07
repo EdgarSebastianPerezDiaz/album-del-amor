@@ -1009,11 +1009,33 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
   .boulevard-chalkboard { border-width:10px; }
   .boulevard-quotes { padding:12px 12px 10px;flex-direction:column;gap:8px; }
   .boulevard-quote-film-strip { display:none; }
-  .boulevard-canvas { min-height:340px; }
-  .boulevard-notes { min-height:340px; }
-  .dream-note { width:130px;min-height:100px;padding:22px 8px 34px; }
+  /* Boulevard: notas en grid en lugar de absoluto */
+  .boulevard-canvas { min-height:auto; overflow:visible; }
+  .boulevard-notes {
+    min-height:auto;
+    position:relative;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:8px 4px 12px;
+    align-items:flex-start;
+  }
+  .dream-note {
+    position:relative !important;
+    left:auto !important;
+    top:auto !important;
+    transform:none !important;
+    width:calc(50% - 5px);
+    min-width:130px;
+    min-height:100px;
+    padding:18px 8px 32px;
+    margin:0;
+    opacity:1;
+  }
   .boulevard-toolbar { flex-direction:column;gap:8px;align-items:stretch;text-align:center; }
-  .flower-pin { font-size:1.5rem;padding:4px 5px; }
+  /* Flores más pequeñas y debajo de las notas en móvil */
+  .boulevard-flowers { z-index:3; pointer-events:none; }
+  .flower-pin { font-size:1.3rem;padding:3px 4px;pointer-events:all; }
   .flower-popup { width:min(88vw,280px); }
   .rarity-legend { flex-wrap:wrap;gap:6px;justify-content:center; }
   .hero-card { padding:clamp(24px,6vw,48px) clamp(18px,5vw,40px); }

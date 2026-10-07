@@ -400,18 +400,45 @@ function createPokeCardElement(cardData, index, isAdd) {
 }
 
 function updateCoverflowPositions(animate = true) {
+  const isMob = window.innerWidth < 760;
   const slots = el.carouselRing.querySelectorAll('.poke-card-slot');
+  // On mobile use faster transition
+  const transitionCss = animate
+    ? (isMob
+        ? 'transform 0.32s ease,opacity 0.32s ease'
+        : 'transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.65s ease,filter 0.65s ease')
+    : 'none';
+
   slots.forEach((slot, i) => {
     const off = circularOffset(i, state.carouselIndex, state.carouselTotal);
     const cfg = getCoverflowTransform(off);
-    slot.style.transition = animate
-      ? 'transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.65s ease,filter 0.65s ease'
-      : 'none';
-    slot.style.transform  = `translateX(${cfg.x}px) translateZ(${cfg.z}px) rotateY(${cfg.ry}deg) scale(${cfg.scale})`;
-    slot.style.opacity    = cfg.opacity;
-    slot.style.filter     = cfg.filter;
-    slot.style.zIndex     = cfg.zi;
-    slot.style.pointerEvents = Math.abs(off) <= 3 ? 'auto' : 'none';
+    slot.style.transition = transitionCss;
+
+    if (isMob) {
+      // Simplified mobile layout: only show -2..+2, hide the rest
+      if (Math.abs(off) > 2) {
+        slot.style.opacity = '0';
+        slot.style.pointerEvents = 'none';
+        slot.style.transform = `translateX(${cfg.x}px) scale(0.1)`;
+        slot.style.zIndex = '0';
+      } else {
+        // Flat 2D transform on mobile (no rotateY = much faster)
+        const mobileX = off * (window.innerWidth * 0.44);
+        const mobileScale = off === 0 ? 1 : 0.72;
+        slot.style.transform  = `translateX(${mobileX}px) scale(${mobileScale})`;
+        slot.style.opacity    = off === 0 ? '1' : '0.45';
+        slot.style.filter     = off === 0 ? 'none' : 'brightness(0.55)';
+        slot.style.zIndex     = off === 0 ? '10' : String(5 - Math.abs(off));
+        slot.style.pointerEvents = Math.abs(off) <= 1 ? 'auto' : 'none';
+      }
+    } else {
+      slot.style.transform  = `translateX(${cfg.x}px) translateZ(${cfg.z}px) rotateY(${cfg.ry}deg) scale(${cfg.scale})`;
+      slot.style.opacity    = cfg.opacity;
+      slot.style.filter     = cfg.filter;
+      slot.style.zIndex     = cfg.zi;
+      slot.style.pointerEvents = Math.abs(off) <= 3 ? 'auto' : 'none';
+    }
+
     if (off === 0) slot.classList.add('is-center');
     else slot.classList.remove('is-center');
   });
@@ -442,7 +469,7 @@ function renderCarousel() {
 
   updateCoverflowPositions(false);
   updateCarouselCounter();
-  initHolographicEffects();
+  if (window.innerWidth >= 760) initHolographicEffects();
 }
 
 function handleCardClick(i) {
