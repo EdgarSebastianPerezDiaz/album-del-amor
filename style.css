@@ -285,6 +285,7 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
   padding:3px 9px;border-radius:999px;
   background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.95);
   backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
 }
 
 /* Bottom gradient overlay with name + stars */
@@ -935,6 +936,51 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 /* ============================
    RESPONSIVE — MOBILE
    ============================ */
+/* ============================
+   PERFORMANCE — MOBILE
+   Elimina efectos GPU costosos:
+   backdrop-filter, filter:blur,
+   animaciones pesadas
+   ============================ */
+@media (max-width:760px) {
+  /* Sin backdrop-filter — el #1 killer en móvil */
+  .glass-panel {
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    background:rgba(8,8,14,0.92) !important;
+  }
+  .flower-pin {
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    filter:none !important;
+  }
+  .flower-popup {
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    background:rgba(6,4,10,0.97) !important;
+  }
+  .card-modal__layout,
+  .add-memory-modal__panel,
+  .add-dream-modal__panel {
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+  /* Sin blurs de ambiente */
+  .ambient { display:none !important; }
+  /* Sin animaciones de float (ahorra CPU) */
+  .flower-pin { animation:none !important; }
+  /* Animaciones holográficas de cartas — solo en legendario */
+  .pcr-holo    { animation:none !important; }
+  .pcr-sparkle { animation:none !important; opacity:0 !important; }
+  .rarity-legendario .pcr-holo { animation:holoShimmerBg 6s ease-in-out infinite !important; }
+  .pcr-type-badge { backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+  /* Sombras más ligeras */
+  .boulevard-board { box-shadow:0 8px 24px rgba(0,0,0,0.55) !important; }
+  /* Scroll momentum iOS */
+  .app-shell        { -webkit-overflow-scrolling:touch; }
+  .card-modal__info { -webkit-overflow-scrolling:touch; }
+}
+
 @media (max-width:760px) {
   :root { --container:calc(100vw - 16px); }
   .topbar { top:8px;flex-direction:column;align-items:stretch;gap:6px; }

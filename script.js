@@ -171,15 +171,19 @@ function initSky() {
   const ctx = canvas.getContext('2d');
   let W, H, t = 0;
 
-  // Stars
-  const stars = Array.from({length:280}, () => ({
+  const isMobile = () => window.innerWidth < 760;
+  const mobile = isMobile();
+
+  // Stars — fewer on mobile
+  const starCount = mobile ? 80 : 280;
+  const stars = Array.from({length:starCount}, () => ({
     x:Math.random(), y:Math.random(),
-    r:Math.random()*1.6+0.2,
+    r:Math.random()*(mobile?1.2:1.6)+0.2,
     a:Math.random(), da:(Math.random()-0.5)*0.004,
   }));
 
-  // Constellations (groups of connected stars)
-  const constellations = [
+  // Constellations — skip on mobile
+  const constellations = mobile ? [] : [
     { pts:[{x:0.08,y:0.12},{x:0.14,y:0.09},{x:0.19,y:0.14},{x:0.17,y:0.20},{x:0.11,y:0.22}] },
     { pts:[{x:0.72,y:0.07},{x:0.78,y:0.05},{x:0.82,y:0.10},{x:0.79,y:0.15},{x:0.73,y:0.13},{x:0.72,y:0.07}] },
     { pts:[{x:0.42,y:0.05},{x:0.47,y:0.03},{x:0.52,y:0.06},{x:0.50,y:0.11},{x:0.45,y:0.12}] },
@@ -187,19 +191,20 @@ function initSky() {
     { pts:[{x:0.25,y:0.22},{x:0.30,y:0.18},{x:0.35,y:0.22},{x:0.32,y:0.28},{x:0.27,y:0.27}] },
   ];
 
-  // Satellites (moving dots)
-  const satellites = Array.from({length:3}, (_, i) => ({
+  // Satellites — skip on mobile
+  const satellites = mobile ? [] : Array.from({length:3}, () => ({
     x: Math.random(), y: Math.random() * 0.5,
     vx:(Math.random()*0.0006+0.0003) * (Math.random()<0.5?1:-1),
     vy:(Math.random()*0.0002+0.0001) * (Math.random()<0.5?1:-1),
     trail:[],
   }));
 
-  // Astronaut
-  const astro = { x:0.15, y:0.35, vx:0.00025, vy:0.00012, angle:0 };
+  // Astronaut — skip on mobile
+  const astro = mobile ? null : { x:0.15, y:0.35, vx:0.00025, vy:0.00012, angle:0 };
 
-  // Floating flowers/petals
-  const petals = Array.from({length:12}, () => ({
+  // Petals — fewer on mobile
+  const petalCount = mobile ? 4 : 12;
+  const petals = Array.from({length:petalCount}, () => ({
     x:Math.random(), y:Math.random()*0.8+0.1,
     vx:(Math.random()-0.5)*0.0004,
     vy:-Math.random()*0.0003-0.0001,
@@ -211,22 +216,18 @@ function initSky() {
   function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
   resize(); window.addEventListener('resize', resize);
 
-  function drawAstronaut(x, y, angle) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(angle);
-    ctx.font = '18px serif';
-    ctx.globalAlpha = 0.55;
-    ctx.fillText('👨‍🚀', -9, 9);
-    ctx.globalAlpha = 1;
-    ctx.restore();
-  }
+  // Throttle to 30fps on mobile
+  let lastFrame = 0;
+  const targetInterval = mobile ? 33 : 0;
 
-  (function tick() {
+  (function tick(now) {
+    requestAnimationFrame(tick);
+    if (mobile && now - lastFrame < targetInterval) return;
+    lastFrame = now;
     t += 0.01;
     ctx.clearRect(0, 0, W, H);
 
-    // Constellations
+    // Constellations (desktop only)
     constellations.forEach(c => {
       ctx.beginPath();
       c.pts.forEach((p, i) => {
@@ -234,13 +235,10 @@ function initSky() {
         if (i === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
       });
       ctx.strokeStyle = `rgba(200,180,255,${0.12 + 0.04 * Math.sin(t*0.7)})`;
-      ctx.lineWidth = 0.8;
-      ctx.stroke();
+      ctx.lineWidth = 0.8; ctx.stroke();
       c.pts.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x * W, p.y * H, 1.6, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(220,210,255,${0.7 + 0.2 * Math.sin(t)})`;
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x*W, p.y*H, 1.6, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(220,210,255,${0.7+0.2*Math.sin(t)})`; ctx.fill();
       });
     });
 
@@ -248,13 +246,11 @@ function initSky() {
     stars.forEach(s => {
       s.a = Math.max(0.06, Math.min(1, s.a + s.da));
       if (s.a <= 0.06 || s.a >= 1) s.da *= -1;
-      ctx.beginPath();
-      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(255,240,200,${s.a * 0.6})`;
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(s.x*W, s.y*H, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,240,200,${s.a*0.6})`; ctx.fill();
     });
 
-    // Satellites
+    // Satellites (desktop only)
     satellites.forEach(sat => {
       sat.x += sat.vx; sat.y += sat.vy;
       if (sat.x < 0) sat.x = 1; if (sat.x > 1) sat.x = 0;
@@ -262,43 +258,36 @@ function initSky() {
       sat.trail.push({x:sat.x*W, y:sat.y*H});
       if (sat.trail.length > 18) sat.trail.shift();
       sat.trail.forEach((pt, i) => {
-        ctx.beginPath();
-        ctx.arc(pt.x, pt.y, 0.8, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(180,230,255,${(i/sat.trail.length)*0.5})`;
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(pt.x, pt.y, 0.8, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(180,230,255,${(i/sat.trail.length)*0.5})`; ctx.fill();
       });
-      ctx.beginPath();
-      ctx.arc(sat.x*W, sat.y*H, 2, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(180,230,255,0.9)';
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(sat.x*W, sat.y*H, 2, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(180,230,255,0.9)'; ctx.fill();
     });
 
-    // Astronaut drift
-    astro.x += astro.vx; astro.y += astro.vy;
-    astro.angle = Math.sin(t * 0.3) * 0.3;
-    if (astro.x > 1.05) astro.x = -0.05;
-    if (astro.y < 0.05) { astro.vy *= -1; }
-    if (astro.y > 0.6) { astro.vy *= -1; }
-    drawAstronaut(astro.x * W, astro.y * H, astro.angle);
+    // Astronaut (desktop only)
+    if (astro) {
+      astro.x += astro.vx; astro.y += astro.vy;
+      astro.angle = Math.sin(t*0.3)*0.3;
+      if (astro.x > 1.05) astro.x = -0.05;
+      if (astro.y < 0.05) astro.vy *= -1;
+      if (astro.y > 0.6)  astro.vy *= -1;
+      ctx.save(); ctx.translate(astro.x*W, astro.y*H); ctx.rotate(astro.angle);
+      ctx.font = '18px serif'; ctx.globalAlpha = 0.55;
+      ctx.fillText('👨‍🚀', -9, 9); ctx.globalAlpha = 1; ctx.restore();
+    }
 
     // Petals
     petals.forEach(p => {
       p.x += p.vx; p.y += p.vy; p.a += p.va;
-      if (p.x < -0.02) p.x = 1.02;
-      if (p.x > 1.02)  p.x = -0.02;
-      if (p.y < -0.05) p.y = 1.05;
-      if (p.y > 1.05)  p.y = -0.05;
-      ctx.save();
-      ctx.translate(p.x*W, p.y*H);
-      ctx.rotate(p.a);
+      if (p.x < -0.02) p.x = 1.02; if (p.x > 1.02) p.x = -0.02;
+      if (p.y < -0.05) p.y = 1.05; if (p.y > 1.05) p.y = -0.05;
+      ctx.save(); ctx.translate(p.x*W, p.y*H); ctx.rotate(p.a);
       ctx.globalAlpha = p.opacity;
-      ctx.font = `${14 + 4*Math.sin(t+p.x*6)}px serif`;
-      ctx.fillText(p.symbol, -8, 8);
-      ctx.restore();
+      ctx.font = `${14+4*Math.sin(t+p.x*6)}px serif`;
+      ctx.fillText(p.symbol, -8, 8); ctx.restore();
     });
-
-    requestAnimationFrame(tick);
-  })();
+  })(0);
 }
 
 /* ─────────────── COUNTER ─────────────── */
