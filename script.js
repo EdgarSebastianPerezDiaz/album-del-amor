@@ -34,26 +34,65 @@ const APP_DATA = {
   ],
 
   gallery: [
-    { date:'El primer beso',              title:'El Primer Beso',           image:'assets/img/3.jpeg',  rarity:'legendario', type:'Amor',       hp:100, songIndex:0,  text:'El instante en que todo cambió. El universo pausó su respiración para que nosotros empezáramos la nuestra juntos. Ese beso que selló nuestro primer sí.' },
-    { date:'Las madrugadas de Instagram', title:'Madrugadas de Instagram',  image:'assets/img/1.jpeg',  rarity:'raro',       type:'Memoria',    hp:70,  songIndex:1,  text:'Horas que se convirtieron en puentes. Cada mensaje una confesión, cada emoji una caricia digital que cruzaba la distancia.' },
-    { date:'La primera foto juntos',      title:'Primera Foto Juntos',      image:'assets/img/2.jpeg',  rarity:'ultra',      type:'Historia',   hp:85,  songIndex:2,  text:'La primera vez que la cámara nos capturó como un "nosotros". Esa foto guarda el inicio de todo.' },
-    { date:'Nuestro primer plan',         title:'El Primer Plan',           image:'assets/img/4.jpeg',  rarity:'raro',       type:'Aventura',   hp:75,  songIndex:3,  text:'El día que dijimos "vamos" sin saber a dónde, pero sabiendo que juntos era suficiente brújula.' },
-    { date:'Cuando me dijiste que sí',    title:'El Gran Sí',               image:'assets/img/5.jpeg',  rarity:'legendario', type:'Amor',       hp:100, songIndex:4,  text:'El momento exacto en que Karen Julieth dijo sí y mi corazón escribió la página más importante de su historia.' },
-    { date:'La primera vez que cocinamos',title:'Cocinando Juntos',         image:'assets/img/6.jpeg',  rarity:'comun',      type:'Hogar',      hp:60,  songIndex:5,  text:'Harina en la ropa, risas en la cocina. Descubrimos que incluso los errores culinarios saben mejor juntos.' },
-    { date:'Ese atardecer inolvidable',   title:'El Atardecer',             image:'assets/img/7.jpeg',  rarity:'ultra',      type:'Magia',      hp:90,  songIndex:6,  text:'El cielo pintó naranja y rosa. Nos quedamos en silencio porque las palabras sobraban.' },
-    { date:'La noche de estrellas',       title:'Noche de Estrellas',       image:'assets/img/8.jpeg',  rarity:'ultra',      type:'Magia',      hp:88,  songIndex:7,  text:'Acostados mirando el cielo, cada estrella testigo de que este amor es real, luminoso y nuestro.' },
-    { date:'Nuestro primer viaje',        title:'Primer Viaje',             image:'assets/img/9.jpeg',  rarity:'legendario', type:'Aventura',   hp:95,  songIndex:8,  text:'El primer mapa que dibujamos juntos. La primera maleta compartida. El primer horizonte que fue nuestro.' },
-    { date:'La llamada de medianoche',    title:'Llamada de Medianoche',    image:'assets/img/10.jpeg', rarity:'raro',       type:'Conexión',   hp:72,  songIndex:9,  text:'A las 2am, cuando el mundo dormía, nuestras voces se encontraron y la distancia dejó de existir.' },
-    { date:'Bailando bajo la lluvia',     title:'Lluvia y Baile',           image:'assets/img/11.jpeg', rarity:'ultra',      type:'Alegría',    hp:87,  songIndex:10, text:'La lluvia llegó de sorpresa y tú dijiste "vamos" y bailamos mojados y absolutamente felices.' },
-    { date:'El día que lloramos juntos',  title:'Lágrimas Compartidas',     image:'assets/img/12.jpeg', rarity:'raro',       type:'Verdad',     hp:80,  songIndex:11, text:'Descubrimos que el amor también es llorar sin vergüenza, sostenerse cuando todo tiembla.' },
-    { date:'Nuestra canción favorita',    title:'Nuestra Canción',          image:'assets/img/13.jpeg', rarity:'comun',      type:'Música',     hp:65,  songIndex:12, text:'Una canción que se convirtió en nuestra. Ahora cada vez que suena el mundo se detiene.' },
-    { date:'El cumpleaños especial',      title:'Cumpleaños Especial',      image:'assets/img/14.jpeg', rarity:'ultra',      type:'Celebración',hp:92,  songIndex:13, text:'Un año más de ella en el mundo y yo queriendo celebrar cada uno de esos años.' },
-    { date:'La promesa del futuro',       title:'Promesa del Futuro',       image:'assets/img/15.jpeg', rarity:'legendario', type:'Amor',       hp:100, songIndex:14, text:'El día que prometimos el mañana juntos. El futuro dejó de ser incierto.' },
-    { date:'Nuestro lugar secreto',       title:'Lugar Secreto',            image:'assets/img/16.jpeg', rarity:'ultra',      type:'Refugio',    hp:88,  songIndex:15, text:'Ese rincón del mundo donde el tiempo corre diferente y somos exactamente quienes somos.' },
-    { date:'La sorpresa perfecta',        title:'La Gran Sorpresa',         image:'assets/img/17.jpeg', rarity:'raro',       type:'Magia',      hp:78,  songIndex:16, text:'Planifiqué todo durante semanas y cuando la viste, tu cara valió más que todo el esfuerzo.' },
-    { date:'Nuestro primer año',          title:'Un Año Juntos',            image:'assets/img/18.jpeg', rarity:'legendario', type:'Hito',       hp:100, songIndex:17, text:'365 días aprendiendo a amarte mejor. Un año entero eligiéndote.' },
-    { date:'La selfie del corazón',       title:'Selfie del Corazón',       image:'assets/img/19.jpeg', rarity:'comun',      type:'Cotidiano',  hp:62,  songIndex:18, text:'Una foto cualquiera que guarda algo extraordinario: el destello en tus ojos cuando eres feliz.' },
-    { date:'Hoy y siempre',              title:'Hoy y Siempre',            image:'assets/img/20.jpeg', rarity:'legendario', type:'Amor',       hp:100, songIndex:0,  text:'Este recuerdo aún se está escribiendo. Cada día que pasa agrega palabras nuevas a esta historia sin final.' },
+    { date:'El primer beso', title:'El Primer Beso', image:'assets/img/3.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:0,
+      text:'Karen,\n\nHay besos que son sólo besos. Y luego está ese, el nuestro, que fue una declaración entera. Un poema sin palabras. Una respuesta a todas las preguntas que no sabía que me estaba haciendo.\n\nCuando cerraste los ojos, cerré el capítulo de la soledad para siempre.\n\nTuyo,\nEdgar ♥' },
+
+    { date:'Las madrugadas de Instagram', title:'Madrugadas de Instagram', image:'assets/img/1.jpeg', rarity:'raro', type:'Memoria', hp:70, songIndex:1,
+      text:'Para Karen,\n\nLas 2am contigo son diferentes. El mundo duerme pero nosotros inventábamos universos en letras y emojis. Cada notificación era un regalo anticipado.\n\nEn esas madrugadas aprendí que el tiempo contigo no se pierde: se invierte en algo que vale la eternidad.\n\nSiempre,\nEdgar ♥' },
+
+    { date:'La primera foto juntos', title:'Primera Foto Juntos', image:'assets/img/2.jpeg', rarity:'ultra', type:'Historia', hp:85, songIndex:2,
+      text:'Mi Karen,\n\nLa primera foto juntos guarda más que imagen: guarda el instante preciso en que dejamos de ser dos historias separadas para convertirnos en un capítulo conjunto.\n\nMira esa foto y verás en mis ojos que ya sabía que eras todo.\n\nCon amor,\nEdgar ♥' },
+
+    { date:'Nuestro primer plan', title:'El Primer Plan', image:'assets/img/4.jpeg', rarity:'raro', type:'Aventura', hp:75, songIndex:3,
+      text:'Karen Julieth,\n\nEse día tomamos la decisión más sencilla del mundo: estar juntos en algún lugar del mapa. No importaba el destino. Tú eras el destino.\n\nAprendí que el mejor viaje es cualquiera que hagas a mi lado.\n\nPara siempre tuyo,\nEdgar ♥' },
+
+    { date:'Cuando me dijiste que sí', title:'El Gran Sí', image:'assets/img/5.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:4,
+      text:'Mi amor,\n\nCuando dijiste sí, el tiempo se detuvo. El corazón aceleró. El mundo adquirió colores que no tenía antes.\n\nEse sí tuyo es la respuesta más hermosa que he recibido en toda mi vida. Y la más importante de todas.\n\nCompletamente tuyo,\nEdgar ♥' },
+
+    { date:'La primera vez que cocinamos', title:'Cocinando Juntos', image:'assets/img/6.jpeg', rarity:'comun', type:'Hogar', hp:60, songIndex:5,
+      text:'Para Karen,\n\nLa harina en la ropa y las risas en la cocina me enseñaron que los momentos imperfectos contigo son perfectos. Que no necesito planearlo todo para que salga bien, si estás tú presente.\n\nCon cariño y harina,\nEdgar ♥' },
+
+    { date:'Ese atardecer inolvidable', title:'El Atardecer', image:'assets/img/7.jpeg', rarity:'ultra', type:'Magia', hp:90, songIndex:6,
+      text:'Karen,\n\nEl cielo pintó naranja ese atardecer y yo sólo pude mirarte a ti. Porque ningún color del mundo compite con la luz que tienes cuando eres feliz.\n\nEse silencio que compartimos fue la conversación más profunda de mi vida.\n\nTuyo,\nEdgar ♥' },
+
+    { date:'La noche de estrellas', title:'Noche de Estrellas', image:'assets/img/8.jpeg', rarity:'ultra', type:'Magia', hp:88, songIndex:7,
+      text:'Mi Karen,\n\nAcostados bajo el cielo contándote cosas que nunca le he dicho a nadie. Cada estrella testigo de que este amor es real, luminoso y completamente nuestro.\n\nEl universo entero conspira para que sigamos aquí, juntos.\n\nSiempre,\nEdgar ♥' },
+
+    { date:'Nuestro primer viaje', title:'Primer Viaje', image:'assets/img/9.jpeg', rarity:'legendario', type:'Aventura', hp:95, songIndex:8,
+      text:'Para Karen Julieth,\n\nEl primer viaje juntos redefinió todo lo que sabía sobre la aventura. Resultó que el mejor destino no está en el mapa sino en la persona que lleva tu mano en el camino.\n\nContigo quiero perderme en todos los mapas del mundo.\n\nCon amor eterno,\nEdgar ♥' },
+
+    { date:'La llamada de medianoche', title:'Llamada de Medianoche', image:'assets/img/10.jpeg', rarity:'raro', type:'Conexión', hp:72, songIndex:9,
+      text:'Karen,\n\nA las 2am cuando el mundo duerme, tu voz es el único sonido que necesito. Cada llamada un puente entre tu mundo y el mío, construido en segundos, sólido como el amor.\n\nTuyo a cualquier hora,\nEdgar ♥' },
+
+    { date:'Bailando bajo la lluvia', title:'Lluvia y Baile', image:'assets/img/11.jpeg', rarity:'ultra', type:'Alegría', hp:87, songIndex:10,
+      text:'Mi Karen,\n\nBailaste bajo la lluvia sin importarte nada y en ese momento te vi como eres: libre, luminosa, completamente viva. El agua no te mojó, te reveló.\n\nEnamorado de ti para siempre,\nEdgar ♥' },
+
+    { date:'El día que lloramos juntos', title:'Lágrimas Compartidas', image:'assets/img/12.jpeg', rarity:'raro', type:'Verdad', hp:80, songIndex:11,
+      text:'Para Karen,\n\nEl día que lloramos juntos descubrí que el amor verdadero no es sólo risa sino también abrazo en la tormenta, mano tendida en la oscuridad, presencia cuando más duele.\n\nAquí estaré siempre,\nEdgar ♥' },
+
+    { date:'Nuestra canción favorita', title:'Nuestra Canción', image:'assets/img/13.jpeg', rarity:'comun', type:'Música', hp:65, songIndex:12,
+      text:'Karen Julieth,\n\nUna canción que se convirtió en nuestra cuando la escuchamos juntos. Ahora cada vez que suena el mundo se detiene y sólo existimos nosotros dos en ese segundo perfecto.\n\nCon música y amor,\nEdgar ♥' },
+
+    { date:'El cumpleaños especial', title:'Cumpleaños Especial', image:'assets/img/14.jpeg', rarity:'ultra', type:'Celebración', hp:92, songIndex:13,
+      text:'Mi Karen,\n\nUn año más de ti en el mundo y yo queriendo celebrar cada uno de esos años. No sólo tu cumpleaños sino el regalo que significa tu existencia entera para mí.\n\nFeliz de compartir el tiempo contigo,\nEdgar ♥' },
+
+    { date:'La promesa del futuro', title:'Promesa del Futuro', image:'assets/img/15.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:14,
+      text:'Para Karen,\n\nEl día que prometimos el mañana juntos, el futuro dejó de ser incierto. Ahora lo que viene tiene dirección, tiene nombre, tiene tus ojos como brújula.\n\nPrometido para siempre,\nEdgar ♥' },
+
+    { date:'Nuestro lugar secreto', title:'Lugar Secreto', image:'assets/img/16.jpeg', rarity:'ultra', type:'Refugio', hp:88, songIndex:15,
+      text:'Karen mía,\n\nEse lugar que sólo nosotros conocemos, donde el tiempo corre diferente y somos exactamente quienes somos sin máscaras ni miedo. Ese rincón del mundo tiene tu perfume.\n\nTuyo en ese lugar y en todos,\nEdgar ♥' },
+
+    { date:'La sorpresa perfecta', title:'La Gran Sorpresa', image:'assets/img/17.jpeg', rarity:'raro', type:'Magia', hp:78, songIndex:16,
+      text:'Mi amor,\n\nPlanifiqué la sorpresa durante semanas y cuando la viste, tu cara valió más que todo el esfuerzo combinado. Ese momento guardado para siempre en los archivos del corazón.\n\nSiempre queriendo sorprenderte,\nEdgar ♥' },
+
+    { date:'Nuestro primer año', title:'Un Año Juntos', image:'assets/img/18.jpeg', rarity:'legendario', type:'Hito', hp:100, songIndex:17,
+      text:'Para Karen Julieth,\n\n365 días. 8760 horas. Un año entero aprendiendo a amarte mejor cada día. Un año entero eligiéndote y descubriendo que es la decisión más fácil y más importante de mi vida.\n\nCon un año de amor y toda la vida por delante,\nEdgar ♥' },
+
+    { date:'La selfie del corazón', title:'Selfie del Corazón', image:'assets/img/19.jpeg', rarity:'comun', type:'Cotidiano', hp:62, songIndex:18,
+      text:'Karen,\n\nUna foto cualquiera de un día cualquiera. Y sin embargo guarda algo extraordinario: el destello en tus ojos cuando estás feliz y sé que soy parte de ese brillo.\n\nEnamorado de tu cotidiano,\nEdgar ♥' },
+
+    { date:'Hoy y siempre', title:'Hoy y Siempre', image:'assets/img/20.jpeg', rarity:'legendario', type:'Amor', hp:100, songIndex:0,
+      text:'Mi Karen Julieth,\n\nEste recuerdo aún se está escribiendo. Hoy, mañana, todos los días que vienen. El amor no tiene punto final, tiene puntos suspensivos que se convierten en nuevos capítulos.\n\nHoy y siempre,\nEdgar Sebastian Perez Diaz ♥' },
   ],
 
   timeline: [
