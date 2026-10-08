@@ -675,6 +675,8 @@ function openCardModal(index) {
 
 function initFullCardHolo(cardEl, rarity) {
   if (!cardEl) return;
+  // En móvil táctil no hay hover y el giroscopio compite con el scroll → skip
+  if (window.matchMedia('(max-width:760px)').matches) return;
   const holo = cardEl.querySelector('.pcr-holo'), sparkle = cardEl.querySelector('.pcr-sparkle');
   if (!holo || !sparkle) return;
   cardEl.addEventListener('mousemove', e => {
@@ -894,26 +896,28 @@ function initAddMemory() {
         // Editar carta del álbum — guardar como override
         const overrides = loadGalleryOverrides();
         const origCard = APP_DATA.gallery[_galleryEditIndex];
+        const prevOverride = overrides[_galleryEditIndex] || {};
+        // Preservar imagen existente del override si no subieron una nueva
         overrides[_galleryEditIndex] = {
           title, date, text, rarity,
-          image: imageSrc || origCard.image,
+          image: imageSrc || prevOverride.image || origCard.image,
           hp: rarityHp[rarity] || 60,
-          songIndex: songIndex >= 0 ? songIndex : origCard.songIndex,
-          customSongSrc: pendingAudioBlob || undefined,
-          customSongName: pendingAudioBlob ? pendingAudioName : undefined,
+          songIndex: songIndex >= 0 ? songIndex : (prevOverride.songIndex ?? origCard.songIndex),
+          customSongSrc: pendingAudioBlob || prevOverride.customSongSrc || undefined,
+          customSongName: pendingAudioBlob ? pendingAudioName : (prevOverride.customSongName || undefined),
         };
         saveGalleryOverrides(overrides);
         _memEditIndex = -1; _galleryEditIndex = -1;
       } else {
         const memories = loadUserMemories();
-        const existingImage = _memEditIndex >= 0 ? (memories[_memEditIndex]?.image || '') : '';
-        const finalImage = imageSrc || existingImage;
+        const existing = _memEditIndex >= 0 ? (memories[_memEditIndex] || {}) : {};
+        const finalImage = imageSrc || existing.image || '';
         const memory = {
           title, date, text, rarity, image: finalImage,
           type: 'Memoria', hp: rarityHp[rarity] || 60,
-          songIndex: songIndex >= 0 ? songIndex : undefined,
-          customSongSrc: pendingAudioBlob || undefined,
-          customSongName: pendingAudioBlob ? pendingAudioName : undefined,
+          songIndex: songIndex >= 0 ? songIndex : (existing.songIndex ?? undefined),
+          customSongSrc: pendingAudioBlob || existing.customSongSrc || undefined,
+          customSongName: pendingAudioBlob ? pendingAudioName : (existing.customSongName || undefined),
         };
         if (_memEditIndex >= 0) { memories[_memEditIndex] = memory; } else { memories.push(memory); }
         saveUserMemories(memories);
