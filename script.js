@@ -136,7 +136,7 @@ const el = {
   cardModal: $('cardModal'), cardModalClose: $('cardModalClose'), cardModalBackdrop: $('cardModalBackdrop'),
   cardModalCard: $('cardModalCard'), cardModalTitle: $('cardModalTitle'), cardModalText: $('cardModalText'),
   cardModalRarityLabel: $('cardModalRarityLabel'), cardModalSong: $('cardModalSong'),
-  cardModalPrev: $('cardModalPrev'), cardModalNext: $('cardModalNext'),
+  cardModalPrev: $('cardModalPrev'), cardModalNext: $('cardModalNext'), cardModalInfo: $('cardModalInfo'),
   addMemoryModal: $('addMemoryModal'), addMemoryClose: $('addMemoryClose'), addMemoryBackdrop: $('addMemoryBackdrop'),
   addMemoryForm: $('addMemoryForm'), addMemoryFile: $('addMemoryFile'),
   fileUploadContent: $('fileUploadContent'), filePreview: $('filePreview'),
@@ -156,6 +156,8 @@ function loadUserMemories() { try { return JSON.parse(localStorage.getItem('user
 function saveUserMemories(arr) { try { localStorage.setItem('userMemories', JSON.stringify(arr)); } catch {} }
 function loadBoulevardDreams() { try { const d = localStorage.getItem('boulevardDreams2'); return d ? JSON.parse(d) : null; } catch { return null; } }
 function saveBoulevardDreams(arr) { try { localStorage.setItem('boulevardDreams2', JSON.stringify(arr)); } catch {} }
+function loadGalleryOverrides() { try { return JSON.parse(localStorage.getItem('galleryOverrides') || '{}'); } catch { return {}; } }
+function saveGalleryOverrides(obj) { try { localStorage.setItem('galleryOverrides', JSON.stringify(obj)); } catch {} }
 
 /* ─────────────── MEDIADB — IndexedDB para fotos grandes ─────────────── */
 const MediaDB = (() => {
@@ -389,7 +391,9 @@ function circularOffset(i, active, total) {
 
 function buildAllCards() {
   const memories = loadUserMemories();
-  state.allCards = [...APP_DATA.gallery, ...memories];
+  const overrides = loadGalleryOverrides();
+  const gallery = APP_DATA.gallery.map((card, i) => overrides[i] ? { ...card, ...overrides[i] } : card);
+  state.allCards = [...gallery, ...memories];
 }
 
 function createPokeCardElement(cardData, index, isAdd) {
@@ -652,15 +656,15 @@ function openCardModal(index) {
   let editRow = el.cardModalInfo.querySelector('.card-modal__edit-row');
   if (!editRow) { editRow = document.createElement('div'); editRow.className = 'card-modal__edit-row'; infoScroll.appendChild(editRow); }
   const isUserMemory = index >= APP_DATA.gallery.length;
+  editRow.innerHTML = `
+    <button class="ghost-button" style="width:100%;justify-content:center;gap:6px;margin-top:8px;">✏️ ${isUserMemory ? 'Editar recuerdo' : 'Editar carta'}</button>
+    ${isUserMemory ? '<button class="ghost-button" style="width:100%;justify-content:center;gap:6px;color:rgba(255,120,120,0.85);">🗑️ Eliminar recuerdo</button>' : ''}`;
   if (isUserMemory) {
     const memIndex = index - APP_DATA.gallery.length;
-    editRow.innerHTML = `
-      <button class="ghost-button" style="width:100%;justify-content:center;gap:6px;margin-top:8px;">✏️ Editar recuerdo</button>
-      <button class="ghost-button" style="width:100%;justify-content:center;gap:6px;color:rgba(255,120,120,0.85);">🗑️ Eliminar recuerdo</button>`;
     editRow.children[0].onclick = () => { closeCardModal(); openEditMemory(memIndex, card); };
-    editRow.children[1].onclick = () => deleteUserMemory(memIndex);
+    if (editRow.children[1]) editRow.children[1].onclick = () => deleteUserMemory(memIndex);
   } else {
-    editRow.innerHTML = '';
+    editRow.children[0].onclick = () => { closeCardModal(); openEditGalleryCard(index, card); };
   }
 
   el.cardModal.classList.add('is-open');
@@ -777,6 +781,7 @@ function populateSongSelect() {
 }
 
 let _memEditIndex = -1;
+let _galleryEditIndex = -1;
 
 function openAddMemoryModal() {
   _memEditIndex = -1;
@@ -786,6 +791,7 @@ function openAddMemoryModal() {
 }
 function closeAddMemoryModal() {
   _memEditIndex = -1;
+  _galleryEditIndex = -1;
   el.addMemoryModal.classList.remove('is-open');
   el.addMemoryModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
@@ -809,6 +815,29 @@ function openEditMemory(memIndex, card) {
     f.querySelector('.file-upload-area').before(p);
     return p;
   })();
+  note.style.display = 'block';
+  el.addMemoryModal.classList.add('is-open');
+  el.addMemoryModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function openEditGalleryCard(galleryIndex, card) {
+  _memEditIndex = -2;
+  _galleryEditIndex = galleryIndex;
+  const f = el.addMemoryForm;
+  if (f.elements.title)  f.elements.title.value  = card.title  || '';
+  if (f.elements.date)   f.elements.date.value   = card.date   || '';
+  if (f.elements.text)   f.elements.text.value   = card.text   || '';
+  if (f.elements.rarity) f.elements.rarity.value = card.rarity || 'comun';
+  if (el.addMemorySongSelect) el.addMemorySongSelect.value = card.songIndex ?? '';
+  const note = f.querySelector('.edit-image-note') || (() => {
+    const p = document.createElement('p');
+    p.className = 'edit-image-note';
+    p.style.cssText = 'font-size:0.78rem;color:rgba(255,200,120,0.8);margin:0 0 8px;';
+    f.querySelector('.file-upload-area').before(p);
+    return p;
+  })();
+  note.textContent = 'Editando carta del álbum. Deja la imagen vacía para conservar la foto original.';
   note.style.display = 'block';
   el.addMemoryModal.classList.add('is-open');
   el.addMemoryModal.setAttribute('aria-hidden', 'false');
@@ -861,22 +890,34 @@ function initAddMemory() {
     const rarityHp = {comun:60,raro:75,ultra:88,legendario:100};
 
     const finalize = (imageSrc) => {
-      const memories = loadUserMemories();
-      const existingImage = _memEditIndex >= 0 ? (memories[_memEditIndex]?.image || '') : '';
-      const finalImage = imageSrc || existingImage;
-      const memory = {
-        title, date, text, rarity, image: finalImage,
-        type: 'Memoria', hp: rarityHp[rarity] || 60,
-        songIndex: songIndex >= 0 ? songIndex : undefined,
-        customSongSrc: pendingAudioBlob || undefined,
-        customSongName: pendingAudioBlob ? pendingAudioName : undefined,
-      };
-      if (_memEditIndex >= 0) {
-        memories[_memEditIndex] = memory;
+      if (_memEditIndex === -2 && _galleryEditIndex >= 0) {
+        // Editar carta del álbum — guardar como override
+        const overrides = loadGalleryOverrides();
+        const origCard = APP_DATA.gallery[_galleryEditIndex];
+        overrides[_galleryEditIndex] = {
+          title, date, text, rarity,
+          image: imageSrc || origCard.image,
+          hp: rarityHp[rarity] || 60,
+          songIndex: songIndex >= 0 ? songIndex : origCard.songIndex,
+          customSongSrc: pendingAudioBlob || undefined,
+          customSongName: pendingAudioBlob ? pendingAudioName : undefined,
+        };
+        saveGalleryOverrides(overrides);
+        _memEditIndex = -1; _galleryEditIndex = -1;
       } else {
-        memories.push(memory);
+        const memories = loadUserMemories();
+        const existingImage = _memEditIndex >= 0 ? (memories[_memEditIndex]?.image || '') : '';
+        const finalImage = imageSrc || existingImage;
+        const memory = {
+          title, date, text, rarity, image: finalImage,
+          type: 'Memoria', hp: rarityHp[rarity] || 60,
+          songIndex: songIndex >= 0 ? songIndex : undefined,
+          customSongSrc: pendingAudioBlob || undefined,
+          customSongName: pendingAudioBlob ? pendingAudioName : undefined,
+        };
+        if (_memEditIndex >= 0) { memories[_memEditIndex] = memory; } else { memories.push(memory); }
+        saveUserMemories(memories);
       }
-      saveUserMemories(memories);
       el.addMemoryForm.reset();
       const note = el.addMemoryForm.querySelector('.edit-image-note');
       if (note) note.style.display = 'none';
@@ -1046,11 +1087,14 @@ function initBoulevard() {
   renderBoulevard();
   initBoulevardQuotes();
 
-  el.boulevardAddBtn.addEventListener('click', () => {
+  const openDreamModal = () => {
     el.addDreamModal.classList.add('is-open');
     el.addDreamModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-  });
+  };
+  el.boulevardAddBtn.addEventListener('click', openDreamModal);
+  const addBtnList = document.getElementById('boulevardAddBtnList');
+  if (addBtnList) addBtnList.addEventListener('click', openDreamModal);
 
   document.querySelectorAll('.note-color-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1066,6 +1110,7 @@ function initBoulevard() {
     boulevardDreams.push({ text, color: state.selectedColor, x: Math.random()*60+5, y: Math.random()*60+5, rotate: (Math.random()-0.5)*8, done: false });
     saveBoulevardDreams(boulevardDreams);
     renderBoulevard();
+    renderDreamList();
     el.dreamText.value = '';
     el.addDreamModal.classList.remove('is-open');
     el.addDreamModal.setAttribute('aria-hidden', 'true');
@@ -1551,6 +1596,103 @@ function initFlowers() {
 }
 
 /* ═══════════════════════════════════════════════════════
+   TOPBAR COLLAPSE (mobile)
+   ═══════════════════════════════════════════════════════ */
+function initTopbarCollapse() {
+  const topbar = document.querySelector('.topbar');
+  const btn = document.getElementById('topbarCollapseBtn');
+  if (!btn || !topbar) return;
+  let collapsed = localStorage.getItem('topbarCollapsed') === '1';
+  function apply() {
+    if (collapsed) {
+      topbar.classList.add('is-collapsed');
+      btn.classList.add('is-collapsed-state');
+      btn.textContent = '♪';
+      btn.title = 'Mostrar controles';
+    } else {
+      topbar.classList.remove('is-collapsed');
+      btn.classList.remove('is-collapsed-state');
+      btn.textContent = '▲';
+      btn.title = 'Ocultar controles';
+    }
+  }
+  apply();
+  btn.addEventListener('click', () => {
+    collapsed = !collapsed;
+    localStorage.setItem('topbarCollapsed', collapsed ? '1' : '0');
+    apply();
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 760) topbar.classList.remove('is-collapsed');
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOULEVARD VISTA LISTA / TABLERO
+   ═══════════════════════════════════════════════════════ */
+let boulevardMode = localStorage.getItem('boulevardMode') || 'tablero';
+
+function renderDreamList() {
+  const items = document.getElementById('dreamListItems');
+  if (!items) return;
+  items.innerHTML = '';
+  if (!boulevardDreams.length) {
+    items.innerHTML = '<p class="dream-list-empty">Aún no hay sueños. ¡Agrega uno! ✨</p>';
+    return;
+  }
+  boulevardDreams.forEach((dream, i) => {
+    const item = document.createElement('div');
+    item.className = `dream-list-item${dream.done ? ' is-done' : ''}`;
+    item.innerHTML = `
+      <button class="dream-list-check" aria-label="${dream.done ? 'Marcar pendiente' : 'Marcar cumplida'}">${dream.done ? '✅' : '◌'}</button>
+      <span class="dream-list-text">${dream.text}</span>
+      <button class="dream-list-del" aria-label="Eliminar">✕</button>`;
+    item.querySelector('.dream-list-check').addEventListener('click', () => {
+      boulevardDreams[i].done = !boulevardDreams[i].done;
+      saveBoulevardDreams(boulevardDreams);
+      renderDreamList();
+    });
+    item.querySelector('.dream-list-del').addEventListener('click', () => {
+      boulevardDreams.splice(i, 1);
+      saveBoulevardDreams(boulevardDreams);
+      renderDreamList();
+      renderBoulevard();
+    });
+    items.appendChild(item);
+  });
+}
+
+function setBoulevardMode(mode) {
+  boulevardMode = mode;
+  localStorage.setItem('boulevardMode', mode);
+  const board = document.getElementById('boulevardBoard');
+  const listView = document.getElementById('boulevardListView');
+  const btnBoard = document.getElementById('blvModeBoard');
+  const btnList = document.getElementById('blvModeList');
+  if (!board || !listView) return;
+  if (mode === 'lista') {
+    board.style.display = 'none';
+    listView.style.display = 'block';
+    if (btnBoard) btnBoard.classList.remove('active');
+    if (btnList)  btnList.classList.add('active');
+    renderDreamList();
+  } else {
+    board.style.display = '';
+    listView.style.display = 'none';
+    if (btnBoard) btnBoard.classList.add('active');
+    if (btnList)  btnList.classList.remove('active');
+  }
+}
+
+function initBoulevardModeToggle() {
+  const btnBoard = document.getElementById('blvModeBoard');
+  const btnList  = document.getElementById('blvModeList');
+  if (btnBoard) btnBoard.addEventListener('click', () => setBoulevardMode('tablero'));
+  if (btnList)  btnList.addEventListener('click',  () => setBoulevardMode('lista'));
+  setBoulevardMode(window.innerWidth < 760 ? 'lista' : boulevardMode);
+}
+
+/* ═══════════════════════════════════════════════════════
    GLOBAL ESC
    ═══════════════════════════════════════════════════════ */
 document.addEventListener('keydown', e => {
@@ -1581,4 +1723,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initMusic();
   initLoveButton();
   initReveal();
+  initTopbarCollapse();
+  initBoulevardModeToggle();
 });
