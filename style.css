@@ -1040,12 +1040,46 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
   .rarity-legend { flex-wrap:wrap;gap:6px;justify-content:center; }
   .hero-card { padding:clamp(24px,6vw,48px) clamp(18px,5vw,40px); }
   .hero-card h1 { font-size:clamp(1.8rem,8vw,3.2rem); }
-  /* Card modal: scrollable so song section is reachable */
-  .card-modal { overflow-y:auto;-webkit-overflow-scrolling:touch;align-items:flex-start;padding-top:52px; }
-  .card-modal__layout { max-height:none !important;overflow-y:visible !important;width:100%; }
-  .card-modal__info { max-height:none !important;overflow-y:visible !important; }
+  /* Botón cerrar: fijo en la esquina superior derecha del viewport */
+  .card-modal__close { position:fixed;top:12px;right:12px;z-index:70; }
+  /* Card modal móvil: layout en columna, scroll correcto */
+  .card-modal {
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:56px 10px 32px;
+    gap:0;
+  }
+  .card-modal__layout {
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:18px !important;
+    max-height:none !important;
+    width:100% !important;
+    padding-bottom:16px;
+  }
+  .card-modal__card-wrap {
+    width:100%;
+    display:flex;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .poke-card-full { width:clamp(220px,72vw,310px) !important; }
+  .card-modal__info {
+    width:100% !important;
+    max-height:none !important;
+    overflow-y:visible !important;
+    padding:0 4px;
+  }
+  .card-modal__info-scroll { padding:0; }
+  .card-modal__info h3 { font-size:1.3rem;margin-bottom:10px; }
+  .card-modal__info p { font-size:0.95rem;line-height:1.75; }
   /* Edit/delete buttons en modal */
-  .card-modal__edit-row { display:flex;flex-direction:column;gap:6px;margin-top:14px; }
+  .card-modal__edit-row { display:flex;flex-direction:column;gap:8px;margin-top:16px; }
 }
 @media (max-height:760px) {
   .gallery-modal__panel { grid-template-columns:1fr;gap:12px; }
