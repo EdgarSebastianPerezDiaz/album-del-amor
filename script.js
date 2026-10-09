@@ -159,11 +159,51 @@ function isVideoSrc(src) {
   return /\.(mp4|webm|ogg|mov|avi)$/i.test(src);
 }
 function loadUserMemories() { try { return JSON.parse(localStorage.getItem('userMemories') || '[]'); } catch { return []; } }
-function saveUserMemories(arr) { try { localStorage.setItem('userMemories', JSON.stringify(arr)); } catch {} }
+function saveUserMemories(arr) { try { localStorage.setItem('userMemories', JSON.stringify(arr)); } catch {} syncKey('memories', arr); }
 function loadBoulevardDreams() { try { const d = localStorage.getItem('boulevardDreams2'); return d ? JSON.parse(d) : null; } catch { return null; } }
-function saveBoulevardDreams(arr) { try { localStorage.setItem('boulevardDreams2', JSON.stringify(arr)); } catch {} }
+function saveBoulevardDreams(arr) { try { localStorage.setItem('boulevardDreams2', JSON.stringify(arr)); } catch {} syncKey('dreams', arr); }
 function loadGalleryOverrides() { try { return JSON.parse(localStorage.getItem('galleryOverrides') || '{}'); } catch { return {}; } }
-function saveGalleryOverrides(obj) { try { localStorage.setItem('galleryOverrides', JSON.stringify(obj)); } catch {} }
+function saveGalleryOverrides(obj) { try { localStorage.setItem('galleryOverrides', JSON.stringify(obj)); } catch {} syncKey('overrides', obj); }
+
+/* ─── Sync con servidor (multi-dispositivo) ─── */
+let _syncPending = {};
+let _syncTimer = null;
+
+function syncKey(key, value) {
+  _syncPending[key] = value;
+  clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(flushSync, 1200);
+}
+
+function flushSync() {
+  const batch = _syncPending;
+  _syncPending = {};
+  Object.entries(batch).forEach(([key, value]) => {
+    fetch('/api/sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, value })
+    }).catch(() => {});
+  });
+}
+
+async function loadFromServer() {
+  try {
+    const res = await fetch('/api/sync');
+    if (!res.ok) return;
+    const data = await res.json();
+    let changed = false;
+    if (data.memories) { try { localStorage.setItem('userMemories', JSON.stringify(data.memories)); changed = true; } catch {} }
+    if (data.overrides) { try { localStorage.setItem('galleryOverrides', JSON.stringify(data.overrides)); changed = true; } catch {} }
+    if (data.dreams)   { try { localStorage.setItem('boulevardDreams2', JSON.stringify(data.dreams)); changed = true; } catch {} }
+    if (changed) {
+      renderCarousel();
+      boulevardDreams = loadBoulevardDreams() || [];
+      renderBoulevard();
+      renderDreamList();
+    }
+  } catch {}
+}
 
 /* ─────────────── MEDIADB — IndexedDB para fotos grandes ─────────────── */
 const MediaDB = (() => {
@@ -1992,4 +2032,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTopbarCollapse();
   initBoulevardModeToggle();
   initExportImport();
+  // Cargar datos del servidor y re-renderizar si hay algo nuevo
+  loadFromServer();
 });

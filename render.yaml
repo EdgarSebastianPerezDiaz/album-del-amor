@@ -1,8 +1,18 @@
 services:
-  - type: static_site
+  - type: web
     name: album-del-amor
-    env: static
+    env: node
+    plan: free
     branch: master
-    rootDir: .
-    buildCommand: ""
-    publishPath: .
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: album-amor-db
+          property: connectionString
+
+databases:
+  - name: album-amor-db
+    databaseName: albumamor
+    plan: free
