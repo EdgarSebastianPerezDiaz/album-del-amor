@@ -105,7 +105,8 @@ const APP_DATA = {
   ],
 };
 
-const RARITY_STARS = { comun:'★', raro:'★★', ultra:'★★★', legendario:'★★★★' };
+const RARITY_STARS  = { comun:'♡', raro:'♡♡', ultra:'♡♡♡', legendario:'♡♡♡♡' };
+const RARITY_LABELS = { comun:'Dulce', raro:'Especial', ultra:'Mágico', legendario:'Para Siempre' };
 
 /* ─────────────── BOULEVARD QUOTES ─────────────── */
 const BOULEVARD_QUOTES = [
@@ -627,7 +628,7 @@ function openCardModal(index) {
   }
 
   el.cardModalRarityLabel.className = `card-modal__rarity-label rarity-${rarity}`;
-  el.cardModalRarityLabel.textContent = `${RARITY_STARS[rarity]} ${rarity.charAt(0).toUpperCase()+rarity.slice(1)} • ${card.type||'Memoria'}`;
+  el.cardModalRarityLabel.textContent = `${RARITY_STARS[rarity]} ${RARITY_LABELS[rarity]||rarity} • ${card.type||'Memoria'}`;
   el.cardModalTitle.textContent = card.title;
   el.cardModalText.textContent = card.text || '';
 
@@ -1040,19 +1041,31 @@ function initBoulevardQuotes() {
   setInterval(() => { state.quoteIndex = (state.quoteIndex + 1) % BOULEVARD_QUOTES.length; show(state.quoteIndex); }, 7000);
 }
 
+const DREAM_PIN_EMOJI = {
+  yellow:   ['🌟','✨','⭐','💛','🌼'],
+  pink:     ['🌸','🌺','💖','🌷','🪷'],
+  blue:     ['💫','🫧','💙','🌀','🔵'],
+  lavender: ['✨','💜','🌙','🫐','💐'],
+  green:    ['🍃','🌿','🌱','💚','🪴'],
+};
+function getDreamEmoji(color, index) {
+  const arr = DREAM_PIN_EMOJI[color] || DREAM_PIN_EMOJI.yellow;
+  return arr[index % arr.length];
+}
+
 function renderBoulevardNote(dream, index) {
-  const rot = dream.rotate ?? ((Math.random() - 0.5) * 8);
-  const note = document.createElement('div');
-  note.className = `dream-note dream-note--${dream.color||'yellow'}${dream.done?' is-done':''}`;
-  note.style.cssText = `left:${dream.x}%;top:${dream.y}%;transform:rotate(${rot}deg);`;
-  note.style.setProperty('--note-transform', `rotate(${rot}deg)`);
-  note.style.animation = `noteAppear 0.4s ease ${index * 0.07}s both`;
+  const note = document.createElement('button');
+  const color = dream.color || 'yellow';
+  note.className = `dream-note dream-note--${color}${dream.done?' is-done':''}`;
+  note.style.cssText = `left:${dream.x}%;top:${dream.y}%;`;
+  note.style.animation = `floatUp ${3.5 + (index % 5) * 0.3}s ease-in-out ${index * 0.18}s infinite`;
   note.setAttribute('data-index', index);
+  note.setAttribute('aria-label', dream.text);
+  note.setAttribute('type', 'button');
 
-  const preview = dream.text.length > 40 ? dream.text.slice(0, 38) + '…' : dream.text;
-  note.innerHTML = `<p>${preview}</p><div class="dream-note__actions" style="display:none"></div>`;
+  const emoji = dream.done ? '✅' : getDreamEmoji(color, index);
+  note.textContent = emoji;
 
-  // Click → show detail popup
   note.addEventListener('click', e => {
     if (note.classList.contains('is-dragging')) return;
     showDreamPopup(index, note);
@@ -1145,7 +1158,7 @@ function makeDraggable(note, idx) {
     const p = note.parentElement, pr = p ? p.getBoundingClientRect() : {width:600,height:480};
     ol = (parseFloat(note.style.left)/100) * pr.width;
     ot = (parseFloat(note.style.top)/100) * pr.height;
-    note.classList.add('is-dragging'); note.style.zIndex = 20;
+    note.style.zIndex = 20;
   }
   function move(cx, cy) {
     if (!dragging) return;
@@ -1164,11 +1177,11 @@ function makeDraggable(note, idx) {
     }
     drawStrings();
   }
-  note.addEventListener('mousedown',  e => { if (e.target.closest('.dream-note__actions')) return; e.preventDefault(); start(e.clientX, e.clientY); });
-  document.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+  note.addEventListener('mousedown',  e => { e.preventDefault(); start(e.clientX, e.clientY); });
+  document.addEventListener('mousemove', e => { if (dragging) { const d = Math.hypot(e.clientX-sx, e.clientY-sy); if (d > 5) note.classList.add('is-dragging'); move(e.clientX, e.clientY); } });
   document.addEventListener('mouseup', end);
-  note.addEventListener('touchstart', e => { if (e.target.closest('.dream-note__actions')) return; start(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
-  note.addEventListener('touchmove',  e => { move(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, {passive:false});
+  note.addEventListener('touchstart', e => { start(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
+  note.addEventListener('touchmove',  e => { const d = Math.hypot(e.touches[0].clientX-sx, e.touches[0].clientY-sy); if (d > 8) note.classList.add('is-dragging'); move(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, {passive:false});
   note.addEventListener('touchend', end);
 }
 

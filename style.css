@@ -541,47 +541,58 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 .boulevard-board {
   border-radius:var(--radius-xl);overflow:hidden;
   position:relative;
-  background:#0a1008;
-  border:1px solid rgba(200,160,80,0.18);
-  box-shadow:0 20px 60px rgba(0,0,0,0.65), 0 0 60px rgba(120,80,20,0.12) inset;
+  /* Photo background — the actual garden image */
+  background-image: url('assets/img/boulevard-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  border:1px solid rgba(200,160,80,0.22);
+  box-shadow:0 20px 60px rgba(0,0,0,0.65), 0 0 60px rgba(120,80,20,0.15) inset;
   min-height:680px;
-  padding:36px 16px 44px;
+  padding:0;
+}
+/* Subtle warm overlay so text stays legible over photo */
+.boulevard-board::before {
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(
+    to bottom,
+    rgba(10,6,2,0.28) 0%,
+    rgba(10,6,2,0.08) 35%,
+    rgba(10,6,2,0.08) 65%,
+    rgba(10,6,2,0.35) 100%
+  );
 }
 
-/* Garden SVG background */
-.boulevard-bg {
-  position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
-}
-.boulevard-bg svg { width:100%;height:100%;display:block; }
+/* Garden SVG background — hidden, photo takes over */
+.boulevard-bg { display:none; }
 
-/* ---- OVERLAY PANEL (transparente — el jardín se ve de fondo) ---- */
+/* ---- OVERLAY PANEL ---- */
 .boulevard-chalkboard {
   position:relative;z-index:5;
-  max-width:940px;margin:0 auto;
+  max-width:100%;margin:0 auto;
   background:transparent;
   border:none;outline:none;box-shadow:none;
   overflow:hidden;
 }
 .boulevard-chalkboard::before { display:none; }
 
-/* ---- Daisy garland (decoration floating on garden) ---- */
+/* ---- Daisy garland ---- */
 .chalkboard-garland {
   position:relative;z-index:6;height:42px;
-  background:rgba(0,0,0,0.12);
-  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:rgba(0,0,0,0.05);
+  border-bottom:1px solid rgba(255,255,255,0.04);
   overflow:hidden;
 }
 .chalkboard-garland svg { width:100%;height:100%;display:block; }
-.chalkboard-garland--bottom { border-top:1px solid rgba(255,255,255,0.06);border-bottom:none; }
+.chalkboard-garland--bottom { border-top:1px solid rgba(255,255,255,0.04);border-bottom:none; }
 
-/* ---- Quote strip ---- */
+/* ---- Quote strip — very light, doesn't cover the photo ---- */
 .boulevard-quotes {
   position:relative;z-index:5;
-  padding:20px 26px 18px;
+  padding:16px 26px 14px;
   display:flex;align-items:stretch;gap:18px;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  background:rgba(0,0,0,0.3);
-  backdrop-filter:blur(4px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:rgba(0,0,0,0.18);
+  backdrop-filter:blur(6px);
 }
 .boulevard-quote-film-strip {
   width:13px;flex-shrink:0;
@@ -610,113 +621,69 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 /* ---- Toolbar ---- */
 .boulevard-toolbar {
   display:flex;align-items:center;justify-content:space-between;
-  padding:12px 22px;
-  background:rgba(0,0,0,0.25);
-  backdrop-filter:blur(4px);
-  border-bottom:1px solid rgba(255,255,255,0.07);
+  padding:10px 22px;
+  background:rgba(0,0,0,0.18);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
   position:relative;z-index:5;
 }
-.boulevard-title-tag { font-family:'Caveat',cursive;font-size:1rem;color:rgba(175,255,155,0.75);letter-spacing:0.06em; }
+.boulevard-title-tag {
+  font-family:'Caveat',cursive;font-size:1.05rem;
+  color:rgba(255,240,210,0.88);letter-spacing:0.06em;
+  text-shadow:0 1px 6px rgba(0,0,0,0.7);
+}
 .boulevard-add-btn {
-  padding:8px 18px;border-radius:999px;cursor:pointer;
-  font-family:'Caveat',cursive;font-size:0.9rem;font-weight:700;
-  color:#0d2010;
-  background:rgba(100,200,70,0.75);
-  border:1px solid rgba(120,220,90,0.5);
-  box-shadow:0 2px 10px rgba(40,120,20,0.3);
+  padding:8px 20px;border-radius:999px;cursor:pointer;
+  font-family:'Caveat',cursive;font-size:0.92rem;font-weight:700;
+  color:#fff;
+  background:rgba(180,100,200,0.7);
+  border:1px solid rgba(220,150,255,0.4);
+  box-shadow:0 2px 12px rgba(140,60,180,0.4);
+  backdrop-filter:blur(4px);
   transition:transform 0.2s,box-shadow 0.2s,background 0.2s;
 }
-.boulevard-add-btn:hover { transform:translateY(-2px) scale(1.03);background:rgba(120,220,85,0.9);box-shadow:0 6px 18px rgba(40,120,20,0.5); }
+.boulevard-add-btn:hover { transform:translateY(-2px) scale(1.04);background:rgba(200,120,230,0.85);box-shadow:0 6px 20px rgba(160,80,210,0.55); }
 
-/* ---- Canvas (inside chalkboard) ---- */
+/* ---- Canvas — takes up the full photo area ---- */
 .boulevard-canvas {
-  position:relative;min-height:460px;overflow:hidden;z-index:2;
+  position:relative;min-height:520px;overflow:hidden;z-index:2;
 }
 .boulevard-canvas::before { display:none; }
 .boulevard-strings { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1; }
-.boulevard-notes { position:relative;z-index:2;min-height:460px; }
+.boulevard-notes { position:absolute;inset:0;z-index:3;min-height:520px; }
 
-/* ---- Notes flotando sobre el jardín (muy sutiles) ---- */
+/* ---- Dream pins — float over the garden photo exactly like flower pins ---- */
 .dream-note {
-  position:absolute;width:170px;min-height:120px;
-  padding:26px 12px 38px;
-  cursor:move;user-select:none;
-  transition:opacity 0.2s,transform 0.15s,border-color 0.2s;
-  z-index:2;will-change:transform;word-break:break-word;
-  border-radius:3px;
-  background:rgba(0,0,0,0.18);
-  border:1px solid rgba(255,255,255,0.16);
-  box-shadow:none;
-  backdrop-filter:blur(2px);
-  opacity:0.72;
+  position:absolute;
+  pointer-events:all;
+  background:rgba(0,0,0,0.28);
+  border:1.5px solid rgba(255,255,255,0.18);
+  cursor:pointer;
+  font-size:clamp(1.8rem,3vw,2.5rem);
+  line-height:1;padding:6px 7px;border-radius:50%;
+  filter:drop-shadow(0 3px 12px rgba(0,0,0,0.8));
+  transition:transform 0.2s,filter 0.2s,background 0.2s;
+  animation:floatUp 3.5s ease-in-out infinite;
+  transform-origin:center bottom;
+  backdrop-filter:blur(4px);
+  width:auto;min-height:auto;
+  user-select:none;
+  z-index:3;
 }
-.dream-note:hover { opacity:1;border-color:rgba(255,255,255,0.35);z-index:10;
-  box-shadow:0 4px 20px rgba(0,0,0,0.35); }
-.dream-note.is-dragging { opacity:1;z-index:20;transform:scale(1.04) rotate(1deg) !important;
-  border-color:rgba(255,255,255,0.45); }
-
-/* Emoji flower pin */
-.dream-note::before {
-  content:'✿';position:absolute;top:6px;left:50%;transform:translateX(-50%);
-  font-size:0.9rem;z-index:4;color:rgba(255,255,255,0.38);
-  background:none;width:auto;height:auto;border-radius:0;filter:none;
+.dream-note:hover {
+  filter:drop-shadow(0 0 18px rgba(255,210,140,1)) drop-shadow(0 0 30px rgba(255,170,100,0.65));
+  transform:scale(1.5) translateY(-6px) !important;
+  animation-play-state:paused;
+  background:rgba(20,10,5,0.5);
+  border-color:rgba(255,200,130,0.6);
 }
-.dream-note::after { display:none; }
-
-/* Very subtle color tints */
-.dream-note--yellow   { border-color:rgba(255,240,110,0.22);background:rgba(20,15,0,0.22); }
-.dream-note--yellow::before { color:rgba(255,235,100,0.45); }
-.dream-note--pink     { border-color:rgba(255,160,190,0.22);background:rgba(20,0,8,0.22); }
-.dream-note--pink::before   { color:rgba(255,155,185,0.45); }
-.dream-note--blue     { border-color:rgba(110,195,255,0.22);background:rgba(0,10,20,0.22); }
-.dream-note--blue::before   { color:rgba(110,195,255,0.45); }
-.dream-note--green    { border-color:rgba(130,250,150,0.22);background:rgba(0,15,5,0.22); }
-.dream-note--green::before  { color:rgba(130,250,140,0.45); }
-.dream-note--lavender { border-color:rgba(195,155,255,0.22);background:rgba(10,0,20,0.22); }
-.dream-note--lavender::before { color:rgba(195,155,255,0.45); }
-
-/* Text — luminoso sobre el jardín oscuro */
-.dream-note p {
-  margin:0;font-size:1rem;line-height:1.5;
-  font-family:'Caveat','Comic Sans MS',cursive;
-  font-weight:600;
-  color:rgba(240,255,235,0.9);
-  position:relative;z-index:1;
-  text-shadow:0 1px 6px rgba(0,0,0,0.8);
-  background-image:none;
+.dream-note.is-dragging {
+  opacity:0.9;z-index:20;
+  transform:scale(1.15) !important;
+  animation-play-state:paused;
 }
-
-/* Note actions — aparecen al hover */
-.dream-note__actions {
-  position:absolute;bottom:5px;left:0;right:0;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 7px;gap:4px;
-  opacity:0;transition:opacity 0.2s;
-}
-.dream-note:hover .dream-note__actions { opacity:1; }
-.dream-note__done-btn {
-  flex:1;padding:3px 7px;border-radius:999px;
-  border:1px solid rgba(255,255,255,0.2);
-  background:rgba(0,0,0,0.3);cursor:pointer;
-  font-family:'Caveat',cursive;font-size:0.8rem;font-weight:700;
-  color:rgba(190,255,175,0.8);transition:background 0.2s;
-  line-height:1;
-}
-.dream-note__done-btn:hover { background:rgba(80,190,60,0.3);color:rgba(140,255,100,0.95); }
-.dream-note__del {
-  width:20px;height:20px;flex-shrink:0;border-radius:50%;
-  background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);cursor:pointer;
-  font-size:0.62rem;display:grid;place-items:center;color:rgba(255,190,190,0.65);
-  transition:background 0.2s;
-}
-.dream-note__del:hover { background:rgba(180,40,40,0.35);color:rgba(255,160,160,0.95); }
-
-/* Done state */
-.dream-note.is-done { opacity:0.5; }
-.dream-note.is-done:hover { opacity:0.75; }
-.dream-note.is-done::before { content:'✅'; }
-.dream-note.is-done p { text-decoration:line-through;color:rgba(150,215,135,0.65); }
-.dream-note.is-done .dream-note__done-btn { color:rgba(130,255,90,0.7); }
+.dream-note.is-done { opacity:0.6; filter:grayscale(0.4); }
+.dream-note.is-done:hover { opacity:0.85; }
 
 /* Strings entre notas — casi invisibles */
 .boulevard-string { stroke:rgba(255,255,255,0.1);stroke-width:1;fill:none; }
@@ -1015,25 +982,14 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
   /* Boulevard: notas en grid en lugar de absoluto */
   .boulevard-canvas { min-height:auto; overflow:visible; }
   .boulevard-notes {
-    min-height:auto;
-    position:relative;
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    padding:8px 4px 12px;
-    align-items:flex-start;
+    min-height:480px;
+    position:absolute;
+    inset:0;
   }
   .dream-note {
-    position:relative !important;
-    left:auto !important;
-    top:auto !important;
-    transform:none !important;
-    width:calc(50% - 5px);
-    min-width:130px;
-    min-height:100px;
-    padding:18px 8px 32px;
-    margin:0;
-    opacity:1;
+    font-size:1.6rem;
+    padding:5px 6px;
+    animation:floatUp 3.5s ease-in-out infinite;
   }
   .boulevard-toolbar { flex-direction:column;gap:8px;align-items:stretch;text-align:center; }
   /* Flores encima del tablero en móvil */
@@ -1275,17 +1231,8 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 @media (max-width: 760px) {
   #boulevardBoard { overflow-x: hidden; }
   .dream-note {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    width: calc(50% - 5px);
-    min-width: 130px;
-    min-height: 90px;
-    padding: 14px 8px 28px;
-    margin: 0;
-    opacity: 1;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    font-size:1.5rem;
+    padding:5px 6px;
   }
 }
 
