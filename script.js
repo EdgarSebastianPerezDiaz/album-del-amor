@@ -1107,6 +1107,7 @@ function showDreamPopup(index, noteEl) {
   // Position popup near the note or centered on mobile
   popup.style.display = 'block';
   popup.setAttribute('aria-hidden', 'false');
+  popup.style.transform = '';
   if (noteEl && window.innerWidth > 600) {
     const r = noteEl.getBoundingClientRect();
     const pw = 320, ph = 160;
@@ -1126,6 +1127,7 @@ function showDreamPopup(index, noteEl) {
 }
 
 function renderBoulevard() {
+  el.boulevardNotes.querySelectorAll('.dream-note').forEach(n => n._dragAC?.abort());
   el.boulevardNotes.innerHTML = '';
   el.boulevardStrings.innerHTML = '';
   boulevardDreams.forEach((dream, i) => el.boulevardNotes.appendChild(renderBoulevardNote(dream, i)));
@@ -1153,6 +1155,8 @@ function drawStrings() {
 
 function makeDraggable(note, idx) {
   let sx, sy, ol, ot, dragging = false;
+  const ac = new AbortController();
+  note._dragAC = ac;
   function start(cx, cy) {
     dragging = true; sx = cx; sy = cy;
     const p = note.parentElement, pr = p ? p.getBoundingClientRect() : {width:600,height:480};
@@ -1177,9 +1181,10 @@ function makeDraggable(note, idx) {
     }
     drawStrings();
   }
+  const sig = ac.signal;
   note.addEventListener('mousedown',  e => { e.preventDefault(); start(e.clientX, e.clientY); });
-  document.addEventListener('mousemove', e => { if (dragging) { const d = Math.hypot(e.clientX-sx, e.clientY-sy); if (d > 5) note.classList.add('is-dragging'); move(e.clientX, e.clientY); } });
-  document.addEventListener('mouseup', end);
+  document.addEventListener('mousemove', e => { if (dragging) { const d = Math.hypot(e.clientX-sx, e.clientY-sy); if (d > 5) note.classList.add('is-dragging'); move(e.clientX, e.clientY); } }, { signal: sig });
+  document.addEventListener('mouseup', end, { signal: sig });
   note.addEventListener('touchstart', e => { start(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
   note.addEventListener('touchmove',  e => { const d = Math.hypot(e.touches[0].clientX-sx, e.touches[0].clientY-sy); if (d > 8) note.classList.add('is-dragging'); move(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, {passive:false});
   note.addEventListener('touchend', end);
@@ -1809,6 +1814,7 @@ function setBoulevardMode(mode) {
     listView.style.display = 'none';
     if (btnBoard) btnBoard.classList.add('active');
     if (btnList)  btnList.classList.remove('active');
+    setTimeout(drawStrings, 50);
   }
 }
 

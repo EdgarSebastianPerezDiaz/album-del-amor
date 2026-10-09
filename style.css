@@ -541,29 +541,53 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 .boulevard-board {
   border-radius:var(--radius-xl);overflow:hidden;
   position:relative;
-  /* Photo background — the actual garden image */
+  /* Photo background — the actual garden image, HD quality */
   background-image: url('assets/img/boulevard-bg.jpg');
   background-size: cover;
-  background-position: center top;
-  border:1px solid rgba(200,160,80,0.22);
-  box-shadow:0 20px 60px rgba(0,0,0,0.65), 0 0 60px rgba(120,80,20,0.15) inset;
-  min-height:680px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border:2px solid rgba(180,140,60,0.3);
+  box-shadow:0 24px 70px rgba(0,0,0,0.7), 0 0 50px rgba(120,80,20,0.18) inset;
+  /* Aspect ratio close to original photo (wider than tall) */
+  min-height: clamp(480px, 56vw, 780px);
   padding:0;
 }
-/* Subtle warm overlay so text stays legible over photo */
+/* Very minimal warm vignette — don't cover the photo */
 .boulevard-board::before {
   content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(
-    to bottom,
-    rgba(10,6,2,0.28) 0%,
-    rgba(10,6,2,0.08) 35%,
-    rgba(10,6,2,0.08) 65%,
-    rgba(10,6,2,0.35) 100%
-  );
+  background:radial-gradient(ellipse at center, transparent 50%, rgba(5,3,1,0.28) 100%);
 }
 
 /* Garden SVG background — hidden, photo takes over */
 .boulevard-bg { display:none; }
+
+/* ---- Board view: hide all text overlays, only photo + pins visible ---- */
+.boulevard-board .chalkboard-garland,
+.boulevard-board .boulevard-quotes,
+.boulevard-board .boulevard-toolbar { display:none; }
+
+/* Chalkboard becomes transparent full-size container */
+.boulevard-board .boulevard-chalkboard {
+  position:absolute;inset:0;
+  max-width:100%;margin:0;
+  background:transparent;
+  border:none;box-shadow:none;
+  overflow:visible;
+  padding:0;
+}
+
+/* Canvas fills the full board */
+.boulevard-board .boulevard-canvas {
+  position:absolute;inset:0;
+  min-height:100%;height:100%;
+  overflow:visible;
+}
+
+/* Notes layer fills the full board */
+.boulevard-board .boulevard-notes {
+  position:absolute;inset:0;
+  min-height:100%;
+}
 
 /* ---- OVERLAY PANEL ---- */
 .boulevard-chalkboard {
@@ -975,7 +999,7 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
   .letter-book__controls { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .letter-rail { grid-template-columns:repeat(4,minmax(0,1fr)); }
   .form-row { grid-template-columns:1fr; }
-  .boulevard-board { padding:16px 6px 24px; }
+  .boulevard-board { padding:0; }
   .boulevard-chalkboard { border-width:10px; }
   .boulevard-quotes { padding:12px 12px 10px;flex-direction:column;gap:8px; }
   .boulevard-quote-film-strip { display:none; }
