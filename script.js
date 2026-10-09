@@ -191,17 +191,35 @@ async function loadFromServer() {
   try {
     const res = await fetch('/api/sync');
     if (!res.ok) return;
-    const data = await res.json();
-    let changed = false;
-    if (data.memories) { try { localStorage.setItem('userMemories', JSON.stringify(data.memories)); changed = true; } catch {} }
-    if (data.overrides) { try { localStorage.setItem('galleryOverrides', JSON.stringify(data.overrides)); changed = true; } catch {} }
-    if (data.dreams)   { try { localStorage.setItem('boulevardDreams2', JSON.stringify(data.dreams)); changed = true; } catch {} }
-    if (changed) {
-      renderCarousel();
-      boulevardDreams = loadBoulevardDreams() || [];
-      renderBoulevard();
-      renderDreamList();
-    }
+    const srv = await res.json();
+
+    const localMem  = loadUserMemories();
+    const localDrm  = loadBoulevardDreams() || [];
+    const localOvr  = loadGalleryOverrides();
+    const srvMem    = Array.isArray(srv.memories) ? srv.memories : [];
+    const srvDrm    = Array.isArray(srv.dreams)   ? srv.dreams   : [];
+    const srvOvr    = (srv.overrides && typeof srv.overrides === 'object') ? srv.overrides : {};
+
+    // El que tenga más registros gana (migración inicial del celular al servidor)
+    const finalMem = srvMem.length >= localMem.length ? srvMem : localMem;
+    const finalDrm = srvDrm.length >= localDrm.length ? srvDrm : localDrm;
+    const finalOvr = Object.keys(srvOvr).length >= Object.keys(localOvr).length ? srvOvr : localOvr;
+
+    // Si lo local tenía más → subirlo al servidor ahora
+    if (localMem.length > srvMem.length) syncKey('memories', localMem);
+    if (localDrm.length > srvDrm.length) syncKey('dreams',   localDrm);
+    if (Object.keys(localOvr).length > Object.keys(srvOvr).length) syncKey('overrides', localOvr);
+
+    // Guardar la versión ganadora en local
+    try { localStorage.setItem('userMemories',   JSON.stringify(finalMem)); } catch {}
+    try { localStorage.setItem('boulevardDreams2', JSON.stringify(finalDrm)); } catch {}
+    try { localStorage.setItem('galleryOverrides', JSON.stringify(finalOvr)); } catch {}
+
+    // Re-renderizar siempre para mostrar lo que llegó del servidor
+    renderCarousel();
+    boulevardDreams = finalDrm;
+    renderBoulevard();
+    renderDreamList();
   } catch {}
 }
 
