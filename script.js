@@ -194,6 +194,13 @@ function resolveIdbSrc(src, cb) {
   MediaDB.load(src.slice(4)).then(blob => cb(blob ? URL.createObjectURL(blob) : '')).catch(() => cb(''));
 }
 
+const IDB_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+
+function getCardMedia(card) {
+  if (card.media && card.media.length) return card.media;
+  return card.image ? [card.image] : [];
+}
+
 /* Gradient fallback per rarity for missing images */
 const RARITY_GRADIENT = {
   comun:     'linear-gradient(145deg,#1a1a2a,#0d0d18)',
@@ -412,8 +419,8 @@ function createPokeCardElement(cardData, index, isAdd) {
   const num    = String(index + 1).padStart(3, '0');
   const bg     = RARITY_GRADIENT[rarity];
 
-  const rawSrc = cardData.image || '';
-  const thumbSrc = rawSrc.startsWith('idb:') ? '' : rawSrc;
+  const rawSrc = getCardMedia(cardData)[0] || '';
+  const thumbSrc = rawSrc.startsWith('idb:') ? IDB_PLACEHOLDER : rawSrc;
   let mediaHtml = isVideoFile(rawSrc)
     ? `<video src="${thumbSrc}" class="pcr-photo" autoplay muted loop playsinline></video>`
     : `<img src="${thumbSrc}" class="pcr-photo" alt="${cardData.title}" loading="lazy"
@@ -501,10 +508,11 @@ function renderCarousel() {
   state.allCards.forEach((card, i) => {
     const slot = createPokeCardElement(card, i, false);
     slot.addEventListener('click', () => handleCardClick(i));
-    if (card.image && card.image.startsWith('idb:')) {
-      resolveIdbSrc(card.image, url => {
+    const firstSrc = getCardMedia(card)[0] || '';
+    if (firstSrc.startsWith('idb:')) {
+      resolveIdbSrc(firstSrc, url => {
         const m = slot.querySelector('.pcr-photo');
-        if (m) m.src = url;
+        if (m) { m.src = url; m.style.display = ''; }
       });
     }
     el.carouselRing.appendChild(slot);
@@ -590,14 +598,24 @@ function buildFullCard(cardData, index) {
   const stars  = RARITY_STARS[rarity];
   const num    = String(index + 1).padStart(3, '0');
   const bg     = RARITY_GRADIENT[rarity];
-  const imgSrc = (cardData.image || '').startsWith('idb:') ? '' : (cardData.image || '');
-  const media  = isVideoFile(cardData.image)
-    ? `<video src="${imgSrc}" class="pcr-photo" autoplay muted loop playsinline></video>`
-    : `<img src="${imgSrc}" class="pcr-photo" alt="${cardData.title}"
-            onerror="this.style.display='none'"/>`;
+  const mediaList = getCardMedia(cardData);
+  const primarySrc = mediaList[0] || '';
+  const primaryDisp = primarySrc.startsWith('idb:') ? IDB_PLACEHOLDER : primarySrc;
+  const mainMedia = isVideoFile(primarySrc)
+    ? `<video src="${primaryDisp}" class="pcr-photo" autoplay muted loop playsinline></video>`
+    : `<img src="${primaryDisp}" class="pcr-photo" alt="${cardData.title}" data-idbsrc="${primarySrc.startsWith('idb:')?primarySrc:''}"
+            onerror="if(this.src!==IDB_PLACEHOLDER)this.style.display='none'"/>`;
+  const extraStrip = mediaList.length > 1
+    ? `<div class="pcr-media-strip">${mediaList.slice(1,5).map((s,i) => {
+        const d = s.startsWith('idb:') ? IDB_PLACEHOLDER : s;
+        return isVideoFile(s)
+          ? `<video src="${d}" class="pcr-media-thumb" muted playsinline data-idbsrc="${s.startsWith('idb:')?s:''}"></video>`
+          : `<img src="${d}" class="pcr-media-thumb" alt="" data-idbsrc="${s.startsWith('idb:')?s:''}"/>`;
+      }).join('')}</div>`
+    : '';
 
   return `
-    <div class="pcr-photo-wrap" style="background:${bg}">${media}</div>
+    <div class="pcr-photo-wrap" style="background:${bg}">${mainMedia}${extraStrip}</div>
     <div class="pcr-top">
       <span class="pcr-num">#${num}</span>
       <span class="pcr-type-badge">${cardData.type||'Memoria'}</span>
@@ -619,13 +637,19 @@ function openCardModal(index) {
   el.cardModalCard.className = `poke-card-full rarity-${rarity}`;
   el.cardModalCard.style.background = RARITY_GRADIENT[rarity];
   el.cardModalCard.innerHTML = buildFullCard(card, index);
-  // Resolve idb: image async
-  if (card.image && card.image.startsWith('idb:')) {
-    resolveIdbSrc(card.image, url => {
-      const m = el.cardModalCard.querySelector('.pcr-photo');
-      if (m) m.src = url;
+  // Resolve all idb: media sources
+  getCardMedia(card).forEach((src, i) => {
+    if (!src.startsWith('idb:')) return;
+    resolveIdbSrc(src, url => {
+      if (i === 0) {
+        const m = el.cardModalCard.querySelector('.pcr-photo');
+        if (m) { m.src = url; m.style.display = ''; }
+      } else {
+        const thumbs = el.cardModalCard.querySelectorAll('.pcr-media-thumb');
+        if (thumbs[i-1]) { thumbs[i-1].src = url; thumbs[i-1].style.display = ''; }
+      }
     });
-  }
+  });
 
   el.cardModalRarityLabel.className = `card-modal__rarity-label rarity-${rarity}`;
   el.cardModalRarityLabel.textContent = `${RARITY_STARS[rarity]} ${RARITY_LABELS[rarity]||rarity} • ${card.type||'Memoria'}`;
@@ -650,6 +674,12 @@ function openCardModal(index) {
       el.cardModalSong.innerHTML = '';
       el.cardModalSong.style.display = 'none';
     }
+  }
+
+  // Auto-play card song on open
+  if (song || customSrc) {
+    const autoSrc = customSrc || (song ? song.src : '');
+    if (autoSrc) playAudio(autoSrc, si, song);
   }
 
   // Edit / delete for user-added memories
@@ -864,7 +894,7 @@ function openEditMemory(memIndex, card) {
     const p = document.createElement('p');
     p.className = 'edit-image-note';
     p.style.cssText = 'font-size:0.78rem;color:rgba(255,200,120,0.8);margin:0 0 8px;';
-    p.textContent = 'Deja el campo de imagen vacío para conservar la foto actual.';
+    p.textContent = 'Deja vacío para conservar las fotos actuales, o selecciona nuevas para reemplazarlas.';
     f.querySelector('.file-upload-area').before(p);
     return p;
   })();
@@ -910,19 +940,23 @@ function initAddMemory() {
   el.addMemoryClose.addEventListener('click', closeAddMemoryModal);
   el.addMemoryBackdrop.addEventListener('click', closeAddMemoryModal);
 
-  let pendingMedia = null;
+  let pendingMediaFiles = [];
   let pendingAudioBlob = null;
   let pendingAudioName = '';
 
   el.addMemoryFile.addEventListener('change', e => {
-    const file = e.target.files[0]; if (!file) return;
-    pendingMedia = file;
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    pendingMediaFiles = files;
     el.filePreview.style.display = 'block';
     el.fileUploadContent.style.display = 'none';
-    const url = URL.createObjectURL(file);
-    el.filePreview.innerHTML = isVideoFile(file.name)
-      ? `<video src="${url}" controls style="max-height:220px;width:100%;border-radius:12px;"></video>`
-      : `<img src="${url}" alt="preview" style="max-height:220px;width:100%;object-fit:contain;border-radius:12px;"/>`;
+    el.filePreview.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;padding:8px;';
+    el.filePreview.innerHTML = files.map(file => {
+      const url = URL.createObjectURL(file);
+      return isVideoFile(file.name)
+        ? `<video src="${url}" muted style="height:100px;width:auto;max-width:100%;border-radius:10px;object-fit:cover;flex-shrink:0;"></video>`
+        : `<img src="${url}" alt="preview" style="height:100px;width:auto;max-width:100%;object-fit:cover;border-radius:10px;flex-shrink:0;"/>`;
+    }).join('');
   });
 
   el.addMemoryAudio.addEventListener('change', e => {
@@ -942,16 +976,16 @@ function initAddMemory() {
     const songIndex = data.get('songIndex') !== '' ? parseInt(data.get('songIndex')) : -1;
     const rarityHp = {comun:60,raro:75,ultra:88,legendario:100};
 
-    const finalize = (imageSrc) => {
+    const finalize = (mediaSrcs) => {
+      const primaryImage = mediaSrcs[0] || '';
       if (_memEditIndex === -2 && _galleryEditIndex >= 0) {
-        // Editar carta del álbum — guardar como override
         const overrides = loadGalleryOverrides();
         const origCard = APP_DATA.gallery[_galleryEditIndex];
         const prevOverride = overrides[_galleryEditIndex] || {};
-        // Preservar imagen existente del override si no subieron una nueva
         overrides[_galleryEditIndex] = {
           title, date, text, rarity,
-          image: imageSrc || prevOverride.image || origCard.image,
+          image: primaryImage || prevOverride.image || origCard.image,
+          media: mediaSrcs.length ? mediaSrcs : (prevOverride.media || null),
           hp: rarityHp[rarity] || 60,
           songIndex: songIndex >= 0 ? songIndex : (prevOverride.songIndex ?? origCard.songIndex),
           customSongSrc: pendingAudioBlob || prevOverride.customSongSrc || undefined,
@@ -962,9 +996,11 @@ function initAddMemory() {
       } else {
         const memories = loadUserMemories();
         const existing = _memEditIndex >= 0 ? (memories[_memEditIndex] || {}) : {};
-        const finalImage = imageSrc || existing.image || '';
+        const finalImage = primaryImage || existing.image || '';
+        const finalMedia = mediaSrcs.length ? mediaSrcs : (existing.media || null);
         const memory = {
-          title, date, text, rarity, image: finalImage,
+          title, date, text, rarity,
+          image: finalImage, media: finalMedia,
           type: 'Memoria', hp: rarityHp[rarity] || 60,
           songIndex: songIndex >= 0 ? songIndex : (existing.songIndex ?? undefined),
           customSongSrc: pendingAudioBlob || existing.customSongSrc || undefined,
@@ -978,31 +1014,28 @@ function initAddMemory() {
       if (note) note.style.display = 'none';
       el.filePreview.style.display = 'none';
       el.fileUploadContent.style.display = 'flex';
-      pendingMedia = null; pendingAudioBlob = null; pendingAudioName = '';
+      pendingMediaFiles = []; pendingAudioBlob = null; pendingAudioName = '';
       if (el.audioUploadName) el.audioUploadName.textContent = '';
       closeAddMemoryModal();
       renderCarousel();
       spawnParticles('hearts');
     };
 
-    if (pendingMedia) {
-      if (isVideoFile(pendingMedia.name)) {
-        finalize(URL.createObjectURL(pendingMedia));
-      } else {
-        // Toda foto > 200KB va a IndexedDB — fotos de cámara móvil son 3-8MB
-        // y no caben en localStorage (límite ~5MB total), causando fallo silencioso
-        const key = 'img_' + Date.now();
-        MediaDB.save(key, pendingMedia)
-          .then(() => finalize('idb:' + key))
-          .catch(() => {
-            // Solo si IndexedDB falla, usar DataURL (solo para imágenes pequeñas)
+    if (pendingMediaFiles.length) {
+      const saves = pendingMediaFiles.map((file, i) => {
+        if (isVideoFile(file.name)) return Promise.resolve(URL.createObjectURL(file));
+        const key = 'img_' + Date.now() + '_' + i;
+        return MediaDB.save(key, file)
+          .then(() => 'idb:' + key)
+          .catch(() => new Promise(res => {
             const fr = new FileReader();
-            fr.onload = ev => finalize(ev.target.result);
-            fr.readAsDataURL(pendingMedia);
-          });
-      }
+            fr.onload = ev => res(ev.target.result);
+            fr.readAsDataURL(file);
+          }));
+      });
+      Promise.all(saves).then(srcs => finalize(srcs));
     } else {
-      finalize('');
+      finalize([]);
     }
   });
 }
@@ -1057,7 +1090,9 @@ function renderBoulevardNote(dream, index) {
   const note = document.createElement('button');
   const color = dream.color || 'yellow';
   note.className = `dream-note dream-note--${color}${dream.done?' is-done':''}`;
-  note.style.cssText = `left:${dream.x}%;top:${dream.y}%;`;
+  const px = Math.max(3, Math.min(91, dream.x));
+  const py = Math.max(3, Math.min(87, dream.y));
+  note.style.cssText = `left:${px}%;top:${py}%;`;
   note.style.animation = `floatUp ${3.5 + (index % 5) * 0.3}s ease-in-out ${index * 0.18}s infinite`;
   note.setAttribute('data-index', index);
   note.setAttribute('aria-label', dream.text);
@@ -1240,7 +1275,7 @@ function initBoulevard() {
   el.addDreamForm.addEventListener('submit', e => {
     e.preventDefault();
     const text = el.dreamText.value.trim(); if (!text) return;
-    boulevardDreams.push({ text, color: state.selectedColor, x: Math.random()*60+5, y: Math.random()*60+5, rotate: (Math.random()-0.5)*8, done: false });
+    boulevardDreams.push({ text, color: state.selectedColor, x: Math.random()*80+5, y: Math.random()*76+5, rotate: (Math.random()-0.5)*8, done: false });
     saveBoulevardDreams(boulevardDreams);
     renderBoulevard();
     renderDreamList();
