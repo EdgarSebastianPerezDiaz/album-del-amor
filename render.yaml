@@ -2,7 +2,7 @@ services:
   - type: static_site
     name: album-del-amor
     env: static
-    branch: main
+    branch: master
     rootDir: .
     buildCommand: ""
     publishPath: .

@@ -153,6 +153,11 @@ const el = {
 
 /* ─────────────── UTILS ─────────────── */
 function isVideoFile(src) { return src && /\.(mp4|webm|ogg|mov|avi)$/i.test(src); }
+function isVideoSrc(src) {
+  if (!src) return false;
+  if (src.startsWith('idb:vid_')) return true;
+  return /\.(mp4|webm|ogg|mov|avi)$/i.test(src);
+}
 function loadUserMemories() { try { return JSON.parse(localStorage.getItem('userMemories') || '[]'); } catch { return []; } }
 function saveUserMemories(arr) { try { localStorage.setItem('userMemories', JSON.stringify(arr)); } catch {} }
 function loadBoulevardDreams() { try { const d = localStorage.getItem('boulevardDreams2'); return d ? JSON.parse(d) : null; } catch { return null; } }
@@ -421,8 +426,8 @@ function createPokeCardElement(cardData, index, isAdd) {
 
   const rawSrc = getCardMedia(cardData)[0] || '';
   const thumbSrc = rawSrc.startsWith('idb:') ? IDB_PLACEHOLDER : rawSrc;
-  let mediaHtml = isVideoFile(rawSrc)
-    ? `<video src="${thumbSrc}" class="pcr-photo" autoplay muted loop playsinline></video>`
+  let mediaHtml = isVideoSrc(rawSrc)
+    ? `<video src="${rawSrc.startsWith('idb:') ? '' : thumbSrc}" class="pcr-photo" autoplay muted loop playsinline></video>`
     : `<img src="${thumbSrc}" class="pcr-photo" alt="${cardData.title}" loading="lazy"
             onerror="this.style.display='none'"/>`;
 
@@ -511,6 +516,7 @@ function renderCarousel() {
     const firstSrc = getCardMedia(card)[0] || '';
     if (firstSrc.startsWith('idb:')) {
       resolveIdbSrc(firstSrc, url => {
+        if (!url) return;
         const m = slot.querySelector('.pcr-photo');
         if (m) { m.src = url; m.style.display = ''; }
       });
@@ -601,16 +607,16 @@ function buildFullCard(cardData, index) {
   const mediaList = getCardMedia(cardData);
   const primarySrc = mediaList[0] || '';
   const primaryDisp = primarySrc.startsWith('idb:') ? IDB_PLACEHOLDER : primarySrc;
-  const mainMedia = isVideoFile(primarySrc)
-    ? `<video src="${primaryDisp}" class="pcr-photo" autoplay muted loop playsinline></video>`
-    : `<img src="${primaryDisp}" class="pcr-photo" alt="${cardData.title}" data-idbsrc="${primarySrc.startsWith('idb:')?primarySrc:''}"
-            onerror="if(this.src!==IDB_PLACEHOLDER)this.style.display='none'"/>`;
+  const mainMedia = isVideoSrc(primarySrc)
+    ? `<video src="${primarySrc.startsWith('idb:') ? '' : primaryDisp}" class="pcr-photo" autoplay muted loop playsinline></video>`
+    : `<img src="${primaryDisp}" class="pcr-photo" alt="${cardData.title}"
+            onerror="if(this.getAttribute('src')!==IDB_PLACEHOLDER)this.style.display='none'"/>`;
   const extraStrip = mediaList.length > 1
     ? `<div class="pcr-media-strip">${mediaList.slice(1,5).map((s,i) => {
         const d = s.startsWith('idb:') ? IDB_PLACEHOLDER : s;
-        return isVideoFile(s)
-          ? `<video src="${d}" class="pcr-media-thumb" muted playsinline data-idbsrc="${s.startsWith('idb:')?s:''}"></video>`
-          : `<img src="${d}" class="pcr-media-thumb" alt="" data-idbsrc="${s.startsWith('idb:')?s:''}"/>`;
+        return isVideoSrc(s)
+          ? `<video src="${s.startsWith('idb:')?'':d}" class="pcr-media-thumb" muted playsinline></video>`
+          : `<img src="${d}" class="pcr-media-thumb" alt=""/>`;
       }).join('')}</div>`
     : '';
 
@@ -641,6 +647,7 @@ function openCardModal(index) {
   getCardMedia(card).forEach((src, i) => {
     if (!src.startsWith('idb:')) return;
     resolveIdbSrc(src, url => {
+      if (!url) return;
       if (i === 0) {
         const m = el.cardModalCard.querySelector('.pcr-photo');
         if (m) { m.src = url; m.style.display = ''; }
@@ -1023,15 +1030,18 @@ function initAddMemory() {
 
     if (pendingMediaFiles.length) {
       const saves = pendingMediaFiles.map((file, i) => {
-        if (isVideoFile(file.name)) return Promise.resolve(URL.createObjectURL(file));
-        const key = 'img_' + Date.now() + '_' + i;
+        const prefix = isVideoFile(file.name) ? 'vid_' : 'img_';
+        const key = prefix + Date.now() + '_' + i;
         return MediaDB.save(key, file)
           .then(() => 'idb:' + key)
-          .catch(() => new Promise(res => {
-            const fr = new FileReader();
-            fr.onload = ev => res(ev.target.result);
-            fr.readAsDataURL(file);
-          }));
+          .catch(() => {
+            if (isVideoFile(file.name)) return Promise.resolve(URL.createObjectURL(file));
+            return new Promise(res => {
+              const fr = new FileReader();
+              fr.onload = ev => res(ev.target.result);
+              fr.readAsDataURL(file);
+            });
+          });
       });
       Promise.all(saves).then(srcs => finalize(srcs));
     } else {
@@ -1292,6 +1302,92 @@ function initBoulevard() {
   }));
 
   window.addEventListener('resize', drawStrings);
+}
+
+/* ═══════════════════════════════════════════════════════
+   EXPORT / IMPORT — sincronizar entre dispositivos
+   ═══════════════════════════════════════════════════════ */
+
+function blobToBase64(blob) {
+  return new Promise(res => { const fr = new FileReader(); fr.onload = e => res(e.target.result); fr.readAsDataURL(blob); });
+}
+
+async function exportarDatos() {
+  const btn = document.getElementById('exportBtn');
+  if (btn) { btn.textContent = '⏳ Exportando...'; btn.disabled = true; }
+  try {
+    const memories = loadUserMemories();
+    const overrides = loadGalleryOverrides();
+    const dreams = loadBoulevardDreams() || [];
+    const mediaMap = {};
+    const allItems = [...memories, ...Object.values(overrides).filter(Boolean)];
+    for (const item of allItems) {
+      for (const src of getCardMedia(item)) {
+        if (src && src.startsWith('idb:') && !mediaMap[src]) {
+          const blob = await MediaDB.load(src.slice(4)).catch(() => null);
+          if (blob) mediaMap[src] = await blobToBase64(blob);
+        }
+      }
+    }
+    const json = JSON.stringify({ version:2, memories, overrides, dreams, mediaMap });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([json], {type:'application/json'}));
+    a.download = 'album-amor-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+  } finally {
+    if (btn) { btn.textContent = '💾 Exportar datos'; btn.disabled = false; }
+  }
+}
+
+async function importarDatos(file) {
+  const btn = document.getElementById('importBtn');
+  if (btn) { btn.textContent = '⏳ Importando...'; btn.disabled = true; }
+  try {
+    const data = JSON.parse(await file.text());
+    const keyMap = {};
+    if (data.mediaMap) {
+      for (const [oldKey, base64] of Object.entries(data.mediaMap)) {
+        try {
+          const res = await fetch(base64);
+          const blob = await res.blob();
+          const newKey = oldKey.slice(4) + '_' + Date.now();
+          await MediaDB.save(newKey, blob);
+          keyMap[oldKey] = 'idb:' + newKey;
+        } catch {}
+      }
+    }
+    function remapItem(item) {
+      if (!item) return item;
+      if (item.image && keyMap[item.image]) item.image = keyMap[item.image];
+      if (item.media) item.media = item.media.map(s => keyMap[s] || s);
+      return item;
+    }
+    if (data.memories) saveUserMemories(data.memories.map(remapItem));
+    if (data.overrides) {
+      const ro = {};
+      for (const [k,v] of Object.entries(data.overrides)) ro[k] = remapItem(v);
+      saveGalleryOverrides(ro);
+    }
+    if (data.dreams) saveBoulevardDreams(data.dreams);
+    renderCarousel();
+    boulevardDreams = loadBoulevardDreams() || [];
+    renderBoulevard();
+    renderDreamList();
+    alert('✅ Datos importados correctamente');
+  } catch(e) {
+    alert('Error al importar: ' + e.message);
+  } finally {
+    if (btn) { btn.textContent = '📥 Importar datos'; btn.disabled = false; }
+  }
+}
+
+function initExportImport() {
+  const exportBtn = document.getElementById('exportBtn');
+  const importBtn = document.getElementById('importBtn');
+  const importFile = document.getElementById('importFile');
+  if (exportBtn) exportBtn.addEventListener('click', exportarDatos);
+  if (importFile) importFile.addEventListener('change', e => { if (e.target.files[0]) importarDatos(e.target.files[0]); });
+  if (importBtn) importBtn.addEventListener('click', () => importFile && importFile.click());
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1849,7 +1945,8 @@ function setBoulevardMode(mode) {
     listView.style.display = 'none';
     if (btnBoard) btnBoard.classList.add('active');
     if (btnList)  btnList.classList.remove('active');
-    setTimeout(drawStrings, 50);
+    renderBoulevard();
+    setTimeout(drawStrings, 80);
   }
 }
 
@@ -1894,4 +1991,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initTopbarCollapse();
   initBoulevardModeToggle();
+  initExportImport();
 });

@@ -783,6 +783,16 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
 .final-visual { position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(216,180,92,0.12),transparent 22%),radial-gradient(circle at 50% 60%,rgba(207,156,165,0.08),transparent 35%);animation:pulseGlow 4.8s ease-in-out infinite; }
 .final-copy { position:relative;z-index:1;padding:28px;max-width:840px; }
 .final-copy p { max-width:62ch;margin:18px auto 0; }
+.sync-row { display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px; }
+.sync-btn {
+  padding:10px 20px;border-radius:999px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);
+  color:var(--text);font-size:0.85rem;cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.sync-btn:hover { background:rgba(255,255,255,0.13);transform:translateY(-2px); }
+.sync-btn:disabled { opacity:0.5;cursor:not-allowed; }
+.sync-note { font-size:0.75rem;opacity:0.5;margin-top:10px !important; }
 .final-poems { margin-top:20px; }
 .final-poems h3 { margin:8px 0 12px;font-size:1.4rem; }
 .poem-list { display:grid;gap:12px; }
