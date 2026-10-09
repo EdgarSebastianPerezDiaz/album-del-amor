@@ -670,6 +670,7 @@ function openCardModal(index) {
   el.cardModal.classList.add('is-open');
   el.cardModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  document.body.classList.add('card-modal-open');
   initFullCardHolo(el.cardModalCard, rarity);
 }
 
@@ -707,6 +708,7 @@ function closeCardModal() {
   el.cardModal.classList.remove('is-open');
   el.cardModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  document.body.classList.remove('card-modal-open');
 }
 
 function initCardModal() {
@@ -728,29 +730,77 @@ function initCardModal() {
    MUSIC PLAYER
    ═══════════════════════════════════════════════════════ */
 
+function buildSongMenu() {
+  const existing = document.getElementById('songMenu');
+  if (existing) { existing.remove(); return; }
+
+  const menu = document.createElement('div');
+  menu.id = 'songMenu';
+  menu.className = 'song-menu glass-panel';
+  menu.innerHTML = `<div class="song-menu__header">🎵 Nuestras Canciones</div>` +
+    APP_DATA.songs.map((s, i) => `
+      <button class="song-menu__item${i === state.currentSongIndex ? ' is-active' : ''}" data-idx="${i}">
+        <span class="song-menu__title">${s.title}</span>
+        ${s.artist ? `<span class="song-menu__artist">${s.artist}</span>` : ''}
+      </button>`).join('');
+
+  menu.querySelectorAll('.song-menu__item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.idx);
+      playAudio(APP_DATA.songs[idx].src, idx, APP_DATA.songs[idx]);
+      menu.remove();
+    });
+  });
+
+  // Cierra al tocar fuera
+  setTimeout(() => document.addEventListener('click', function close(e) {
+    if (!menu.contains(e.target) && e.target !== el.musicButton) { menu.remove(); document.removeEventListener('click', close); }
+  }), 50);
+
+  document.body.appendChild(menu);
+  // Posicionar bajo el botón de música
+  const r = el.musicButton.getBoundingClientRect();
+  menu.style.top = (r.bottom + 8) + 'px';
+  menu.style.left = Math.max(8, r.left - 60) + 'px';
+}
+
 function initMusic() {
   state.audio = new Audio();
   state.audio.addEventListener('ended', () => {
-    state.audioPlaying = false;
-    document.body.classList.remove('music-playing');
+    // Avanzar automáticamente a la siguiente canción
+    const next = ((state.currentSongIndex >= 0 ? state.currentSongIndex : 0) + 1) % APP_DATA.songs.length;
+    playAudio(APP_DATA.songs[next].src, next, APP_DATA.songs[next]);
   });
 
-  el.musicButton.addEventListener('click', () => {
-    if (state.audioPlaying) {
-      state.audio.pause();
-      state.audioPlaying = false;
-      document.body.classList.remove('music-playing');
-      el.musicButton.setAttribute('aria-pressed', 'false');
-    } else {
-      /* Play current song or first available */
-      const idx = state.currentSongIndex >= 0 ? state.currentSongIndex : 0;
-      const song = APP_DATA.songs[idx];
-      if (song && song.src) playAudio(song.src, idx, song);
-      else {
-        if (el.musicStatus) el.musicStatus.textContent = 'Pon el MP3 en assets/music/';
+  // Click en el icono/área de play → play/pause
+  const icon = el.musicButton.querySelector('.music-button__icon');
+  if (icon) {
+    icon.addEventListener('click', e => {
+      e.stopPropagation();
+      if (state.audioPlaying) {
+        state.audio.pause();
+        state.audioPlaying = false;
+        document.body.classList.remove('music-playing');
+        el.musicButton.setAttribute('aria-pressed', 'false');
+      } else {
+        const idx = state.currentSongIndex >= 0 ? state.currentSongIndex : 0;
+        const song = APP_DATA.songs[idx];
+        if (song?.src) playAudio(song.src, idx, song);
+        else if (el.musicStatus) el.musicStatus.textContent = 'Pon el MP3 en assets/music/';
       }
-    }
-  });
+    });
+  }
+
+  // Click en el texto/título → abrir lista de canciones
+  const copy = el.musicButton.querySelector('.music-button__copy');
+  if (copy) {
+    copy.addEventListener('click', e => { e.stopPropagation(); buildSongMenu(); });
+  }
+
+  // Fallback: click en el botón completo si no hay icono separado
+  if (!icon && !copy) {
+    el.musicButton.addEventListener('click', () => buildSongMenu());
+  }
 }
 
 function playAudio(src, songIndex, songData) {
@@ -937,20 +987,18 @@ function initAddMemory() {
     if (pendingMedia) {
       if (isVideoFile(pendingMedia.name)) {
         finalize(URL.createObjectURL(pendingMedia));
-      } else if (pendingMedia.size > 10 * 1024 * 1024) {
-        // Foto grande → IndexedDB para persistencia entre recargas
+      } else {
+        // Toda foto > 200KB va a IndexedDB — fotos de cámara móvil son 3-8MB
+        // y no caben en localStorage (límite ~5MB total), causando fallo silencioso
         const key = 'img_' + Date.now();
         MediaDB.save(key, pendingMedia)
           .then(() => finalize('idb:' + key))
           .catch(() => {
+            // Solo si IndexedDB falla, usar DataURL (solo para imágenes pequeñas)
             const fr = new FileReader();
             fr.onload = ev => finalize(ev.target.result);
             fr.readAsDataURL(pendingMedia);
           });
-      } else {
-        const reader = new FileReader();
-        reader.onload = ev => finalize(ev.target.result);
-        reader.readAsDataURL(pendingMedia);
       }
     } else {
       finalize('');
@@ -1001,28 +1049,67 @@ function renderBoulevardNote(dream, index) {
   note.style.animation = `noteAppear 0.4s ease ${index * 0.07}s both`;
   note.setAttribute('data-index', index);
 
-  note.innerHTML = `
-    <p>${dream.text}</p>
-    <div class="dream-note__actions">
-      <button class="dream-note__done-btn" data-done="${index}">${dream.done ? '✓ Cumplida' : '◌ Pendiente'}</button>
-      <button class="dream-note__del" aria-label="Eliminar" data-del="${index}">✕</button>
-    </div>`;
+  const preview = dream.text.length > 40 ? dream.text.slice(0, 38) + '…' : dream.text;
+  note.innerHTML = `<p>${preview}</p><div class="dream-note__actions" style="display:none"></div>`;
 
-  note.querySelector('[data-done]').addEventListener('click', e => {
-    e.stopPropagation();
-    boulevardDreams[index].done = !boulevardDreams[index].done;
-    saveBoulevardDreams(boulevardDreams);
-    renderBoulevard();
-  });
-  note.querySelector('[data-del]').addEventListener('click', e => {
-    e.stopPropagation();
-    boulevardDreams.splice(index, 1);
-    saveBoulevardDreams(boulevardDreams);
-    renderBoulevard();
+  // Click → show detail popup
+  note.addEventListener('click', e => {
+    if (note.classList.contains('is-dragging')) return;
+    showDreamPopup(index, note);
   });
 
   makeDraggable(note, index);
   return note;
+}
+
+function showDreamPopup(index, noteEl) {
+  const popup = document.getElementById('dreamDetailPopup');
+  const textEl = document.getElementById('dreamPopupText');
+  const actionsEl = document.getElementById('dreamPopupActions');
+  if (!popup || !textEl || !actionsEl) return;
+
+  const dream = boulevardDreams[index];
+  if (!dream) return;
+
+  textEl.textContent = dream.text;
+  actionsEl.innerHTML = `
+    <button class="dream-popup__btn dream-popup__btn--done">${dream.done ? '✅ Cumplida' : '◌ Pendiente'}</button>
+    <button class="dream-popup__btn dream-popup__btn--del">🗑 Eliminar</button>`;
+
+  actionsEl.querySelector('.dream-popup__btn--done').addEventListener('click', () => {
+    boulevardDreams[index].done = !boulevardDreams[index].done;
+    saveBoulevardDreams(boulevardDreams);
+    popup.style.display = 'none';
+    renderBoulevard();
+    renderDreamList();
+  });
+  actionsEl.querySelector('.dream-popup__btn--del').addEventListener('click', () => {
+    boulevardDreams.splice(index, 1);
+    saveBoulevardDreams(boulevardDreams);
+    popup.style.display = 'none';
+    renderBoulevard();
+    renderDreamList();
+  });
+
+  // Position popup near the note or centered on mobile
+  popup.style.display = 'block';
+  popup.setAttribute('aria-hidden', 'false');
+  if (noteEl && window.innerWidth > 600) {
+    const r = noteEl.getBoundingClientRect();
+    const pw = 320, ph = 160;
+    let left = r.right + 10;
+    let top  = r.top;
+    if (left + pw > window.innerWidth - 12) left = r.left - pw - 10;
+    if (top + ph  > window.innerHeight - 12) top = window.innerHeight - ph - 12;
+    left = Math.max(8, left);
+    top  = Math.max(8, top);
+    popup.style.left = left + 'px';
+    popup.style.top  = top  + 'px';
+  } else {
+    popup.style.left = '50%';
+    popup.style.top  = '50%';
+    popup.style.transform = 'translate(-50%,-50%)';
+  }
 }
 
 function renderBoulevard() {
@@ -1085,11 +1172,35 @@ function makeDraggable(note, idx) {
   note.addEventListener('touchend', end);
 }
 
+function initDreamDetailPopup() {
+  const popup = document.getElementById('dreamDetailPopup');
+  const closeBtn = document.getElementById('dreamPopupClose');
+  if (!popup || !closeBtn) return;
+  closeBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
+    popup.style.transform = '';
+    popup.setAttribute('aria-hidden', 'true');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && popup.style.display !== 'none') {
+      popup.style.display = 'none';
+      popup.style.transform = '';
+    }
+  });
+  document.addEventListener('click', e => {
+    if (popup.style.display !== 'none' && !popup.contains(e.target) && !e.target.closest('.dream-note')) {
+      popup.style.display = 'none';
+      popup.style.transform = '';
+    }
+  });
+}
+
 function initBoulevard() {
   const saved = loadBoulevardDreams();
   boulevardDreams = (saved && saved.length) ? saved : JSON.parse(JSON.stringify(DEFAULT_DREAMS));
   renderBoulevard();
   initBoulevardQuotes();
+  initDreamDetailPopup();
 
   const openDreamModal = () => {
     el.addDreamModal.classList.add('is-open');

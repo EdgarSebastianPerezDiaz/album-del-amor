@@ -144,205 +144,309 @@
           <div class="boulevard-bg" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 580" preserveAspectRatio="xMidYMid slice">
               <defs>
-                <!-- Sky base -->
-                <linearGradient id="gBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#04030c"/><stop offset="55%" stop-color="#080b07"/><stop offset="100%" stop-color="#10090a"/></linearGradient>
-                <!-- Greenhouse warm glow (matching the movie's warm amber interior) -->
-                <radialGradient id="ghGlow" cx="50%" cy="55%" r="38%"><stop offset="0%" stop-color="#f0b030" stop-opacity="0.65"/><stop offset="40%" stop-color="#d08820" stop-opacity="0.28"/><stop offset="100%" stop-color="#c07010" stop-opacity="0"/></radialGradient>
+                <!-- Warm dusk sky -->
+                <linearGradient id="gBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1030"/><stop offset="40%" stop-color="#36204a"/><stop offset="72%" stop-color="#6b2d18"/><stop offset="100%" stop-color="#3a1508"/></linearGradient>
+                  <!-- Warm amber glow / gazebo interior -->
+                <radialGradient id="ghGlow" cx="50%" cy="55%" r="40%"><stop offset="0%" stop-color="#f5c040" stop-opacity="0.75"/><stop offset="40%" stop-color="#d08830" stop-opacity="0.32"/><stop offset="100%" stop-color="#c07010" stop-opacity="0"/></radialGradient>
                 <!-- Window glow -->
-                <radialGradient id="winG" cx="50%" cy="55%" r="50%"><stop offset="0%" stop-color="#ffc840" stop-opacity="1"/><stop offset="35%" stop-color="#e09820" stop-opacity="0.65"/><stop offset="100%" stop-color="#c07810" stop-opacity="0"/></radialGradient>
-                <!-- Purple/wisteria clusters (left side — like the movie) -->
-                <radialGradient id="bkPurp" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#8844cc" stop-opacity="0.95"/><stop offset="40%" stop-color="#6030a8" stop-opacity="0.52"/><stop offset="100%" stop-color="#5028a0" stop-opacity="0"/></radialGradient>
-                <radialGradient id="bkLav" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c090f0" stop-opacity="0.85"/><stop offset="45%" stop-color="#9060d8" stop-opacity="0.35"/><stop offset="100%" stop-color="#8050c8" stop-opacity="0"/></radialGradient>
-                <radialGradient id="bkDeepPurp" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#6028b0" stop-opacity="0.98"/><stop offset="50%" stop-color="#4018a0" stop-opacity="0.5"/><stop offset="100%" stop-color="#300888" stop-opacity="0"/></radialGradient>
-                <!-- Pink/rose clusters (right side — like the movie) -->
-                <radialGradient id="bkPink" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f06090" stop-opacity="0.95"/><stop offset="40%" stop-color="#d03870" stop-opacity="0.48"/><stop offset="100%" stop-color="#c02868" stop-opacity="0"/></radialGradient>
-                <radialGradient id="bkPinkL" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffb0cc" stop-opacity="0.88"/><stop offset="45%" stop-color="#e888b0" stop-opacity="0.38"/><stop offset="100%" stop-color="#e070a0" stop-opacity="0"/></radialGradient>
-                <radialGradient id="bkRoseD" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d02060" stop-opacity="0.98"/><stop offset="45%" stop-color="#a81048" stop-opacity="0.55"/><stop offset="100%" stop-color="#900838" stop-opacity="0"/></radialGradient>
-                <!-- String light glows -->
-                <radialGradient id="sl" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff8e0" stop-opacity="1"/><stop offset="28%" stop-color="#ffe070" stop-opacity="0.65"/><stop offset="65%" stop-color="#ffc040" stop-opacity="0.22"/><stop offset="100%" stop-color="#ffc040" stop-opacity="0"/></radialGradient>
-                <radialGradient id="slSm" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff8e0" stop-opacity="1"/><stop offset="38%" stop-color="#ffe080" stop-opacity="0.42"/><stop offset="100%" stop-color="#ffc040" stop-opacity="0"/></radialGradient>
+                <radialGradient id="winG" cx="50%" cy="55%" r="50%"><stop offset="0%" stop-color="#ffd050" stop-opacity="1"/><stop offset="35%" stop-color="#e09820" stop-opacity="0.65"/><stop offset="100%" stop-color="#c07810" stop-opacity="0"/></radialGradient>
+                <!-- Purple/wisteria clusters (left) -->
+                <radialGradient id="bkPurp" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#9955e0" stop-opacity="1"/><stop offset="40%" stop-color="#7030bb" stop-opacity="0.55"/><stop offset="100%" stop-color="#5028a0" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkLav" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d0a0ff" stop-opacity="0.9"/><stop offset="45%" stop-color="#a060e0" stop-opacity="0.4"/><stop offset="100%" stop-color="#8050c8" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkDeepPurp" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7030cc" stop-opacity="1"/><stop offset="50%" stop-color="#4818a8" stop-opacity="0.52"/><stop offset="100%" stop-color="#300888" stop-opacity="0"/></radialGradient>
+                <!-- Peach/pink rose clusters (gazebo + right) -->
+                <radialGradient id="bkPeach" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5b070" stop-opacity="0.98"/><stop offset="45%" stop-color="#d07845" stop-opacity="0.52"/><stop offset="100%" stop-color="#b05030" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkPink" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f07090" stop-opacity="0.98"/><stop offset="40%" stop-color="#d03878" stop-opacity="0.52"/><stop offset="100%" stop-color="#c02868" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkPinkL" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffc8d8" stop-opacity="0.92"/><stop offset="45%" stop-color="#ee90b0" stop-opacity="0.4"/><stop offset="100%" stop-color="#e070a0" stop-opacity="0"/></radialGradient>
+                <radialGradient id="bkRoseD" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e03070" stop-opacity="1"/><stop offset="45%" stop-color="#b01050" stop-opacity="0.55"/><stop offset="100%" stop-color="#900838" stop-opacity="0"/></radialGradient>
+                <!-- Cream building wall -->
+                <linearGradient id="gWall" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#e8d8b8" stop-opacity="0.92"/><stop offset="75%" stop-color="#d4c4a0" stop-opacity="0.75"/><stop offset="100%" stop-color="#c0a878" stop-opacity="0.4"/></linearGradient>
+                <linearGradient id="gWallR" x1="1" y1="0" x2="0" y2="0"><stop offset="0%" stop-color="#e8d8b8" stop-opacity="0.88"/><stop offset="75%" stop-color="#d4c4a0" stop-opacity="0.7"/><stop offset="100%" stop-color="#c0a878" stop-opacity="0.35"/></linearGradient>
+                <!-- Horizon warm glow -->
+                <radialGradient id="gHorizon" cx="50%" cy="95%" r="55%"><stop offset="0%" stop-color="#e08040" stop-opacity="0.45"/><stop offset="55%" stop-color="#c05820" stop-opacity="0.18"/><stop offset="100%" stop-color="#c05820" stop-opacity="0"/></radialGradient>
+                <!-- Globe string light glow -->
+                <radialGradient id="sl" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff8c0" stop-opacity="1"/><stop offset="25%" stop-color="#ffe870" stop-opacity="0.72"/><stop offset="60%" stop-color="#ffc840" stop-opacity="0.28"/><stop offset="100%" stop-color="#ffc040" stop-opacity="0"/></radialGradient>
+                <radialGradient id="slSm" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff8e0" stop-opacity="1"/><stop offset="38%" stop-color="#ffe080" stop-opacity="0.45"/><stop offset="100%" stop-color="#ffc040" stop-opacity="0"/></radialGradient>
                 <!-- Lantern -->
                 <radialGradient id="lanG" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#f8b020" stop-opacity="0.98"/><stop offset="40%" stop-color="#e08010" stop-opacity="0.5"/><stop offset="100%" stop-color="#e08010" stop-opacity="0"/></radialGradient>
                 <!-- Vignette -->
-                <radialGradient id="vig" cx="50%" cy="50%" r="68%"><stop offset="28%" stop-color="transparent"/><stop offset="100%" stop-color="#000000" stop-opacity="0.78"/></radialGradient>
-                <!-- Side darkness overlays -->
-                <linearGradient id="darkLeft"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#000" stop-opacity="0.6"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></linearGradient>
-                <linearGradient id="darkRight" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.6"/></linearGradient>
-                <!-- Rose petal gradient -->
+                <radialGradient id="vig" cx="50%" cy="50%" r="70%"><stop offset="30%" stop-color="transparent"/><stop offset="100%" stop-color="#000000" stop-opacity="0.65"/></radialGradient>
+                <!-- Side darkness -->
+                <linearGradient id="darkLeft"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#000" stop-opacity="0.55"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></linearGradient>
+                <linearGradient id="darkRight" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></linearGradient>
+                <!-- Rose petal -->
                 <radialGradient id="roseCenter" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7a0828"/><stop offset="100%" stop-color="#5a0020"/></radialGradient>
                 <radialGradient id="rosePetal" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="#ff6090"/><stop offset="60%" stop-color="#d82060"/><stop offset="100%" stop-color="#b00040"/></radialGradient>
                 <radialGradient id="rosePetalL" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="#ffa0c0"/><stop offset="60%" stop-color="#e86090"/><stop offset="100%" stop-color="#cc3870"/></radialGradient>
               </defs>
 
-              <!-- BASE -->
+              <!-- BASE SKY -->
               <rect width="1200" height="580" fill="url(#gBase)"/>
+              <!-- Horizon warm glow at bottom of sky -->
+              <rect x="0" y="320" width="1200" height="260" fill="url(#gHorizon)"/>
 
-              <!-- GROUND – autumn leaf-covered soil -->
-              <rect x="0" y="400" width="1200" height="180" fill="#100c07"/>
-              <ellipse cx="95" cy="438" rx="30" ry="9" fill="#a04818" opacity="0.34" transform="rotate(-14,95,438)"/>
-              <ellipse cx="205" cy="455" rx="24" ry="7" fill="#c06020" opacity="0.29" transform="rotate(11,205,455)"/>
-              <ellipse cx="355" cy="440" rx="20" ry="6" fill="#b05018" opacity="0.27" transform="rotate(-19,355,440)"/>
-              <ellipse cx="480" cy="465" rx="26" ry="8" fill="#984015" opacity="0.26" transform="rotate(7,480,465)"/>
-              <ellipse cx="620" cy="448" rx="22" ry="7" fill="#b05820" opacity="0.29" transform="rotate(-11,620,448)"/>
-              <ellipse cx="750" cy="460" rx="24" ry="7" fill="#a84818" opacity="0.31" transform="rotate(16,750,460)"/>
-              <ellipse cx="900" cy="444" rx="28" ry="8" fill="#c06822" opacity="0.27" transform="rotate(-9,900,444)"/>
-              <ellipse cx="1040" cy="458" rx="21" ry="6" fill="#a04510" opacity="0.3" transform="rotate(17,1040,458)"/>
-              <ellipse cx="1150" cy="442" rx="26" ry="8" fill="#b85520" opacity="0.27" transform="rotate(-21,1150,442)"/>
-              <ellipse cx="165" cy="478" rx="17" ry="5" fill="#984015" opacity="0.21" transform="rotate(24,165,478)"/>
-              <ellipse cx="525" cy="482" rx="15" ry="4" fill="#b05020" opacity="0.2" transform="rotate(13,525,482)"/>
-              <ellipse cx="695" cy="485" rx="21" ry="5" fill="#984015" opacity="0.19" transform="rotate(-17,695,485)"/>
-              <ellipse cx="840" cy="476" rx="17" ry="5" fill="#a04818" opacity="0.21" transform="rotate(22,840,476)"/>
+              <!-- CREAM BUILDING WALL — left side, fades to center -->
+              <rect x="0" y="0" width="380" height="580" fill="url(#gWall)" opacity="0.82"/>
+              <!-- CREAM BUILDING WALL — right side, fades to center -->
+              <rect x="820" y="0" width="380" height="580" fill="url(#gWallR)" opacity="0.78"/>
 
-              <!-- FOLIAGE LEFT -->
-              <ellipse cx="-35" cy="250" rx="160" ry="68" fill="#0a1808" transform="rotate(-20,-35,250)"/>
-              <ellipse cx="25" cy="335" rx="138" ry="58" fill="#0c1e09" transform="rotate(-13,25,335)"/>
-              <ellipse cx="75" cy="430" rx="155" ry="62" fill="#091508" transform="rotate(-7,75,430)"/>
-              <ellipse cx="-20" cy="410" rx="145" ry="58" fill="#0b1a09" transform="rotate(16,-20,410)"/>
-              <ellipse cx="145" cy="390" rx="128" ry="52" fill="#0a1708" transform="rotate(-11,145,390)"/>
-              <ellipse cx="58" cy="175" rx="118" ry="52" fill="#0d2210" transform="rotate(-30,58,175)"/>
-              <ellipse cx="12" cy="110" rx="108" ry="46" fill="#0b1e09" transform="rotate(-36,12,110)"/>
-              <ellipse cx="185" cy="235" rx="112" ry="48" fill="#0c2009" transform="rotate(-17,185,235)"/>
-              <ellipse cx="225" cy="295" rx="102" ry="44" fill="#0a1808" transform="rotate(-13,225,295)"/>
+              <!-- WISTERIA TREE TRUNK + BRANCHES (left wall) -->
+              <!-- Main trunk from ground up -->
+              <path d="M115,580 C112,520 108,460 112,390 C116,330 105,270 95,200 C88,140 92,80 100,30" stroke="#3a220c" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <!-- Thick side branch left-up -->
+              <path d="M108,310 C80,280 45,255 10,240" stroke="#3a220c" stroke-width="12" fill="none" stroke-linecap="round"/>
+              <!-- Side branch right -->
+              <path d="M110,260 C155,240 210,228 270,215" stroke="#3a220c" stroke-width="9" fill="none" stroke-linecap="round"/>
+              <!-- Thin branch upper right -->
+              <path d="M100,160 C145,148 195,138 255,130" stroke="#3a220c" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <!-- Wispy twigs -->
+              <path d="M95,200 C70,185 40,170 5,162" stroke="#3a220c" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M100,130 C72,118 42,108 8,100" stroke="#3a220c" stroke-width="5" fill="none" stroke-linecap="round"/>
 
-              <!-- FOLIAGE RIGHT -->
-              <ellipse cx="1235" cy="250" rx="160" ry="68" fill="#0a1808" transform="rotate(20,1235,250)"/>
-              <ellipse cx="1175" cy="335" rx="138" ry="58" fill="#0c1e09" transform="rotate(13,1175,335)"/>
-              <ellipse cx="1125" cy="430" rx="155" ry="62" fill="#091508" transform="rotate(7,1125,430)"/>
-              <ellipse cx="1220" cy="410" rx="145" ry="58" fill="#0b1a09" transform="rotate(-16,1220,410)"/>
-              <ellipse cx="1055" cy="390" rx="128" ry="52" fill="#0a1708" transform="rotate(11,1055,390)"/>
-              <ellipse cx="1142" cy="175" rx="118" ry="52" fill="#0d2210" transform="rotate(30,1142,175)"/>
-              <ellipse cx="1188" cy="110" rx="108" ry="46" fill="#0b1e09" transform="rotate(36,1188,110)"/>
-              <ellipse cx="1015" cy="235" rx="112" ry="48" fill="#0c2009" transform="rotate(17,1015,235)"/>
-              <ellipse cx="975" cy="295" rx="102" ry="44" fill="#0a1808" transform="rotate(13,975,295)"/>
+              <!-- GROUND – warm autumn packed earth with leaves -->
+              <rect x="0" y="410" width="1200" height="170" fill="#3d1e08"/>
+              <!-- Autumn leaf scatter — orange, amber, red, gold -->
+              <ellipse cx="80"  cy="430" rx="22" ry="7"  fill="#c84818" opacity="0.82" transform="rotate(-22,80,430)"/>
+              <ellipse cx="155" cy="448" rx="18" ry="6"  fill="#e07020" opacity="0.78" transform="rotate(14,155,448)"/>
+              <ellipse cx="240" cy="436" rx="25" ry="8"  fill="#f09030" opacity="0.85" transform="rotate(-9,240,436)"/>
+              <ellipse cx="315" cy="455" rx="16" ry="5"  fill="#d05820" opacity="0.76" transform="rotate(18,315,455)"/>
+              <ellipse cx="420" cy="440" rx="23" ry="7"  fill="#e08028" opacity="0.8"  transform="rotate(-14,420,440)"/>
+              <ellipse cx="510" cy="458" rx="19" ry="6"  fill="#c84015" opacity="0.75" transform="rotate(8,510,458)"/>
+              <ellipse cx="600" cy="445" rx="27" ry="8"  fill="#f0a030" opacity="0.82" transform="rotate(-5,600,445)"/>
+              <ellipse cx="690" cy="462" rx="20" ry="6"  fill="#d86020" opacity="0.76" transform="rotate(13,690,462)"/>
+              <ellipse cx="775" cy="438" rx="24" ry="7"  fill="#e87828" opacity="0.8"  transform="rotate(-17,775,438)"/>
+              <ellipse cx="865" cy="453" rx="18" ry="5"  fill="#c84818" opacity="0.74" transform="rotate(9,865,453)"/>
+              <ellipse cx="960" cy="442" rx="22" ry="7"  fill="#f09030" opacity="0.78" transform="rotate(-11,960,442)"/>
+              <ellipse cx="1050" cy="460" rx="20" ry="6" fill="#d05020" opacity="0.74" transform="rotate(16,1050,460)"/>
+              <ellipse cx="1135" cy="444" rx="26" ry="8" fill="#e07830" opacity="0.78" transform="rotate(-19,1135,444)"/>
+              <!-- Second layer closer to viewer — bigger, bolder leaves -->
+              <ellipse cx="50"  cy="472" rx="30" ry="9"  fill="#d04010" opacity="0.7"  transform="rotate(-28,50,472)"/>
+              <ellipse cx="190" cy="478" rx="24" ry="7"  fill="#e06020" opacity="0.65" transform="rotate(20,190,478)"/>
+              <ellipse cx="380" cy="470" rx="28" ry="8"  fill="#f08020" opacity="0.68" transform="rotate(-12,380,470)"/>
+              <ellipse cx="560" cy="476" rx="22" ry="7"  fill="#c84015" opacity="0.62" transform="rotate(15,560,476)"/>
+              <ellipse cx="740" cy="472" rx="26" ry="8"  fill="#e07020" opacity="0.65" transform="rotate(-8,740,472)"/>
+              <ellipse cx="920" cy="474" rx="24" ry="7"  fill="#d05818" opacity="0.62" transform="rotate(18,920,474)"/>
+              <ellipse cx="1100" cy="468" rx="30" ry="9" fill="#f09028" opacity="0.68" transform="rotate(-15,1100,468)"/>
+              <!-- Gold/yellow accent leaves -->
+              <ellipse cx="130" cy="462" rx="12" ry="4"  fill="#e8b030" opacity="0.72" transform="rotate(25,130,462)"/>
+              <ellipse cx="460" cy="468" rx="14" ry="4"  fill="#f0c040" opacity="0.68" transform="rotate(-18,460,468)"/>
+              <ellipse cx="650" cy="464" rx="12" ry="4"  fill="#e8b030" opacity="0.7"  transform="rotate(12,650,464)"/>
+              <ellipse cx="1000" cy="466" rx="14" ry="4" fill="#f0c040" opacity="0.66" transform="rotate(-22,1000,466)"/>
 
-              <!-- TOP FOLIAGE -->
-              <ellipse cx="105" cy="-5" rx="142" ry="60" fill="#0c1e09"/>
-              <ellipse cx="295" cy="-8" rx="128" ry="54" fill="#0d2009"/>
-              <ellipse cx="905" cy="-8" rx="128" ry="54" fill="#0d2009"/>
-              <ellipse cx="1095" cy="-5" rx="142" ry="60" fill="#0c1e09"/>
+              <!-- WISTERIA PÚRPURA IZQUIERDA — densa, cuelga en racimos sobre la pared -->
+              <!-- Deep base -->
+              <circle cx="20"  cy="80"  r="120" fill="url(#bkDeepPurp)" opacity="0.95"/>
+              <circle cx="105" cy="55"  r="110" fill="url(#bkPurp)"     opacity="0.92"/>
+              <circle cx="188" cy="72"  r="95"  fill="url(#bkDeepPurp)" opacity="0.88"/>
+              <circle cx="55"  cy="178" r="108" fill="url(#bkPurp)"     opacity="0.86"/>
+              <circle cx="145" cy="148" r="92"  fill="url(#bkDeepPurp)" opacity="0.84"/>
+              <circle cx="258" cy="105" r="82"  fill="url(#bkPurp)"     opacity="0.8"/>
+              <circle cx="308" cy="155" r="72"  fill="url(#bkDeepPurp)" opacity="0.76"/>
+              <!-- Lavender top layer -->
+              <circle cx="62"  cy="105" r="80"  fill="url(#bkLav)"      opacity="0.75"/>
+              <circle cx="175" cy="85"  r="68"  fill="url(#bkLav)"      opacity="0.72"/>
+              <circle cx="22"  cy="210" r="75"  fill="url(#bkLav)"      opacity="0.68"/>
+              <circle cx="232" cy="178" r="60"  fill="url(#bkLav)"      opacity="0.65"/>
+              <circle cx="350" cy="125" r="55"  fill="url(#bkLav)"      opacity="0.62"/>
+              <circle cx="118" cy="232" r="65"  fill="url(#bkPurp)"     opacity="0.62"/>
+              <circle cx="278" cy="238" r="55"  fill="url(#bkDeepPurp)" opacity="0.58"/>
+              <circle cx="368" cy="192" r="48"  fill="url(#bkPurp)"     opacity="0.55"/>
+              <circle cx="38"  cy="295" r="70"  fill="url(#bkPurp)"     opacity="0.6"/>
+              <circle cx="152" cy="292" r="58"  fill="url(#bkDeepPurp)" opacity="0.52"/>
+              <!-- Hanging wisteria racemes (elongated clusters dripping down) -->
+              <ellipse cx="72"  cy="220" rx="22" ry="55" fill="url(#bkPurp)"     opacity="0.7"/>
+              <ellipse cx="138" cy="238" rx="18" ry="48" fill="url(#bkDeepPurp)" opacity="0.65"/>
+              <ellipse cx="205" cy="215" rx="20" ry="52" fill="url(#bkLav)"      opacity="0.62"/>
+              <ellipse cx="275" cy="232" rx="17" ry="44" fill="url(#bkPurp)"     opacity="0.58"/>
+              <ellipse cx="15"  cy="265" rx="22" ry="58" fill="url(#bkDeepPurp)" opacity="0.6"/>
+              <ellipse cx="340" cy="225" rx="15" ry="40" fill="url(#bkLav)"      opacity="0.55"/>
 
-              <!-- WISTERIA PÚRPURA IZQUIERDA — densa y dominante como en la película -->
-              <!-- Masa principal: cubre toda la pared izquierda desde arriba -->
-              <circle cx="20"  cy="80"  r="120" fill="url(#bkDeepPurp)" opacity="0.98"/>
-              <circle cx="105" cy="55"  r="110" fill="url(#bkPurp)"     opacity="0.95"/>
-              <circle cx="188" cy="75"  r="95"  fill="url(#bkDeepPurp)" opacity="0.92"/>
-              <circle cx="55"  cy="178" r="108" fill="url(#bkPurp)"     opacity="0.9"/>
-              <circle cx="145" cy="148" r="92"  fill="url(#bkDeepPurp)" opacity="0.88"/>
-              <circle cx="258" cy="108" r="82"  fill="url(#bkPurp)"     opacity="0.84"/>
-              <circle cx="310" cy="160" r="72"  fill="url(#bkDeepPurp)" opacity="0.8"/>
-              <!-- Capa lavanda encima para textura floral -->
-              <circle cx="62"  cy="110" r="80"  fill="url(#bkLav)"      opacity="0.72"/>
-              <circle cx="175" cy="90"  r="68"  fill="url(#bkLav)"      opacity="0.68"/>
-              <circle cx="22"  cy="210" r="75"  fill="url(#bkLav)"      opacity="0.65"/>
-              <circle cx="235" cy="182" r="60"  fill="url(#bkLav)"      opacity="0.62"/>
-              <circle cx="352" cy="130" r="55"  fill="url(#bkLav)"      opacity="0.58"/>
-              <circle cx="120" cy="235" r="65"  fill="url(#bkPurp)"     opacity="0.6"/>
-              <circle cx="280" cy="240" r="55"  fill="url(#bkDeepPurp)" opacity="0.55"/>
-              <circle cx="370" cy="195" r="48"  fill="url(#bkPurp)"     opacity="0.52"/>
-              <circle cx="38"  cy="300" r="70"  fill="url(#bkPurp)"     opacity="0.58"/>
-              <circle cx="155" cy="295" r="58"  fill="url(#bkDeepPurp)" opacity="0.5"/>
+              <!-- ROSAS MELOCOTÓN/ROSADAS DERECHA — densas, cálidas -->
+              <!-- Deep base using peach/pink tones -->
+              <circle cx="1180" cy="80"  r="120" fill="url(#bkPeach)"  opacity="0.95"/>
+              <circle cx="1095" cy="55"  r="110" fill="url(#bkPink)"   opacity="0.92"/>
+              <circle cx="1012" cy="72"  r="95"  fill="url(#bkPeach)"  opacity="0.88"/>
+              <circle cx="1145" cy="178" r="108" fill="url(#bkPink)"   opacity="0.86"/>
+              <circle cx="1055" cy="148" r="92"  fill="url(#bkPeach)"  opacity="0.84"/>
+              <circle cx="942"  cy="105" r="82"  fill="url(#bkPink)"   opacity="0.8"/>
+              <circle cx="892"  cy="158" r="72"  fill="url(#bkPeach)"  opacity="0.76"/>
+              <!-- Light rose top layer -->
+              <circle cx="1138" cy="108" r="80"  fill="url(#bkPinkL)"  opacity="0.75"/>
+              <circle cx="1025" cy="88"  r="68"  fill="url(#bkPinkL)"  opacity="0.72"/>
+              <circle cx="1178" cy="208" r="75"  fill="url(#bkPinkL)"  opacity="0.68"/>
+              <circle cx="963"  cy="180" r="60"  fill="url(#bkPinkL)"  opacity="0.65"/>
+              <circle cx="848"  cy="128" r="55"  fill="url(#bkPinkL)"  opacity="0.62"/>
+              <circle cx="1078" cy="232" r="65"  fill="url(#bkPink)"   opacity="0.62"/>
+              <circle cx="918"  cy="238" r="55"  fill="url(#bkPeach)"  opacity="0.58"/>
+              <circle cx="830"  cy="192" r="48"  fill="url(#bkPink)"   opacity="0.55"/>
+              <circle cx="1162" cy="298" r="70"  fill="url(#bkPeach)"  opacity="0.6"/>
+              <circle cx="1045" cy="292" r="58"  fill="url(#bkPink)"   opacity="0.52"/>
+              <!-- Trailing rose clusters lower right -->
+              <ellipse cx="1128" cy="220" rx="22" ry="55" fill="url(#bkPink)"   opacity="0.68"/>
+              <ellipse cx="1062" cy="238" rx="18" ry="48" fill="url(#bkPeach)"  opacity="0.62"/>
+              <ellipse cx="995"  cy="215" rx="20" ry="52" fill="url(#bkPinkL)"  opacity="0.6"/>
+              <ellipse cx="925"  cy="232" rx="17" ry="44" fill="url(#bkPink)"   opacity="0.55"/>
 
-              <!-- ROSAS ROSAS DERECHA — densas y brillantes como en la película -->
-              <!-- Masa principal: cubre toda la pared derecha / invernadero derecho -->
-              <circle cx="1180" cy="80"  r="120" fill="url(#bkPink)"   opacity="0.98"/>
-              <circle cx="1095" cy="55"  r="110" fill="url(#bkRoseD)"  opacity="0.95"/>
-              <circle cx="1012" cy="75"  r="95"  fill="url(#bkPink)"   opacity="0.92"/>
-              <circle cx="1145" cy="178" r="108" fill="url(#bkRoseD)"  opacity="0.9"/>
-              <circle cx="1055" cy="148" r="92"  fill="url(#bkPink)"   opacity="0.88"/>
-              <circle cx="942"  cy="108" r="82"  fill="url(#bkRoseD)"  opacity="0.84"/>
-              <circle cx="890"  cy="160" r="72"  fill="url(#bkPink)"   opacity="0.8"/>
-              <!-- Capa rosa claro encima -->
-              <circle cx="1138" cy="110" r="80"  fill="url(#bkPinkL)"  opacity="0.72"/>
-              <circle cx="1025" cy="90"  r="68"  fill="url(#bkPinkL)"  opacity="0.68"/>
-              <circle cx="1178" cy="210" r="75"  fill="url(#bkPinkL)"  opacity="0.65"/>
-              <circle cx="965"  cy="182" r="60"  fill="url(#bkPinkL)"  opacity="0.62"/>
-              <circle cx="848"  cy="130" r="55"  fill="url(#bkPinkL)"  opacity="0.58"/>
-              <circle cx="1080" cy="235" r="65"  fill="url(#bkPink)"   opacity="0.6"/>
-              <circle cx="920"  cy="240" r="55"  fill="url(#bkRoseD)"  opacity="0.55"/>
-              <circle cx="830"  cy="195" r="48"  fill="url(#bkPink)"   opacity="0.52"/>
-              <circle cx="1162" cy="300" r="70"  fill="url(#bkPink)"   opacity="0.58"/>
-              <circle cx="1045" cy="295" r="58"  fill="url(#bkRoseD)"  opacity="0.5"/>
+              <!-- IRON GAZEBO — ornate hexagonal structure center -->
+              <!-- Warm amber interior aura -->
+              <ellipse cx="600" cy="300" rx="260" ry="200" fill="url(#ghGlow)" opacity="0.9"/>
+              <ellipse cx="600" cy="320" rx="160" ry="130" fill="#d08020" opacity="0.18"/>
+              <!-- Gazebo floor / base platform -->
+              <ellipse cx="600" cy="408" rx="175" ry="20" fill="#2a1808" opacity="0.65"/>
+              <!-- Gazebo body fill (interior warm tone) -->
+              <path d="M440,408 L440,215 L520,168 L600,148 L680,168 L760,215 L760,408 Z" fill="#1a1005" opacity="0.82"/>
+              <!-- Warm interior window glow panels (arched openings) -->
+              <!-- Left arch -->
+              <path d="M452,215 A34,60 0 0,1 520,215 L520,408 L452,408 Z" fill="#e09020" opacity="0.35"/>
+              <ellipse cx="486" cy="215" rx="34" ry="34" fill="#e09020" opacity="0.35"/>
+              <!-- Center-left arch -->
+              <path d="M524,190 A38,65 0 0,1 600,172 L600,408 L524,408 Z" fill="#f0a828" opacity="0.42"/>
+              <!-- Center-right arch -->
+              <path d="M600,172 A38,65 0 0,1 676,190 L676,408 L600,408 Z" fill="#f0a828" opacity="0.38"/>
+              <!-- Right arch -->
+              <path d="M680,215 A34,60 0 0,1 748,215 L748,408 L680,408 Z" fill="#e09020" opacity="0.32"/>
+              <ellipse cx="714" cy="215" rx="34" ry="34" fill="#e09020" opacity="0.32"/>
+              <!-- Window glow halos -->
+              <ellipse cx="486" cy="290" rx="42" ry="70" fill="url(#winG)" opacity="0.6"/>
+              <ellipse cx="562" cy="275" rx="46" ry="78" fill="url(#winG)" opacity="0.72"/>
+              <ellipse cx="600" cy="268" rx="50" ry="82" fill="url(#winG)" opacity="0.85"/>
+              <ellipse cx="638" cy="275" rx="46" ry="78" fill="url(#winG)" opacity="0.72"/>
+              <ellipse cx="714" cy="290" rx="42" ry="70" fill="url(#winG)" opacity="0.6"/>
 
-              <!-- GREENHOUSE / CONSERVATORY – background trees -->
-              <ellipse cx="600" cy="118" rx="195" ry="88" fill="#0e1c0a"/>
-              <ellipse cx="490" cy="148" rx="118" ry="58" fill="#0c1908"/>
-              <ellipse cx="710" cy="148" rx="118" ry="58" fill="#0c1908"/>
+              <!-- Iron frame — dark ornate metal rods -->
+              <!-- Base ring -->
+              <line x1="440" y1="408" x2="760" y2="408" stroke="#1a1208" stroke-width="3.5"/>
+              <!-- Vertical columns -->
+              <line x1="440" y1="215" x2="440" y2="408" stroke="#1a1208" stroke-width="3.2"/>
+              <line x1="520" y1="168" x2="520" y2="408" stroke="#1a1208" stroke-width="3"/>
+              <line x1="600" y1="148" x2="600" y2="408" stroke="#1a1208" stroke-width="3.2"/>
+              <line x1="680" y1="168" x2="680" y2="408" stroke="#1a1208" stroke-width="3"/>
+              <line x1="760" y1="215" x2="760" y2="408" stroke="#1a1208" stroke-width="3.2"/>
+              <!-- Hex roof ribs to central finial -->
+              <line x1="440" y1="215" x2="600" y2="105" stroke="#1a1208" stroke-width="3"/>
+              <line x1="520" y1="168" x2="600" y2="105" stroke="#1a1208" stroke-width="2.5"/>
+              <line x1="680" y1="168" x2="600" y2="105" stroke="#1a1208" stroke-width="2.5"/>
+              <line x1="760" y1="215" x2="600" y2="105" stroke="#1a1208" stroke-width="3"/>
+              <!-- Hip/eave ring at mid-height -->
+              <path d="M440,215 L520,168 L600,148 L680,168 L760,215" stroke="#1a1208" stroke-width="2.8" fill="none"/>
+              <!-- Mid-height horizontal brace ring -->
+              <line x1="440" y1="310" x2="760" y2="310" stroke="#1a1208" stroke-width="1.8" opacity="0.65"/>
+              <!-- Arch curves on each bay (ornate iron work) -->
+              <path d="M440,310 Q480,272 520,310" stroke="#241c0c" stroke-width="1.5" fill="none" opacity="0.75"/>
+              <path d="M520,282 Q560,245 600,282" stroke="#241c0c" stroke-width="1.5" fill="none" opacity="0.75"/>
+              <path d="M600,282 Q640,245 680,282" stroke="#241c0c" stroke-width="1.5" fill="none" opacity="0.75"/>
+              <path d="M680,310 Q720,272 760,310" stroke="#241c0c" stroke-width="1.5" fill="none" opacity="0.75"/>
+              <!-- Finial (decorative top spike) -->
+              <line x1="600" y1="105" x2="600" y2="85" stroke="#1a1208" stroke-width="2.5"/>
+              <circle cx="600" cy="82" r="5" fill="#2a2010" stroke="#1a1208" stroke-width="1.5"/>
+              <!-- Small finial globe glow -->
+              <circle cx="600" cy="82" r="12" fill="url(#slSm)" opacity="0.5"/>
 
-              <!-- Greenhouse wall fill -->
-              <path d="M398,358 L398,192 L600,122 L802,192 L802,358 Z" fill="#0f0d09"/>
+              <!-- DOOR — central arch entrance -->
+              <path d="M570,408 A30,42 0 0,1 630,408" fill="#e0a020" opacity="0.48"/>
+              <rect x="570" y="366" width="60" height="42" fill="#e0a020" opacity="0.45"/>
+              <!-- Door frame -->
+              <path d="M570,408 A30,42 0 0,1 630,408" stroke="#1a1208" stroke-width="2.2" fill="none"/>
+              <line x1="570" y1="366" x2="570" y2="408" stroke="#1a1208" stroke-width="2.2"/>
+              <line x1="630" y1="366" x2="630" y2="408" stroke="#1a1208" stroke-width="2.2"/>
 
-              <!-- Greenhouse windows (arched, warm amber glow — más brillante) -->
-              <rect x="412" y="195" width="68" height="160" fill="#d89520" opacity="0.45" rx="34 34 2 2"/>
-              <rect x="491" y="195" width="68" height="160" fill="#e0a828" opacity="0.52" rx="34 34 2 2"/>
-              <rect x="569" y="195" width="62" height="163" fill="#f0b030" opacity="0.62" rx="31 31 2 2"/>
-              <rect x="642" y="195" width="68" height="160" fill="#e0a828" opacity="0.52" rx="34 34 2 2"/>
-              <rect x="720" y="195" width="68" height="160" fill="#d08818" opacity="0.42" rx="34 34 2 2"/>
+              <!-- ROSES covering gazebo — peach/pink clusters cascading over frame -->
+              <circle cx="440" cy="200" r="52" fill="url(#bkPeach)"  opacity="0.88"/>
+              <circle cx="490" cy="175" r="44" fill="url(#bkPink)"   opacity="0.82"/>
+              <circle cx="550" cy="158" r="50" fill="url(#bkPeach)"  opacity="0.85"/>
+              <circle cx="615" cy="145" r="55" fill="url(#bkPinkL)"  opacity="0.8"/>
+              <circle cx="680" cy="158" r="48" fill="url(#bkPeach)"  opacity="0.83"/>
+              <circle cx="735" cy="175" r="44" fill="url(#bkPink)"   opacity="0.8"/>
+              <circle cx="775" cy="200" r="50" fill="url(#bkPeach)"  opacity="0.86"/>
+              <!-- Rose clusters on roof ridge -->
+              <circle cx="530" cy="130" r="38" fill="url(#bkPinkL)"  opacity="0.72"/>
+              <circle cx="600" cy="118" r="42" fill="url(#bkPeach)"  opacity="0.78"/>
+              <circle cx="670" cy="130" r="38" fill="url(#bkPinkL)"  opacity="0.72"/>
+              <!-- Trailing roses down the sides -->
+              <circle cx="445" cy="265" r="38" fill="url(#bkPink)"   opacity="0.6"/>
+              <circle cx="758" cy="268" r="38" fill="url(#bkPeach)"  opacity="0.58"/>
+              <circle cx="448" cy="340" r="30" fill="url(#bkPinkL)"  opacity="0.45"/>
+              <circle cx="755" cy="342" r="30" fill="url(#bkPeach)"  opacity="0.42"/>
 
-              <!-- Window glows — más intensos -->
-              <ellipse cx="446" cy="250" rx="44" ry="62" fill="url(#winG)" opacity="0.65"/>
-              <ellipse cx="525" cy="250" rx="46" ry="65" fill="url(#winG)" opacity="0.72"/>
-              <ellipse cx="600" cy="252" rx="50" ry="70" fill="url(#winG)" opacity="0.85"/>
-              <ellipse cx="676" cy="250" rx="46" ry="65" fill="url(#winG)" opacity="0.7"/>
-              <ellipse cx="754" cy="250" rx="42" ry="60" fill="url(#winG)" opacity="0.58"/>
-              <!-- Interior glow fill -->
-              <rect x="400" y="192" width="400" height="166" fill="#c88020" opacity="0.14" rx="2"/>
+              <!-- WHITE WROUGHT IRON BISTRO FURNITURE — right of gazebo -->
+              <!-- Table top (ellipse) -->
+              <ellipse cx="880" cy="390" rx="42" ry="12" fill="#f0ebe0" opacity="0.82"/>
+              <!-- Table pedestal -->
+              <rect x="876" y="390" width="8" height="20" fill="#ede8dc" opacity="0.8" rx="3"/>
+              <!-- Table base spread -->
+              <path d="M860,410 Q880,415 900,410" stroke="#ede8dc" stroke-width="3" fill="none" opacity="0.75"/>
+              <!-- Chair left -->
+              <rect x="843" y="372" width="28" height="22" fill="none" stroke="#f0ebe0" stroke-width="2.2" rx="3" opacity="0.75"/>
+              <path d="M843,372 Q857,360 871,372" stroke="#f0ebe0" stroke-width="2.2" fill="none" opacity="0.75"/>
+              <line x1="847" y1="394" x2="844" y2="410" stroke="#f0ebe0" stroke-width="2" opacity="0.7"/>
+              <line x1="867" y1="394" x2="869" y2="410" stroke="#f0ebe0" stroke-width="2" opacity="0.7"/>
+              <!-- Chair right -->
+              <rect x="909" y="372" width="28" height="22" fill="none" stroke="#f0ebe0" stroke-width="2.2" rx="3" opacity="0.75"/>
+              <path d="M909,372 Q923,360 937,372" stroke="#f0ebe0" stroke-width="2.2" fill="none" opacity="0.75"/>
+              <line x1="913" y1="394" x2="910" y2="410" stroke="#f0ebe0" stroke-width="2" opacity="0.7"/>
+              <line x1="933" y1="394" x2="935" y2="410" stroke="#f0ebe0" stroke-width="2" opacity="0.7"/>
+              <!-- Soft glow under furniture -->
+              <ellipse cx="890" cy="410" rx="55" ry="10" fill="#d09040" opacity="0.18"/>
 
-              <!-- Door (center window) -->
-              <rect x="572" y="295" width="56" height="63" fill="#e0a820" opacity="0.55" rx="2"/>
-              <!-- White garden furniture silhouette visible through windows -->
-              <ellipse cx="480" cy="340" rx="22" ry="8" fill="#e8d0a0" opacity="0.18"/>
-              <rect x="468" y="312" width="4" height="28" fill="#d0b880" opacity="0.22"/>
-              <rect x="472" y="310" width="20" height="5" fill="#d0b880" opacity="0.22" rx="2"/>
-              <ellipse cx="720" cy="338" rx="20" ry="7" fill="#e8d0a0" opacity="0.16"/>
-              <rect x="718" y="313" width="4" height="25" fill="#d0b880" opacity="0.2"/>
-              <rect x="714" y="311" width="18" height="4" fill="#d0b880" opacity="0.2" rx="2"/>
+              <!-- GLOBE STRING LIGHTS — Edison bulb style, large and warm -->
+              <!-- Wire 1 — primary arc -->
+              <path d="M0,82 C120,56 290,68 450,60 C520,56 560,52 600,48 C640,52 680,56 750,60 C910,68 1080,56 1200,82" stroke="rgba(140,100,38,0.55)" stroke-width="2.2" fill="none"/>
+              <!-- Wire 2 — secondary arc lower -->
+              <path d="M0,118 C150,100 370,110 560,104 C600,102 640,104 840,110 C1030,118 1100,106 1200,118" stroke="rgba(140,100,38,0.32)" stroke-width="1.5" fill="none"/>
 
-              <!-- Greenhouse frame lines -->
-              <line x1="398" y1="192" x2="600" y2="122" stroke="#26220e" stroke-width="2.5"/>
-              <line x1="802" y1="192" x2="600" y2="122" stroke="#26220e" stroke-width="2.5"/>
-              <line x1="398" y1="192" x2="802" y2="192" stroke="#26220e" stroke-width="2"/>
-              <line x1="480" y1="192" x2="480" y2="358" stroke="#26220e" stroke-width="1.8"/>
-              <line x1="558" y1="192" x2="558" y2="358" stroke="#26220e" stroke-width="1.8"/>
-              <line x1="640" y1="192" x2="640" y2="358" stroke="#26220e" stroke-width="1.8"/>
-              <line x1="720" y1="192" x2="720" y2="358" stroke="#26220e" stroke-width="1.8"/>
-              <line x1="398" y1="358" x2="802" y2="358" stroke="#26220e" stroke-width="2.5"/>
-              <line x1="398" y1="278" x2="802" y2="278" stroke="#1e1a0c" stroke-width="1.2" opacity="0.6"/>
+              <!-- String 1 globe glows (large Edison bulbs) -->
+              <circle cx="48"   cy="80"  r="52" fill="url(#sl)" opacity="0.72"/>
+              <circle cx="152"  cy="65"  r="44" fill="url(#sl)" opacity="0.65"/>
+              <circle cx="258"  cy="70"  r="50" fill="url(#sl)" opacity="0.68"/>
+              <circle cx="360"  cy="64"  r="40" fill="url(#sl)" opacity="0.62"/>
+              <circle cx="452"  cy="60"  r="52" fill="url(#sl)" opacity="0.72"/>
+              <circle cx="528"  cy="56"  r="46" fill="url(#sl)" opacity="0.68"/>
+              <circle cx="600"  cy="50"  r="58" fill="url(#sl)" opacity="0.82"/>
+              <circle cx="672"  cy="56"  r="46" fill="url(#sl)" opacity="0.68"/>
+              <circle cx="748"  cy="60"  r="52" fill="url(#sl)" opacity="0.72"/>
+              <circle cx="845"  cy="64"  r="42" fill="url(#sl)" opacity="0.64"/>
+              <circle cx="945"  cy="70"  r="48" fill="url(#sl)" opacity="0.68"/>
+              <circle cx="1052" cy="65"  r="40" fill="url(#sl)" opacity="0.62"/>
+              <circle cx="1155" cy="82"  r="50" fill="url(#sl)" opacity="0.7"/>
+              <!-- Globe bulb bodies (small bright center dots) -->
+              <circle cx="48"   cy="80"  r="6.5" fill="#fffce8"/>
+              <circle cx="152"  cy="65"  r="5.5" fill="#fffce8"/>
+              <circle cx="258"  cy="70"  r="6"   fill="#fffce8"/>
+              <circle cx="360"  cy="64"  r="5"   fill="#fffce8"/>
+              <circle cx="452"  cy="60"  r="6.5" fill="#fffce8"/>
+              <circle cx="528"  cy="56"  r="5.8" fill="#fffce8"/>
+              <circle cx="600"  cy="50"  r="7.5" fill="#fffce8"/>
+              <circle cx="672"  cy="56"  r="5.8" fill="#fffce8"/>
+              <circle cx="748"  cy="60"  r="6.5" fill="#fffce8"/>
+              <circle cx="845"  cy="64"  r="5.5" fill="#fffce8"/>
+              <circle cx="945"  cy="70"  r="6"   fill="#fffce8"/>
+              <circle cx="1052" cy="65"  r="5"   fill="#fffce8"/>
+              <circle cx="1155" cy="82"  r="6.2" fill="#fffce8"/>
 
-              <!-- Roof glass tint -->
-              <polygon points="398,192 600,122 600,192" fill="#d4a030" opacity="0.055"/>
-              <polygon points="600,122 802,192 600,192" fill="#d4a030" opacity="0.045"/>
+              <!-- String 2 smaller accent glows -->
+              <circle cx="100"  cy="114" r="34" fill="url(#slSm)" opacity="0.5"/>
+              <circle cx="258"  cy="108" r="30" fill="url(#slSm)" opacity="0.46"/>
+              <circle cx="415"  cy="111" r="34" fill="url(#slSm)" opacity="0.5"/>
+              <circle cx="572"  cy="107" r="30" fill="url(#slSm)" opacity="0.46"/>
+              <circle cx="728"  cy="107" r="34" fill="url(#slSm)" opacity="0.5"/>
+              <circle cx="888"  cy="110" r="30" fill="url(#slSm)" opacity="0.46"/>
+              <circle cx="1048" cy="113" r="34" fill="url(#slSm)" opacity="0.5"/>
+              <circle cx="1165" cy="117" r="28" fill="url(#slSm)" opacity="0.44"/>
+              <circle cx="100"  cy="114" r="4.2" fill="#fffce8"/>
+              <circle cx="258"  cy="108" r="3.8" fill="#fffce8"/>
+              <circle cx="415"  cy="111" r="4.2" fill="#fffce8"/>
+              <circle cx="572"  cy="107" r="3.8" fill="#fffce8"/>
+              <circle cx="728"  cy="107" r="4.2" fill="#fffce8"/>
+              <circle cx="888"  cy="110" r="3.8" fill="#fffce8"/>
+              <circle cx="1048" cy="113" r="4.2" fill="#fffce8"/>
+              <circle cx="1165" cy="117" r="3.5" fill="#fffce8"/>
 
-              <!-- Roof purlins -->
-              <line x1="428" y1="178" x2="558" y2="143" stroke="#26220e" stroke-width="1.2" opacity="0.65"/>
-              <line x1="455" y1="166" x2="528" y2="145" stroke="#26220e" stroke-width="1" opacity="0.55"/>
-              <line x1="642" y1="143" x2="772" y2="178" stroke="#26220e" stroke-width="1.2" opacity="0.65"/>
-              <line x1="672" y1="145" x2="745" y2="166" stroke="#26220e" stroke-width="1" opacity="0.55"/>
-
-              <!-- Greenhouse warm aura — más brillante como en la película -->
-              <ellipse cx="600" cy="240" rx="320" ry="210" fill="url(#ghGlow)" opacity="1.0"/>
-              <ellipse cx="600" cy="260" rx="200" ry="140" fill="#c87820" opacity="0.12"/>
-              <ellipse cx="600" cy="280" rx="120" ry="90"  fill="#e09830" opacity="0.09"/>
-
-              <!-- STRING LIGHTS – arc 1 (main) -->
-              <path d="M0,90 C130,65 300,75 460,68 C520,64 560,61 600,57 C640,61 680,64 740,68 C900,75 1070,65 1200,90" stroke="rgba(155,125,48,0.48)" stroke-width="1.6" fill="none"/>
-              <!-- Arc 2 -->
-              <path d="M0,125 C160,108 380,118 570,112 C600,110 630,112 820,118 C1040,126 1100,115 1200,125" stroke="rgba(155,125,48,0.28)" stroke-width="1.1" fill="none"/>
-
-              <!-- String 1 light glows -->
-              <circle cx="48"   cy="87"  r="32" fill="url(#sl)" opacity="0.8"/><circle cx="148"  cy="73"  r="25" fill="url(#sl)" opacity="0.7"/><circle cx="252"  cy="77"  r="29" fill="url(#sl)" opacity="0.76"/><circle cx="355"  cy="72"  r="23" fill="url(#sl)" opacity="0.66"/><circle cx="448"  cy="68"  r="31" fill="url(#sl)" opacity="0.8"/><circle cx="525"  cy="64"  r="27" fill="url(#sl)" opacity="0.73"/><circle cx="600"  cy="58"  r="34" fill="url(#sl)" opacity="0.85"/><circle cx="675"  cy="64"  r="27" fill="url(#sl)" opacity="0.73"/><circle cx="752"  cy="68"  r="31" fill="url(#sl)" opacity="0.8"/><circle cx="848"  cy="72"  r="25" fill="url(#sl)" opacity="0.7"/><circle cx="950"  cy="77"  r="29" fill="url(#sl)" opacity="0.76"/><circle cx="1052" cy="73"  r="23" fill="url(#sl)" opacity="0.66"/><circle cx="1155" cy="89"  r="30" fill="url(#sl)" opacity="0.76"/>
-              <!-- String 1 bulb dots -->
-              <circle cx="48"   cy="87"  r="3.8" fill="#fffce8"/><circle cx="148"  cy="73"  r="3.2" fill="#fffce8"/><circle cx="252"  cy="77"  r="3.6" fill="#fffce8"/><circle cx="355"  cy="72"  r="2.8" fill="#fffce8"/><circle cx="448"  cy="68"  r="3.8" fill="#fffce8"/><circle cx="525"  cy="64"  r="3.2" fill="#fffce8"/><circle cx="600"  cy="58"  r="4.2" fill="#fffce8"/><circle cx="675"  cy="64"  r="3.2" fill="#fffce8"/><circle cx="752"  cy="68"  r="3.8" fill="#fffce8"/><circle cx="848"  cy="72"  r="3.2" fill="#fffce8"/><circle cx="950"  cy="77"  r="3.6" fill="#fffce8"/><circle cx="1052" cy="73"  r="2.8" fill="#fffce8"/><circle cx="1155" cy="89"  r="3.5" fill="#fffce8"/>
-
-              <!-- String 2 lights -->
-              <circle cx="92"   cy="120" r="20" fill="url(#slSm)" opacity="0.54"/><circle cx="245"  cy="114" r="18" fill="url(#slSm)" opacity="0.5"/><circle cx="408"  cy="117" r="21" fill="url(#slSm)" opacity="0.54"/><circle cx="565"  cy="113" r="18" fill="url(#slSm)" opacity="0.5"/><circle cx="722"  cy="113" r="21" fill="url(#slSm)" opacity="0.54"/><circle cx="882"  cy="116" r="18" fill="url(#slSm)" opacity="0.5"/><circle cx="1042" cy="119" r="21" fill="url(#slSm)" opacity="0.54"/><circle cx="1162" cy="123" r="17" fill="url(#slSm)" opacity="0.46"/>
-              <circle cx="92"   cy="120" r="2.6" fill="#fffce8"/><circle cx="245"  cy="114" r="2.2" fill="#fffce8"/><circle cx="408"  cy="117" r="2.6" fill="#fffce8"/><circle cx="565"  cy="113" r="2.2" fill="#fffce8"/><circle cx="722"  cy="113" r="2.6" fill="#fffce8"/><circle cx="882"  cy="116" r="2.2" fill="#fffce8"/><circle cx="1042" cy="119" r="2.6" fill="#fffce8"/><circle cx="1162" cy="123" r="2.2" fill="#fffce8"/>
-
-              <!-- LANTERN – lower right -->
-              <ellipse cx="985" cy="375" rx="46" ry="48" fill="url(#lanG)" opacity="0.72"/>
-              <rect x="974" y="358" width="24" height="34" fill="#1e1808" rx="2"/>
-              <rect x="977" y="361" width="18" height="25" fill="#f0a020" opacity="0.52" rx="1"/>
-              <polygon points="970,358 1002,358 996,348 976,348" fill="#201c0a"/>
-              <rect x="979" y="390" width="14" height="5" fill="#1e1808" rx="1"/>
+              <!-- LANTERN – left side near wisteria tree base -->
+              <ellipse cx="215" cy="398" rx="46" ry="48" fill="url(#lanG)" opacity="0.65"/>
+              <rect x="204" y="381" width="24" height="34" fill="#1e1808" rx="2"/>
+              <rect x="207" y="384" width="18" height="25" fill="#f0a020" opacity="0.52" rx="1"/>
+              <polygon points="200,381 232,381 226,371 206,371" fill="#201c0a"/>
+              <rect x="209" y="413" width="14" height="5" fill="#1e1808" rx="1"/>
 
               <!-- DAISIES near ground -->
               <g transform="translate(355,410)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.76"/><circle cx="6.4" cy="-6.4" r="4.5" fill="white" opacity="0.76"/><circle cx="9" cy="0" r="4.5" fill="white" opacity="0.76"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.76"/><circle cx="-9" cy="0" r="4.5" fill="white" opacity="0.76"/><circle cx="0" cy="0" r="5.2" fill="#f5c030"/></g>
@@ -472,31 +576,22 @@
               <g transform="translate(240,447) scale(0.65)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.55"/><circle cx="8" cy="0" r="4.5" fill="white" opacity="0.55"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.55"/><circle cx="-8" cy="0" r="4.5" fill="white" opacity="0.55"/><circle cx="0" cy="0" r="4.6" fill="#f5c030"/></g>
               <g transform="translate(958,434) scale(0.68)"><circle cx="0" cy="-9" r="4.5" fill="white" opacity="0.6"/><circle cx="8" cy="0" r="4.5" fill="white" opacity="0.6"/><circle cx="0" cy="9" r="4.5" fill="white" opacity="0.6"/><circle cx="-8" cy="0" r="4.5" fill="white" opacity="0.6"/><circle cx="0" cy="0" r="4.8" fill="#f5c030"/></g>
 
-              <!-- FLORES TREPADORAS sobre el invernadero — izquierda purpura, derecha rosa -->
-              <!-- Wisteria trepando sobre el techo izquierdo del invernadero -->
-              <circle cx="415" cy="175" r="55" fill="url(#bkPurp)"    opacity="0.72"/>
-              <circle cx="455" cy="155" r="45" fill="url(#bkDeepPurp)" opacity="0.65"/>
-              <circle cx="390" cy="215" r="48" fill="url(#bkLav)"     opacity="0.6"/>
-              <!-- Rosas trepando sobre el techo derecho del invernadero -->
-              <circle cx="785" cy="175" r="55" fill="url(#bkPink)"    opacity="0.72"/>
-              <circle cx="745" cy="155" r="45" fill="url(#bkRoseD)"   opacity="0.65"/>
-              <circle cx="810" cy="215" r="48" fill="url(#bkPinkL)"   opacity="0.6"/>
-              <!-- Wisteria mid-left extending down the side wall -->
-              <circle cx="42"   cy="340" r="75" fill="url(#bkPurp)"   opacity="0.6"/>
-              <circle cx="105"  cy="350" r="62" fill="url(#bkDeepPurp)" opacity="0.52"/>
-              <circle cx="195"  cy="340" r="55" fill="url(#bkPurp)"   opacity="0.48"/>
-              <!-- Pink roses mid-right extending down the side wall -->
-              <circle cx="1158" cy="340" r="75" fill="url(#bkPink)"   opacity="0.6"/>
-              <circle cx="1095" cy="350" r="62" fill="url(#bkRoseD)"  opacity="0.52"/>
-              <circle cx="1005" cy="340" r="55" fill="url(#bkPink)"   opacity="0.48"/>
+              <!-- Wisteria mid-left extending lower on wall -->
+              <circle cx="42"   cy="340" r="75" fill="url(#bkPurp)"     opacity="0.58"/>
+              <circle cx="105"  cy="352" r="62" fill="url(#bkDeepPurp)" opacity="0.5"/>
+              <circle cx="195"  cy="342" r="55" fill="url(#bkPurp)"     opacity="0.46"/>
+              <!-- Peach roses mid-right extending lower on wall -->
+              <circle cx="1158" cy="342" r="75" fill="url(#bkPeach)"  opacity="0.58"/>
+              <circle cx="1095" cy="352" r="62" fill="url(#bkPink)"   opacity="0.5"/>
+              <circle cx="1005" cy="342" r="55" fill="url(#bkPeach)"  opacity="0.46"/>
 
-              <!-- ATMOSPHERE + VIGNETTE — oscuro romántico como la película -->
+              <!-- ATMOSPHERE + VIGNETTE -->
               <rect width="1200" height="580" fill="url(#vig)"/>
-              <!-- Oscurecimiento de bordes laterales para que flores destaquen -->
-              <rect x="0" y="0" width="180" height="580" fill="url(#darkLeft)" opacity="0.55"/>
-              <rect x="1020" y="0" width="180" height="580" fill="url(#darkRight)" opacity="0.55"/>
-              <!-- Tenue oscurecimiento general para ambiente noche -->
-              <rect width="1200" height="580" fill="rgba(0,0,0,0.15)"/>
+              <!-- Subtle side darkening to frame the flowers -->
+              <rect x="0" y="0" width="160" height="580" fill="url(#darkLeft)" opacity="0.4"/>
+              <rect x="1040" y="0" width="160" height="580" fill="url(#darkRight)" opacity="0.4"/>
+              <!-- Very light overall atmosphere tint -->
+              <rect width="1200" height="580" fill="rgba(20,8,5,0.1)"/>
             </svg>
           </div>
 
@@ -711,6 +806,13 @@
         <p style="font-size:0.65rem;color:rgba(255,255,255,0.35);letter-spacing:0.14em;margin-top:10px;text-transform:uppercase;">Arrastra para girar el universo</p>
       </div>
       <button class="universe-close" id="universeClose" aria-label="Cerrar universo">×</button>
+    </div>
+
+    <!-- DREAM DETAIL POPUP (pinned card click) -->
+    <div id="dreamDetailPopup" class="dream-popup" style="display:none" aria-hidden="true" role="dialog">
+      <button class="dream-popup__close" id="dreamPopupClose" aria-label="Cerrar">×</button>
+      <p class="dream-popup__text" id="dreamPopupText"></p>
+      <div class="dream-popup__actions" id="dreamPopupActions"></div>
     </div>
 
     <script src="script.js"></script>
