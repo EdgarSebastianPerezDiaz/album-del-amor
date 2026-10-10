@@ -165,62 +165,89 @@ function saveBoulevardDreams(arr) { try { localStorage.setItem('boulevardDreams2
 function loadGalleryOverrides() { try { return JSON.parse(localStorage.getItem('galleryOverrides') || '{}'); } catch { return {}; } }
 function saveGalleryOverrides(obj) { try { localStorage.setItem('galleryOverrides', JSON.stringify(obj)); } catch {} syncKey('overrides', obj); }
 
-/* ─── Sync con servidor (multi-dispositivo) ─── */
-let _syncPending = {};
-let _syncTimer = null;
+/* ─── Sync con Firebase (multi-dispositivo, tiempo real) ─── */
+let _fbDb = null;
+let _firebaseReady = false;
+
+function _fbConfigured() {
+  return typeof FIREBASE_CONFIG !== 'undefined' &&
+    FIREBASE_CONFIG.databaseURL &&
+    !FIREBASE_CONFIG.databaseURL.includes('REEMPLAZAR');
+}
 
 function syncKey(key, value) {
-  _syncPending[key] = value;
-  clearTimeout(_syncTimer);
-  _syncTimer = setTimeout(flushSync, 1200);
+  const lsMap = { memories: 'userMemories', dreams: 'boulevardDreams2', overrides: 'galleryOverrides' };
+  if (lsMap[key]) try { localStorage.setItem(lsMap[key], JSON.stringify(value)); } catch {}
+  if (_firebaseReady && _fbDb) {
+    _fbDb.ref(key).set(value).catch(() => {});
+  }
 }
 
-function flushSync() {
-  const batch = _syncPending;
-  _syncPending = {};
-  Object.entries(batch).forEach(([key, value]) => {
-    fetch('/api/sync', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key, value })
-    }).catch(() => {});
-  });
-}
-
-async function loadFromServer() {
+async function initFirebaseSync() {
+  if (!_fbConfigured()) return;
   try {
-    const res = await fetch('/api/sync');
-    if (!res.ok) return;
-    const srv = await res.json();
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+    _fbDb = firebase.database();
+    _firebaseReady = true;
 
-    const localMem  = loadUserMemories();
-    const localDrm  = loadBoulevardDreams() || [];
-    const localOvr  = loadGalleryOverrides();
-    const srvMem    = Array.isArray(srv.memories) ? srv.memories : [];
-    const srvDrm    = Array.isArray(srv.dreams)   ? srv.dreams   : [];
-    const srvOvr    = (srv.overrides && typeof srv.overrides === 'object') ? srv.overrides : {};
+    const snap = await _fbDb.ref('/').once('value');
+    const srv  = snap.val() || {};
+    const srvMem = Array.isArray(srv.memories) ? srv.memories : [];
+    const srvDrm = Array.isArray(srv.dreams)   ? srv.dreams   : [];
+    const srvOvr = (srv.overrides && typeof srv.overrides === 'object') ? srv.overrides : {};
 
-    // El que tenga más registros gana (migración inicial del celular al servidor)
+    const localMem = loadUserMemories();
+    const localDrm = loadBoulevardDreams() || [];
+    const localOvr = loadGalleryOverrides();
+
     const finalMem = srvMem.length >= localMem.length ? srvMem : localMem;
     const finalDrm = srvDrm.length >= localDrm.length ? srvDrm : localDrm;
     const finalOvr = Object.keys(srvOvr).length >= Object.keys(localOvr).length ? srvOvr : localOvr;
 
-    // Si lo local tenía más → subirlo al servidor ahora
-    if (localMem.length > srvMem.length) syncKey('memories', localMem);
-    if (localDrm.length > srvDrm.length) syncKey('dreams',   localDrm);
-    if (Object.keys(localOvr).length > Object.keys(srvOvr).length) syncKey('overrides', localOvr);
+    const updates = {};
+    if (localMem.length > srvMem.length) updates.memories = localMem;
+    if (localDrm.length > srvDrm.length) updates.dreams   = localDrm;
+    if (Object.keys(localOvr).length > Object.keys(srvOvr).length) updates.overrides = localOvr;
+    if (Object.keys(updates).length) await _fbDb.ref('/').update(updates);
 
-    // Guardar la versión ganadora en local
-    try { localStorage.setItem('userMemories',   JSON.stringify(finalMem)); } catch {}
+    try { localStorage.setItem('userMemories',    JSON.stringify(finalMem)); } catch {}
     try { localStorage.setItem('boulevardDreams2', JSON.stringify(finalDrm)); } catch {}
     try { localStorage.setItem('galleryOverrides', JSON.stringify(finalOvr)); } catch {}
 
-    // Re-renderizar siempre para mostrar lo que llegó del servidor
     renderCarousel();
     boulevardDreams = finalDrm;
     renderBoulevard();
     renderDreamList();
-  } catch {}
+
+    // Listeners en tiempo real: cambios de otros dispositivos → re-renderiza aquí
+    _fbDb.ref('memories').on('value', snap => {
+      const data = snap.val();
+      if (!Array.isArray(data)) return;
+      if (JSON.stringify(loadUserMemories()) === JSON.stringify(data)) return;
+      try { localStorage.setItem('userMemories', JSON.stringify(data)); } catch {}
+      renderCarousel();
+    });
+
+    _fbDb.ref('dreams').on('value', snap => {
+      const data = snap.val();
+      if (!Array.isArray(data)) return;
+      if (JSON.stringify(loadBoulevardDreams() || []) === JSON.stringify(data)) return;
+      try { localStorage.setItem('boulevardDreams2', JSON.stringify(data)); } catch {}
+      boulevardDreams = data;
+      renderBoulevard();
+      renderDreamList();
+    });
+
+    _fbDb.ref('overrides').on('value', snap => {
+      const data = snap.val();
+      if (!data || typeof data !== 'object') return;
+      if (JSON.stringify(loadGalleryOverrides()) === JSON.stringify(data)) return;
+      try { localStorage.setItem('galleryOverrides', JSON.stringify(data)); } catch {}
+    });
+
+  } catch (e) {
+    console.warn('Firebase sync error:', e.message);
+  }
 }
 
 /* ─────────────── MEDIADB — IndexedDB para fotos grandes ─────────────── */
@@ -2050,6 +2077,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTopbarCollapse();
   initBoulevardModeToggle();
   initExportImport();
-  // Cargar datos del servidor y re-renderizar si hay algo nuevo
-  loadFromServer();
+  // Sincronización con Firebase (fuente de verdad compartida entre dispositivos)
+  initFirebaseSync();
 });
