@@ -175,11 +175,21 @@ function _fbConfigured() {
     !FIREBASE_CONFIG.databaseURL.includes('REEMPLAZAR');
 }
 
+function _fbClean(v) {
+  if (Array.isArray(v)) return v.map(_fbClean);
+  if (v && typeof v === 'object') {
+    const o = {};
+    for (const [k, val] of Object.entries(v)) { if (val !== undefined) o[k] = _fbClean(val); }
+    return o;
+  }
+  return v;
+}
+
 function syncKey(key, value) {
   const lsMap = { memories: 'userMemories', dreams: 'boulevardDreams2', overrides: 'galleryOverrides' };
   if (lsMap[key]) try { localStorage.setItem(lsMap[key], JSON.stringify(value)); } catch {}
   if (_firebaseReady && _fbDb) {
-    _fbDb.ref(key).set(value).catch(() => {});
+    try { _fbDb.ref(key).set(_fbClean(value)).catch(() => {}); } catch {}
   }
 }
 
