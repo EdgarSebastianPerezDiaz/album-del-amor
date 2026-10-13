@@ -406,8 +406,9 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
    CARD MODAL (full view)
    ============================ */
 .card-modal {
-  position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;
+  position:fixed;inset:0;z-index:8900;display:grid;place-items:center;padding:20px;
   opacity:0;pointer-events:none;transition:opacity 0.3s ease;
+  isolation:isolate;
 }
 .card-modal.is-open { opacity:1;pointer-events:auto; }
 .card-modal__backdrop { position:absolute;inset:0;background:rgba(2,2,6,0.9);backdrop-filter:blur(20px); }
@@ -497,8 +498,9 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
    ADD MEMORY & DREAM MODALS
    ============================ */
 .add-memory-modal,.add-dream-modal {
-  position:fixed;inset:0;z-index:65;display:grid;place-items:center;padding:20px;
+  position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:20px;
   opacity:0;pointer-events:none;transition:opacity 0.3s ease;
+  isolation:isolate;
 }
 .add-memory-modal.is-open,.add-dream-modal.is-open { opacity:1;pointer-events:auto; }
 .add-memory-modal__backdrop,.add-dream-modal__backdrop {
@@ -903,7 +905,7 @@ body.music-playing .music-wave--three { animation-delay:260ms; }
    MODAL UNIVERSO
    ============================ */
 .universe-modal {
-  position:fixed;inset:0;z-index:200;
+  position:fixed;inset:0;z-index:9100;
   display:flex;align-items:center;justify-content:center;
   opacity:0;pointer-events:none;
   transition:opacity 0.6s ease;
