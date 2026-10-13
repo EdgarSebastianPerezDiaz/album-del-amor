@@ -168,6 +168,8 @@ function saveGalleryOverrides(obj) { try { localStorage.setItem('galleryOverride
 /* ─── Sync con Firebase (multi-dispositivo, tiempo real) ─── */
 let _fbDb = null;
 let _firebaseReady = false;
+let _fbReadyResolve;
+const _fbReadyP = new Promise(r => { _fbReadyResolve = r; });
 
 function _fbConfigured() {
   return typeof FIREBASE_CONFIG !== 'undefined' &&
@@ -194,11 +196,12 @@ function syncKey(key, value) {
 }
 
 async function initFirebaseSync() {
-  if (!_fbConfigured()) return;
+  if (!_fbConfigured()) { _fbReadyResolve(null); return; }
   try {
     if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
     _fbDb = firebase.database();
     _firebaseReady = true;
+    _fbReadyResolve(_fbDb);
 
     const snap = await _fbDb.ref('/').once('value');
     const srv  = snap.val() || {};
@@ -255,7 +258,11 @@ async function initFirebaseSync() {
       try { localStorage.setItem('galleryOverrides', JSON.stringify(data)); } catch {}
     });
 
+    // Sube a la nube las fotos/videos/audios que solo existen en este navegador
+    migrateLocalMedia().catch(e => console.warn('Media migration error:', e.message));
+
   } catch (e) {
+    _fbReadyResolve(null);
     console.warn('Firebase sync error:', e.message);
   }
 }
@@ -289,9 +296,139 @@ const MediaDB = (() => {
   };
 })();
 
+/* ─── Medios compartidos: IndexedDB local + copia en Firebase (media/<key>) ─── */
+const _mediaUrlCache = {};
+const MAX_CLOUD_DATAURL = 9500000; // límite de Firebase: 10 MB por valor
+
 function resolveIdbSrc(src, cb) {
   if (!src || !src.startsWith('idb:')) { cb(src); return; }
-  MediaDB.load(src.slice(4)).then(blob => cb(blob ? URL.createObjectURL(blob) : '')).catch(() => cb(''));
+  const key = src.slice(4);
+  if (_mediaUrlCache[key]) { cb(_mediaUrlCache[key]); return; }
+  MediaDB.load(key)
+    .then(blob => blob || _fetchCloudMedia(key))
+    .catch(() => _fetchCloudMedia(key))
+    .then(blob => {
+      if (!blob) { cb(''); return; }
+      const url = URL.createObjectURL(blob);
+      _mediaUrlCache[key] = url;
+      cb(url);
+    })
+    .catch(() => cb(''));
+}
+
+async function _fetchCloudMedia(key) {
+  const db = await _fbReadyP;
+  if (!db) return null;
+  const snap = await db.ref('media/' + key).once('value');
+  const dataUrl = snap.val();
+  if (typeof dataUrl !== 'string' || !dataUrl.startsWith('data:')) return null;
+  const blob = await (await fetch(dataUrl)).blob();
+  MediaDB.save(key, blob).catch(() => {});
+  try { localStorage.setItem('mediaUp:' + key, '1'); } catch {}
+  return blob;
+}
+
+function _blobToDataUrl(blob) {
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = e => res(e.target.result);
+    fr.onerror = () => rej(fr.error);
+    fr.readAsDataURL(blob);
+  });
+}
+
+async function uploadMediaToCloud(key, blob) {
+  const db = await _fbReadyP;
+  if (!db) throw new Error('Firebase no disponible');
+  const dataUrl = await _blobToDataUrl(blob);
+  if (dataUrl.length > MAX_CLOUD_DATAURL) throw new Error('too-big');
+  await db.ref('media/' + key).set(dataUrl);
+  try { localStorage.setItem('mediaUp:' + key, '1'); } catch {}
+}
+
+/* Reduce fotos a máx. 1600px en JPEG para que suban rápido y quepan en Firebase */
+function compressImage(file, maxSide = 1600, quality = 0.82) {
+  return new Promise(resolve => {
+    if (!file || !/^image\//.test(file.type) || /gif$/i.test(file.type)) { resolve(file); return; }
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob(b => resolve(b && b.size < file.size ? b : file), 'image/jpeg', quality);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
+  });
+}
+
+/* Guarda un archivo local + nube. Devuelve 'idb:<key>' y si se pudo compartir */
+async function storeSharedMedia(file, prefix) {
+  const key = prefix + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+  const blob = prefix === 'img_' ? await compressImage(file) : file;
+  let localOk = true, cloudOk = true;
+  try { await MediaDB.save(key, blob); } catch { localOk = false; }
+  try { await uploadMediaToCloud(key, blob); } catch { cloudOk = false; }
+  if (!localOk && !cloudOk) return { src: null, cloudOk };
+  return { src: 'idb:' + key, cloudOk };
+}
+
+/* Revisa los recuerdos y sube lo que solo existe en este navegador */
+async function migrateLocalMedia() {
+  const db = await _fbReadyP;
+  if (!db) return;
+  const base = FIREBASE_CONFIG.databaseURL.replace(/\/$/, '');
+
+  async function fixSrc(src) {
+    if (typeof src !== 'string') return src;
+    if (src.startsWith('idb:')) {
+      const key = src.slice(4);
+      try { if (localStorage.getItem('mediaUp:' + key)) return src; } catch {}
+      const blob = await MediaDB.load(key).catch(() => null);
+      if (!blob) return src; // no está en este navegador; quizá en otro
+      const exists = await fetch(`${base}/media/${encodeURIComponent(key)}.json?shallow=true`)
+        .then(r => r.json()).catch(() => null);
+      if (exists) { try { localStorage.setItem('mediaUp:' + key, '1'); } catch {} return src; }
+      await uploadMediaToCloud(key, blob).catch(e => console.warn('No se pudo subir', key, e.message));
+      return src;
+    }
+    if (src.startsWith('data:') && src.length > 60000) {
+      const blob = await (await fetch(src)).blob();
+      const isImg = blob.type.startsWith('image/');
+      const isVid = blob.type.startsWith('video/');
+      const res = await storeSharedMedia(blob, isImg ? 'img_' : isVid ? 'vid_' : 'aud_');
+      return res.src && res.cloudOk ? res.src : src;
+    }
+    return src;
+  }
+
+  async function fixCard(card) {
+    if (!card || typeof card !== 'object') return false;
+    let changed = false;
+    for (const f of ['image', 'customSongSrc']) {
+      if (card[f]) { const n = await fixSrc(card[f]); if (n !== card[f]) { card[f] = n; changed = true; } }
+    }
+    if (Array.isArray(card.media)) {
+      for (let i = 0; i < card.media.length; i++) {
+        const n = await fixSrc(card.media[i]);
+        if (n !== card.media[i]) { card.media[i] = n; changed = true; }
+      }
+    }
+    return changed;
+  }
+
+  const mems = loadUserMemories();
+  let memChanged = false;
+  for (const m of mems) { if (await fixCard(m)) memChanged = true; }
+  if (memChanged) { saveUserMemories(mems); renderCarousel(); }
+
+  const ovr = loadGalleryOverrides();
+  let ovrChanged = false;
+  for (const k of Object.keys(ovr)) { if (await fixCard(ovr[k])) ovrChanged = true; }
+  if (ovrChanged) saveGalleryOverrides(ovr);
 }
 
 const IDB_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
@@ -770,7 +907,7 @@ function openCardModal(index) {
       el.cardModalSong.style.display = 'flex';
       el.cardModalSong.onclick = () => {
         const src = customSrc || (song ? song.src : '');
-        if (src) playAudio(src, si, song);
+        if (src) resolveIdbSrc(src, u => { if (u) playAudio(u, si, song); });
       };
     } else {
       el.cardModalSong.innerHTML = '';
@@ -781,7 +918,7 @@ function openCardModal(index) {
   // Auto-play card song on open
   if (song || customSrc) {
     const autoSrc = customSrc || (song ? song.src : '');
-    if (autoSrc) playAudio(autoSrc, si, song);
+    if (autoSrc) resolveIdbSrc(autoSrc, u => { if (u) playAudio(u, si, song); });
   }
 
   // Edit / delete for user-added memories
@@ -1044,6 +1181,7 @@ function initAddMemory() {
 
   let pendingMediaFiles = [];
   let pendingAudioBlob = null;
+  let pendingAudioFile = null;
   let pendingAudioName = '';
 
   el.addMemoryFile.addEventListener('change', e => {
@@ -1064,6 +1202,7 @@ function initAddMemory() {
   el.addMemoryAudio.addEventListener('change', e => {
     const file = e.target.files[0]; if (!file) return;
     pendingAudioBlob = URL.createObjectURL(file);
+    pendingAudioFile = file;
     pendingAudioName = file.name.replace(/\.[^.]+$/, '');
     if (el.audioUploadName) el.audioUploadName.textContent = '♪ ' + pendingAudioName;
   });
@@ -1116,32 +1255,38 @@ function initAddMemory() {
       if (note) note.style.display = 'none';
       el.filePreview.style.display = 'none';
       el.fileUploadContent.style.display = 'flex';
-      pendingMediaFiles = []; pendingAudioBlob = null; pendingAudioName = '';
+      pendingMediaFiles = []; pendingAudioBlob = null; pendingAudioFile = null; pendingAudioName = '';
       if (el.audioUploadName) el.audioUploadName.textContent = '';
       closeAddMemoryModal();
       renderCarousel();
       spawnParticles('hearts');
     };
 
-    if (pendingMediaFiles.length) {
-      const saves = pendingMediaFiles.map((file, i) => {
-        const prefix = isVideoFile(file.name) ? 'vid_' : 'img_';
-        const key = prefix + Date.now() + '_' + i;
-        return MediaDB.save(key, file)
-          .then(() => 'idb:' + key)
-          .catch(() => {
-            if (isVideoFile(file.name)) return Promise.resolve(URL.createObjectURL(file));
-            return new Promise(res => {
-              const fr = new FileReader();
-              fr.onload = ev => res(ev.target.result);
-              fr.readAsDataURL(file);
-            });
-          });
+    const submitBtn = el.addMemoryForm.querySelector('[type="submit"]');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.dataset.label = submitBtn.textContent; submitBtn.textContent = 'Guardando… ♡'; }
+    const notShared = [];
+    (async () => {
+      const srcs = [];
+      for (const file of pendingMediaFiles) {
+        const prefix = isVideoFile(file.name) || /^video\//.test(file.type) ? 'vid_' : 'img_';
+        const r = await storeSharedMedia(file, prefix);
+        if (!r.cloudOk) notShared.push(file.name);
+        if (r.src) srcs.push(r.src);
+        else if (prefix === 'img_') srcs.push(await _blobToDataUrl(await compressImage(file)));
+      }
+      if (pendingAudioFile) {
+        const r = await storeSharedMedia(pendingAudioFile, 'aud_');
+        if (!r.cloudOk) notShared.push(pendingAudioFile.name);
+        if (r.src) pendingAudioBlob = r.src;
+      }
+      return srcs;
+    })()
+      .then(srcs => finalize(srcs))
+      .catch(err => { console.warn('Error guardando medios:', err); finalize([]); })
+      .finally(() => {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtn.dataset.label || submitBtn.textContent; }
+        if (notShared.length) alert('Estos archivos son muy pesados para compartirse entre dispositivos (máx. ~7 MB) y solo se verán en este navegador:\n\n' + notShared.join('\n'));
       });
-      Promise.all(saves).then(srcs => finalize(srcs));
-    } else {
-      finalize([]);
-    }
   });
 }
 

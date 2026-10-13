@@ -1,9 +1,23 @@
 {
   "rules": {
     ".read": true,
-    "memories":  { ".write": true },
-    "dreams":    { ".write": true },
-    "overrides": { ".write": true },
-    "$other":    { ".write": false }
+    "memories": {
+      ".write": true
+    },
+    "dreams": {
+      ".write": true
+    },
+    "overrides": {
+      ".write": true
+    },
+    "media": {
+      "$key": {
+        ".write": "!data.exists()",
+        ".validate": "newData.isString() && newData.val().length < 10000000"
+      }
+    },
+    "$other": {
+      ".write": false
+    }
   }
 }
