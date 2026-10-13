@@ -1,0 +1,9 @@
+{
+  "rules": {
+    ".read": true,
+    "memories":  { ".write": true },
+    "dreams":    { ".write": true },
+    "overrides": { ".write": true },
+    "$other":    { ".write": false }
+  }
+}
