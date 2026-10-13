@@ -20,11 +20,11 @@
   ╚══════════════════════════════════════════════════════════════╝
 */
 const FIREBASE_CONFIG = {
-  apiKey:            "REEMPLAZAR_apiKey",
-  authDomain:        "REEMPLAZAR_authDomain",
-  databaseURL:       "REEMPLAZAR_databaseURL",
-  projectId:         "REEMPLAZAR_projectId",
-  storageBucket:     "REEMPLAZAR_storageBucket",
-  messagingSenderId: "REEMPLAZAR_messagingSenderId",
-  appId:             "REEMPLAZAR_appId"
+  apiKey:            "AIzaSyA-nQAbshReMDKIU0ym0RJHEqpvmWF5ENc",
+  authDomain:        "album-del-amor-sync.firebaseapp.com",
+  databaseURL:       "https://album-del-amor-sync-default-rtdb.firebaseio.com",
+  projectId:         "album-del-amor-sync",
+  storageBucket:     "album-del-amor-sync.firebasestorage.app",
+  messagingSenderId: "168058295779",
+  appId:             "1:168058295779:web:8c0b25656de29432fabcd6"
 };
