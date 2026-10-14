@@ -187,12 +187,39 @@ function _fbClean(v) {
   return v;
 }
 
+/* Cambios locales aún no confirmados por Firebase (p. ej. sin internet).
+   Mientras exista la marca, este navegador manda; si no, manda Firebase. */
+function _markPending(key, on) {
+  try { on ? localStorage.setItem('pendingSync:' + key, '1') : localStorage.removeItem('pendingSync:' + key); } catch {}
+}
+function _isPending(key) {
+  try { return localStorage.getItem('pendingSync:' + key) === '1'; } catch { return false; }
+}
+
 function syncKey(key, value) {
   const lsMap = { memories: 'userMemories', dreams: 'boulevardDreams2', overrides: 'galleryOverrides' };
   if (lsMap[key]) try { localStorage.setItem(lsMap[key], JSON.stringify(value)); } catch {}
+  _markPending(key, true);
   if (_firebaseReady && _fbDb) {
-    try { _fbDb.ref(key).set(_fbClean(value)).catch(() => {}); } catch {}
+    try {
+      _fbDb.ref(key).set(_fbClean(value))
+        .then(() => _markPending(key, false))
+        .catch(e => console.warn('No se pudo sincronizar', key, e.message));
+    } catch {}
   }
+}
+
+/* Clave para reconocer la misma carta en distintos navegadores */
+function _itemId(it) {
+  if (!it || typeof it !== 'object') return JSON.stringify(it);
+  return [it.title || '', it.date || '', (it.text || '').slice(0, 80)].join('|');
+}
+/* Une dos listas sin duplicar (solo se usa una vez, al migrar datos antiguos) */
+function _unionList(server, local) {
+  const seen = new Set(server.map(_itemId));
+  const out = server.slice();
+  for (const it of local) { const id = _itemId(it); if (!seen.has(id)) { seen.add(id); out.push(it); } }
+  return out;
 }
 
 async function initFirebaseSync() {
@@ -213,15 +240,44 @@ async function initFirebaseSync() {
     const localDrm = loadBoulevardDreams() || [];
     const localOvr = loadGalleryOverrides();
 
-    const finalMem = srvMem.length >= localMem.length ? srvMem : localMem;
-    const finalDrm = srvDrm.length >= localDrm.length ? srvDrm : localDrm;
-    const finalOvr = Object.keys(srvOvr).length >= Object.keys(localOvr).length ? srvOvr : localOvr;
+    // Regla: Firebase es la fuente de verdad. Este navegador solo gana si tiene
+    // cambios pendientes de subir (hechos sin conexión). Así, lo que se borra en
+    // un dispositivo no reaparece desde otro.
+    let legacy = false;
+    try { legacy = !localStorage.getItem('syncV2'); } catch {}
+    const hasSrv = k => srv[k] !== undefined && srv[k] !== null;
+
+    const pick = (key, srvVal, localVal, isList) => {
+      if (!hasSrv(key)) {
+        // Firebase vacío: solo subimos lo local si es un cambio pendiente o datos antiguos
+        const hasLocal = isList ? localVal.length > 0 : Object.keys(localVal).length > 0;
+        if (hasLocal && (_isPending(key) || legacy)) return { val: localVal, upload: true };
+        return { val: isList ? [] : {}, upload: false };
+      }
+      if (_isPending(key)) return { val: localVal, upload: true };
+      if (legacy && isList) {
+        const merged = _unionList(srvVal, localVal);
+        return { val: merged, upload: merged.length !== srvVal.length };
+      }
+      if (legacy && !isList) {
+        const merged = Object.assign({}, localVal, srvVal);
+        return { val: merged, upload: Object.keys(merged).length !== Object.keys(srvVal).length };
+      }
+      return { val: srvVal, upload: false };
+    };
+
+    const pm = pick('memories',  srvMem, localMem, true);
+    const pd = pick('dreams',    srvDrm, localDrm, true);
+    const po = pick('overrides', srvOvr, localOvr, false);
+    const finalMem = pm.val, finalDrm = pd.val, finalOvr = po.val;
 
     const updates = {};
-    if (localMem.length > srvMem.length) updates.memories = localMem;
-    if (localDrm.length > srvDrm.length) updates.dreams   = localDrm;
-    if (Object.keys(localOvr).length > Object.keys(srvOvr).length) updates.overrides = localOvr;
+    if (pm.upload) updates.memories  = _fbClean(finalMem);
+    if (pd.upload) updates.dreams    = _fbClean(finalDrm);
+    if (po.upload) updates.overrides = _fbClean(finalOvr);
     if (Object.keys(updates).length) await _fbDb.ref('/').update(updates);
+    ['memories', 'dreams', 'overrides'].forEach(k => _markPending(k, false));
+    try { localStorage.setItem('syncV2', '1'); } catch {}
 
     try { localStorage.setItem('userMemories',    JSON.stringify(finalMem)); } catch {}
     try { localStorage.setItem('boulevardDreams2', JSON.stringify(finalDrm)); } catch {}
@@ -234,7 +290,8 @@ async function initFirebaseSync() {
 
     // Listeners en tiempo real: cambios de otros dispositivos → re-renderiza aquí
     _fbDb.ref('memories').on('value', snap => {
-      const data = snap.val();
+      const raw = snap.val();
+      const data = raw === null ? [] : raw;   // null = se borraron todas las cartas
       if (!Array.isArray(data)) return;
       if (JSON.stringify(loadUserMemories()) === JSON.stringify(data)) return;
       try { localStorage.setItem('userMemories', JSON.stringify(data)); } catch {}
@@ -256,6 +313,7 @@ async function initFirebaseSync() {
       if (!data || typeof data !== 'object') return;
       if (JSON.stringify(loadGalleryOverrides()) === JSON.stringify(data)) return;
       try { localStorage.setItem('galleryOverrides', JSON.stringify(data)); } catch {}
+      renderCarousel();
     });
 
     // Sube a la nube las fotos/videos/audios que solo existen en este navegador
